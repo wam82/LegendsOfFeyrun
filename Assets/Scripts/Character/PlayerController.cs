@@ -22,8 +22,7 @@ namespace Character
         {
             if (_character != null && context.performed)
             {
-                Debug.Log("Jump");
-                _character.Jump();
+                _character.RequestJump();
             }
         }
 
