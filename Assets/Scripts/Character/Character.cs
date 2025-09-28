@@ -34,7 +34,7 @@ namespace Character
             // 2. Compute movement direction from input
             Vector3 desiredDirection = camForward * _inputVector.y + camRight * _inputVector.x;
             
-            // 3. Rotate character to face movement direction
+            // 3. Rotate character to face movement direction - no longer necessary because of the use of cinemachines and external TPS logic
             if (desiredDirection.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);

@@ -11,6 +11,7 @@ namespace Character
         
         public void OnMove(InputAction.CallbackContext context)
         {
+            // Debug.Log("OnMove");
             if (_character != null)
             {
                 _character.SetInputVector(context.ReadValue<Vector2>());
@@ -45,6 +46,9 @@ namespace Character
             {
                 Debug.LogError("Action Map 'Game' not found!");
             }
+            
+            Cursor.lockState = CursorLockMode.Locked;
+            Cursor.visible = false;
         }
     }
 }
