@@ -6,19 +6,30 @@ namespace Character
     public class Character : MonoBehaviour
     {
         [Header("Character Attributes")]
-        [SerializeField] private float movementSpeed;
-        [SerializeField] private float rotationSpeed;
+        [SerializeField] private float movementSpeed = 5f;
+        [SerializeField] private float rotationSpeed = 500f;
+        [SerializeField] private float jumpForce = 5f;
         
         [Header("Character Components")]
         [SerializeField] private Transform cameraTransform;
         
-        private CharacterController _characterController;
-        
+        private Rigidbody _rigidbody;
         private Vector2 _inputVector;
+        private Vector3 _movementDirection;
+        private bool _jumpRequested;
+        private bool _isGrounded;
         
         public void SetInputVector(Vector2 inputVector)
         {
             _inputVector = inputVector;
+        }
+
+        public void Jump()
+        {
+            if (_isGrounded)
+            {
+                _jumpRequested = true;
+            }
         }
 
         private void MoveCharacter()
@@ -38,19 +49,24 @@ namespace Character
             if (desiredDirection.sqrMagnitude > 0.01f)
             {
                 Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
-                transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, Time.deltaTime * rotationSpeed);
+                Quaternion newRotation = Quaternion.RotateTowards(_rigidbody.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
+                _rigidbody.MoveRotation(newRotation);
             }
             
-            _characterController.Move(desiredDirection * (movementSpeed * Time.deltaTime));
+            // 4. Move using velocity (preserve vertical velocity for gravity/jump)
+            Vector3 velocity = desiredDirection.normalized * movementSpeed;
+            velocity.y = _rigidbody.velocity.y; 
+            _rigidbody.velocity = velocity;
         }
 
         private void Awake()
         {
-            _characterController =  GetComponent<CharacterController>();
-            if (_characterController == null)
+            _rigidbody =  GetComponent<Rigidbody>();
+            if (_rigidbody == null)
             {
-                Debug.LogError("Character controller not found");
+                Debug.LogError("Rigid body not found");
             }
+            _rigidbody.freezeRotation = true;
         }
 
         private void FixedUpdate()

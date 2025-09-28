@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 3110052586170420119}
   - component: {fileID: 6050518998829041047}
   - component: {fileID: 989907739582815307}
-  - component: {fileID: 5130651067900348218}
+  - component: {fileID: 3954200958564022392}
+  - component: {fileID: 685807253218164029}
   m_Layer: 0
   m_Name: FemaleBaseCharacter
   m_TagString: Player
@@ -49,7 +50,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   movementSpeed: 5
-  rotationSpeed: 2.5
+  rotationSpeed: 500
+  jumpForce: 5
   cameraTransform: {fileID: 0}
 --- !u!114 &6050518998829041047
 MonoBehaviour:
@@ -108,13 +110,44 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: 82b17f89-03f0-4c03-aaef-f81e74f36830
     m_ActionName: Game/Look[/Mouse/delta]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 7b136be7-d258-4659-bf59-892369358961
+    m_ActionName: Game/Jump[/Keyboard/space]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
---- !u!143 &5130651067900348218
-CharacterController:
+--- !u!54 &3954200958564022392
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106056109905195665}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!136 &685807253218164029
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -131,14 +164,11 @@ CharacterController:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Height: 1
+  serializedVersion: 2
   m_Radius: 0.5
-  m_SlopeLimit: 45
-  m_StepOffset: 0.3
-  m_SkinWidth: 0.08
-  m_MinMoveDistance: 0.001
-  m_Center: {x: 0, y: 1, z: 0}
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &8157484170930600394
 PrefabInstance:
   m_ObjectHideFlags: 0

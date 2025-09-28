@@ -419,11 +419,66 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2064517171 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6106056109905195665, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+  m_PrefabInstance: {fileID: 9026834870733845190}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2064517176 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1334691626993673058, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
   m_PrefabInstance: {fileID: 9026834870733845190}
   m_PrefabAsset: {fileID: 0}
+--- !u!54 &2064517177
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064517171}
+  serializedVersion: 4
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_CenterOfMass: {x: 0, y: 0, z: 0}
+  m_InertiaTensor: {x: 1, y: 1, z: 1}
+  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ImplicitCom: 1
+  m_ImplicitTensor: 1
+  m_UseGravity: 1
+  m_IsKinematic: 0
+  m_Interpolate: 1
+  m_Constraints: 0
+  m_CollisionDetection: 1
+--- !u!136 &2064517178
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2064517171}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.75, z: 0}
 --- !u!1001 &3873852359180950166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -643,6 +698,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionId
+      value: 7b136be7-d258-4659-bf59-892369358961
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[2].m_ActionName
+      value: Game/Jump[/Keyboard/space]
+      objectReference: {fileID: 0}
     - target: {fileID: 1334691626993673058, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.75
@@ -684,10 +751,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
-      propertyPath: rotationSpeed
-      value: 500
-      objectReference: {fileID: 0}
-    - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: cameraTransform
       value: 
       objectReference: {fileID: 96937575}
@@ -695,10 +758,17 @@ PrefabInstance:
       propertyPath: m_Name
       value: FemaleBaseCharacter
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 5130651067900348218, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6106056109905195665, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2064517177}
+    - targetCorrespondingSourceObject: {fileID: 6106056109905195665, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2064517178}
   m_SourcePrefab: {fileID: 100100000, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

@@ -18,6 +18,15 @@ namespace Character
             }
         }
 
+        public void OnJump(InputAction.CallbackContext context)
+        {
+            if (_character != null && context.performed)
+            {
+                Debug.Log("Jump");
+                _character.Jump();
+            }
+        }
+
         private void Awake()
         {
             _playerInput =  GetComponent<PlayerInput>();
