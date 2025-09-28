@@ -11,7 +11,6 @@ namespace Character
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            Debug.Log("OnMove called");
             if (_character != null)
             {
                 _character.SetInputVector(context.ReadValue<Vector2>());
@@ -25,8 +24,6 @@ namespace Character
             {
                 Debug.LogError("No player input found");
             }
-            
-            _playerInput.actions.Enable();
             
             _character =  GetComponent<Character>();
             if (_character == null)
