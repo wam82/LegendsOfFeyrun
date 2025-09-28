@@ -8,7 +8,8 @@ namespace Character
     public class Character : MonoBehaviour
     {
         [Header("Character Attributes")]
-        [SerializeField] private float movementSpeed = 5f;
+        [SerializeField] private float walkSpeed;
+        [SerializeField] private float sprintSpeed;
         [SerializeField] private float rotationSpeed = 500f;
         [SerializeField] private float jumpForce;
         [SerializeField] private float jumpCooldown;
@@ -21,14 +22,24 @@ namespace Character
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
         
+        public enum MovementState
+        {
+            Walk,
+            Sprint,
+            Airborne
+        }
+        
+        private MovementState _movementState;
+        private float _movementSpeed;
         private Rigidbody _rigidbody;
         private Vector2 _inputVector;
         private Vector3 _movementDirection;
         private bool _isGrounded;
         private bool _canJump = true;
         private bool _jumpRequested;
-        private readonly float _characterHeight = 1f;
-        
+        private bool _sprintRequested;
+        private const float CharacterHeight = 1f;
+
         public void SetInputVector(Vector2 inputVector)
         {
             _inputVector = inputVector;
@@ -38,14 +49,37 @@ namespace Character
         {
             if (_isGrounded && _canJump)
             {
-                // Debug.Log("Jump");
                 _jumpRequested = true;
             }
         }
 
+        private void StateHandler()
+        {
+            if (_isGrounded && _sprintRequested)
+            {
+                _movementState = MovementState.Sprint;
+                _movementSpeed = sprintSpeed;
+            }
+            else if (_isGrounded)
+            {
+                _movementState = MovementState.Walk;
+                _movementSpeed = walkSpeed;
+            }
+            else
+            {
+                _movementState = MovementState.Airborne;
+            }
+        }
+
+        public void RequestSprint()
+        {
+            _sprintRequested = !_sprintRequested;
+            Debug.Log("Requesting sprint: " + _sprintRequested);
+        }
+
         private void IsGrounded()
         {
-            _isGrounded = Physics.Raycast(transform.position, Vector3.down,  _characterHeight * 0.5f + 0.2f,  groundLayerMask);
+            _isGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.2f,  groundLayerMask);
         }
 
         private void MoveCharacter()
@@ -74,19 +108,19 @@ namespace Character
             {
                 if (_isGrounded)
                 {
-                    _rigidbody.AddForce(desiredDirection.normalized * (movementSpeed * movementForceFactor), ForceMode.Force);
+                    _rigidbody.AddForce(desiredDirection.normalized * (_movementSpeed * movementForceFactor), ForceMode.Force);
                 }
                 else
                 {
-                    _rigidbody.AddForce(desiredDirection.normalized * (movementSpeed * movementForceFactor * airMultiplier), ForceMode.Force);
+                    _rigidbody.AddForce(desiredDirection.normalized * (_movementSpeed * movementForceFactor * airMultiplier), ForceMode.Force);
                 }
             }
             
             // 5. Clamp horizontal velocity
             Vector3 flatVelocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
-            if (flatVelocity.magnitude > movementSpeed)
+            if (flatVelocity.magnitude > _movementSpeed)
             {
-                Vector3 limitedVelocity = flatVelocity.normalized * movementSpeed;
+                Vector3 limitedVelocity = flatVelocity.normalized * _movementSpeed;
                 _rigidbody.velocity = new Vector3(limitedVelocity.x, _rigidbody.velocity.y, limitedVelocity.z);
             }
         }
@@ -142,6 +176,8 @@ namespace Character
                 
                 StartCoroutine(ResetJumpCoroutine());
             }
+            
+            StateHandler();
         }
 
         private void FixedUpdate()

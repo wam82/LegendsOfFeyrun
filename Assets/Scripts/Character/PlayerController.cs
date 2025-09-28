@@ -26,6 +26,14 @@ namespace Character
             }
         }
 
+        public void OnSprint(InputAction.CallbackContext context)
+        {
+            if (_character != null && context.performed)
+            {
+                _character.RequestSprint();
+            }
+        }
+
         private void Awake()
         {
             _playerInput =  GetComponent<PlayerInput>();

@@ -424,6 +424,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1334691626993673058, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
   m_PrefabInstance: {fileID: 9026834870733845190}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2064517177 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6050518998829041047, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+  m_PrefabInstance: {fileID: 9026834870733845190}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fce88d98e40c466d8bd878f8b3b34cb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &3873852359180950166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -764,6 +775,46 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionId
+      value: 8d431d5c-8915-4a5d-86d8-e7dfc8ebc36f
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_ActionName
+      value: Game/Sprint[/XboxGamepadMacOSWireless/leftStickPress,/Keyboard/leftShift]
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 2064517177}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
+      value: OnSprint
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: Character.PlayerController, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 989907739582815307, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: m_ActionEvents.Array.data[3].m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1334691626993673058, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0.75
@@ -809,8 +860,20 @@ PrefabInstance:
       value: 7.5
       objectReference: {fileID: 0}
     - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: walkSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: sprintSpeed
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: jumpCooldown
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: movementSpeed
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: cameraTransform
