@@ -49,12 +49,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f04e5384c90041dabdd1d4a293c5bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  movementSpeed: 5
+  walkSpeed: 4
+  sprintSpeed: 7
   rotationSpeed: 500
-  jumpForce: 2
-  jumpCooldown: 0.25
+  jumpForce: 7.5
+  jumpCooldown: 0.5
   airMultiplier: 0.4
   groundDrag: 3
+  maxSlopeAngle: 40
   movementForceFactor: 10
   cameraTransform: {fileID: 0}
   groundLayerMask:
@@ -171,6 +173,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 7b136be7-d258-4659-bf59-892369358961
     m_ActionName: Game/Jump[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6050518998829041047}
+        m_TargetAssemblyTypeName: Character.PlayerController, Assembly-CSharp
+        m_MethodName: OnSprint
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 8d431d5c-8915-4a5d-86d8-e7dfc8ebc36f
+    m_ActionName: Game/Sprint[/XboxGamepadMacOSWireless/leftStickPress,/Keyboard/leftShift]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game

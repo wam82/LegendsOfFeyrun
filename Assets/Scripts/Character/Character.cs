@@ -15,7 +15,7 @@ namespace Character
         [SerializeField] private float jumpCooldown;
         [SerializeField] private float airMultiplier;
         [SerializeField] private float groundDrag;
-        // [SerializeField] private float gravity = 9.8f;
+        [SerializeField] private float maxSlopeAngle;
 
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
@@ -30,10 +30,11 @@ namespace Character
         }
         
         private MovementState _movementState;
+        private RaycastHit _slopeHit;
         private float _movementSpeed;
         private Rigidbody _rigidbody;
         private Vector2 _inputVector;
-        private Vector3 _movementDirection;
+        private Vector3 _desiredDirection;
         private bool _isGrounded;
         private bool _canJump = true;
         private bool _jumpRequested;
@@ -45,6 +46,22 @@ namespace Character
             _inputVector = inputVector;
         }
 
+        private bool OnSlope()
+        {
+            if (Physics.Raycast(_rigidbody.position, Vector3.down, out _slopeHit, CharacterHeight * 0.5f + 0.3f))
+            {
+                float angle = Vector3.Angle(Vector3.up, _slopeHit.normal);
+                return angle <= maxSlopeAngle && angle != 0;
+            }
+            
+            return false;
+        }
+
+        private Vector3 GetSlopeMoveDirection()
+        {
+            return Vector3.ProjectOnPlane(_desiredDirection, _slopeHit.normal).normalized;
+        }
+
         public void RequestJump()
         {
             if (_isGrounded && _canJump)
@@ -53,6 +70,16 @@ namespace Character
             }
         }
 
+        public void RequestSprint()
+        {
+            _sprintRequested = !_sprintRequested;
+        }
+
+        private void IsGrounded()
+        {
+            _isGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.3f,  groundLayerMask);
+        }
+        
         private void StateHandler()
         {
             if (_isGrounded && _sprintRequested)
@@ -71,17 +98,6 @@ namespace Character
             }
         }
 
-        public void RequestSprint()
-        {
-            _sprintRequested = !_sprintRequested;
-            Debug.Log("Requesting sprint: " + _sprintRequested);
-        }
-
-        private void IsGrounded()
-        {
-            _isGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.2f,  groundLayerMask);
-        }
-
         private void MoveCharacter()
         {
             // 1. Get camera's forward and right, ignoring vertical component
@@ -93,26 +109,30 @@ namespace Character
             camRight.Normalize();
             
             // 2. Compute movement direction from input
-            Vector3 desiredDirection = camForward * _inputVector.y + camRight * _inputVector.x;
+            _desiredDirection = camForward * _inputVector.y + camRight * _inputVector.x;
             
             // 3. Rotate character to face movement direction 
-            if (desiredDirection.sqrMagnitude > 0.01f)
+            if (_desiredDirection.sqrMagnitude > 0.01f)
             {
-                Quaternion targetRotation = Quaternion.LookRotation(desiredDirection);
+                Quaternion targetRotation = Quaternion.LookRotation(_desiredDirection);
                 Quaternion newRotation = Quaternion.RotateTowards(_rigidbody.rotation, targetRotation, rotationSpeed * Time.fixedDeltaTime);
                 _rigidbody.MoveRotation(newRotation);
             }
             
             // 4. Apply movement on the character's rigid body
-            if (desiredDirection.sqrMagnitude > 0.01f)
+            if (_desiredDirection.sqrMagnitude > 0.01f)
             {
-                if (_isGrounded)
+                if (OnSlope())
                 {
-                    _rigidbody.AddForce(desiredDirection.normalized * (_movementSpeed * movementForceFactor), ForceMode.Force);
+                    _rigidbody.AddForce(GetSlopeMoveDirection() * (_movementSpeed * 0.5f * movementForceFactor), ForceMode.Force);
                 }
-                else
+                else if (_isGrounded)
                 {
-                    _rigidbody.AddForce(desiredDirection.normalized * (_movementSpeed * movementForceFactor * airMultiplier), ForceMode.Force);
+                    _rigidbody.AddForce(_desiredDirection.normalized * (_movementSpeed * movementForceFactor), ForceMode.Force);
+                }
+                else if (!_isGrounded)
+                {
+                    _rigidbody.AddForce(_desiredDirection.normalized * (_movementSpeed * movementForceFactor * airMultiplier), ForceMode.Force);
                 }
             }
             
