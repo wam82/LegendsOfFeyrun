@@ -11,7 +11,6 @@ namespace Character
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            // Debug.Log("OnMove");
             if (_character != null)
             {
                 _character.SetInputVector(context.ReadValue<Vector2>());
@@ -31,6 +30,30 @@ namespace Character
             if (_character != null && context.performed)
             {
                 _character.RequestSprint();
+            }
+        }
+
+        public void OnAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Debug.Log("OnAttack");
+            }
+        }
+
+        public void OnShield(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Debug.Log("OnShield");
+            }
+        }
+
+        public void OnPause(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                Debug.Log("OnPause");
             }
         }
 
