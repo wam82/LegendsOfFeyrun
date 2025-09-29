@@ -41,6 +41,9 @@ namespace Character
         private bool _canJump = true;
         private bool _jumpRequested;
         private bool _sprintRequested;
+
+        public bool SprintRequested => _sprintRequested;
+
         private const float CharacterHeight = 1f;
 
         public void SetInputVector(Vector2 inputVector)

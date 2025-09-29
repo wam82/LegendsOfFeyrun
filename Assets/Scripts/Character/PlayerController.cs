@@ -19,11 +19,11 @@ namespace Character
                 Vector2 movement = context.ReadValue<Vector2>();
                 _character.SetInputVector(movement);
                 _animator.SetBool(IsWalking, movement.sqrMagnitude > 0);
-
+                
                 if (!_animator.GetBool(IsWalking))
                 {
-                    _animator.SetBool(IsSprinting, false);
                     _character.RequestSprint();
+                    _animator.SetBool(IsSprinting, _character.SprintRequested);
                 }
             }
         }
@@ -40,11 +40,10 @@ namespace Character
         {
             if (_character != null && context.performed)
             {
-                _character.RequestSprint();
-
                 if (_animator.GetBool(IsWalking))
                 {
-                    _animator.SetBool(IsSprinting, !_animator.GetBool(IsSprinting));
+                    _character.RequestSprint();
+                    _animator.SetBool(IsSprinting, _character.SprintRequested);
                 }
             }
         }
