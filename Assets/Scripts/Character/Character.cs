@@ -29,7 +29,9 @@ namespace Character
             Airborne
         }
         
+#pragma warning disable CS0414 // Field is assigned but its value is never used
         private MovementState _movementState;
+#pragma warning restore CS0414 // Field is assigned but its value is never used
         private RaycastHit _slopeHit;
         private float _movementSpeed;
         private Rigidbody _rigidbody;

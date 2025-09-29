@@ -6,14 +6,25 @@ namespace Character
 {
     public class PlayerController : MonoBehaviour
     {
+        private static readonly int IsWalking = Animator.StringToHash("isWalking");
+        private static readonly int IsSprinting = Animator.StringToHash("isSprinting");
         private PlayerInput _playerInput;
         private Character _character;
+        private Animator _animator;
         
         public void OnMove(InputAction.CallbackContext context)
         {
             if (_character != null)
             {
-                _character.SetInputVector(context.ReadValue<Vector2>());
+                Vector2 movement = context.ReadValue<Vector2>();
+                _character.SetInputVector(movement);
+                _animator.SetBool(IsWalking, movement.sqrMagnitude > 0);
+
+                if (!_animator.GetBool(IsWalking))
+                {
+                    _animator.SetBool(IsSprinting, false);
+                    _character.RequestSprint();
+                }
             }
         }
 
@@ -30,6 +41,11 @@ namespace Character
             if (_character != null && context.performed)
             {
                 _character.RequestSprint();
+
+                if (_animator.GetBool(IsWalking))
+                {
+                    _animator.SetBool(IsSprinting, !_animator.GetBool(IsSprinting));
+                }
             }
         }
 
@@ -57,6 +73,14 @@ namespace Character
             }
         }
 
+        public void OnInteract(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                
+            }
+        }
+
         private void Awake()
         {
             _playerInput =  GetComponent<PlayerInput>();
@@ -69,6 +93,12 @@ namespace Character
             if (_character == null)
             {
                 Debug.LogError("No character found");
+            }
+            
+            _animator = GetComponent<Animator>();
+            if (_animator == null)
+            {
+                Debug.LogError("No animator found");
             }
         }
 
