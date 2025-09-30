@@ -20,7 +20,7 @@ namespace Character
                 _character.SetInputVector(movement);
                 _animator.SetBool(IsWalking, movement.sqrMagnitude > 0);
                 
-                if (!_animator.GetBool(IsWalking))
+                if (!_animator.GetBool(IsWalking) && _character.SprintRequested)
                 {
                     _character.RequestSprint();
                     _animator.SetBool(IsSprinting, _character.SprintRequested);

@@ -78,6 +78,8 @@ namespace Character
         public void RequestSprint()
         {
             _sprintRequested = !_sprintRequested;
+            Debug.Log("Sprint requested: " + _sprintRequested);
+            
         }
 
         private void IsGrounded()
