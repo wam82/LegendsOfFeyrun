@@ -57,7 +57,7 @@
                     "id": "428979f3-a5ad-4f8d-86d7-45f751e27bdc",
                     "expectedControlType": "",
                     "processors": "",
-                    "interactions": "",
+                    "interactions": "Hold",
                     "initialStateCheck": false
                 },
                 {
@@ -237,7 +237,7 @@
                 {
                     "name": "",
                     "id": "c0fb93f4-1ebf-4eb9-b0e5-719d68223430",
-                    "path": "<Mouse>/rightButton",
+                    "path": "<Mouse>/leftButton",
                     "interactions": "",
                     "processors": "",
                     "groups": ";KeyboardMouseScheme",

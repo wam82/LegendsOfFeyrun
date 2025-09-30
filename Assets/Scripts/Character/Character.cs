@@ -9,6 +9,7 @@ namespace Character
     {
         [Header("Character Attributes")]
         [SerializeField] private float walkSpeed;
+        [SerializeField] private float shieldSpeed;
         [SerializeField] private float sprintSpeed;
         [SerializeField] private float rotationSpeed = 500f;
         [SerializeField] private float jumpForce;
@@ -22,15 +23,16 @@ namespace Character
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
 
-        private enum MovementState
-        {
-            Walk,
-            Sprint,
-            Airborne
-        }
+        // private enum MovementState
+        // {
+        //     Walk,
+        //     Sprint,
+        //     Shield,
+        //     Airborne
+        // }
         
 #pragma warning disable CS0414 // Field is assigned but its value is never used
-        private MovementState _movementState;
+        // private MovementState _movementState;
 #pragma warning restore CS0414 // Field is assigned but its value is never used
         private RaycastHit _slopeHit;
         private float _movementSpeed;
@@ -39,9 +41,8 @@ namespace Character
         private Vector3 _desiredDirection;
         private bool _canJump = true;
         private bool _jumpRequested;
-
+        private bool _shieldRequested;
         public bool SprintRequested { get; private set; }
-
         public bool IsGrounded { get; private set; }
 
         private const float CharacterHeight = 1f;
@@ -82,6 +83,11 @@ namespace Character
             
         }
 
+        public void RequestShield(bool shieldRequested)
+        {
+            _shieldRequested = shieldRequested;
+        }
+
         private void CheckIsGrounded()
         {
             IsGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.3f,  groundLayerMask);
@@ -91,17 +97,22 @@ namespace Character
         {
             if (IsGrounded && SprintRequested)
             {
-                _movementState = MovementState.Sprint;
+                // _movementState = MovementState.Sprint;
                 _movementSpeed = sprintSpeed;
+            }
+            else if (IsGrounded && _shieldRequested)
+            {
+                // _movementState = MovementState.Shield;
+                _movementSpeed = shieldSpeed;
             }
             else if (IsGrounded)
             {
-                _movementState = MovementState.Walk;
+                // _movementState = MovementState.Walk;
                 _movementSpeed = walkSpeed;
             }
             else
             {
-                _movementState = MovementState.Airborne;
+                // _movementState =  MovementState.Airborne;
             }
         }
 

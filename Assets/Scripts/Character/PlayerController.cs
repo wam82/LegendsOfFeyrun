@@ -9,6 +9,7 @@ namespace Character
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
         private static readonly int IsSprinting = Animator.StringToHash("isSprinting");
         private static readonly int IsFalling = Animator.StringToHash("isFalling");
+        private static readonly int IsShielding = Animator.StringToHash("isShielding");
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -41,7 +42,7 @@ namespace Character
         {
             if (_character != null && context.performed)
             {
-                if (_animator.GetBool(IsWalking))
+                if (_animator.GetBool(IsWalking) && !_animator.GetBool(IsShielding))
                 {
                     _character.RequestSprint();
                     _animator.SetBool(IsSprinting, _character.SprintRequested);
@@ -61,7 +62,19 @@ namespace Character
         {
             if (context.performed)
             {
-                Debug.Log("OnShield");
+                _animator.SetBool(IsShielding, true); 
+                _character.RequestShield(_animator.GetBool(IsShielding));
+                if (_animator.GetBool(IsSprinting)) 
+                { 
+                    _character.RequestSprint(); 
+                    _animator.SetBool(IsSprinting, _character.SprintRequested);
+                }
+            }
+
+            if (context.canceled)
+            {
+                _animator.SetBool(IsShielding, false);
+                _character.RequestShield(_animator.GetBool(IsShielding));
             }
         }
 
