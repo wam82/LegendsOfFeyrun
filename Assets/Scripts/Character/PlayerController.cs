@@ -10,6 +10,7 @@ namespace Character
         private static readonly int IsSprinting = Animator.StringToHash("isSprinting");
         private static readonly int IsFalling = Animator.StringToHash("isFalling");
         private static readonly int IsShielding = Animator.StringToHash("isShielding");
+        private static readonly int AttackValue = Animator.StringToHash("attackValue");
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -54,7 +55,7 @@ namespace Character
         {
             if (context.performed)
             {
-                Debug.Log("OnAttack");
+                _character.RequestAttack();
             }
         }
 
@@ -142,6 +143,11 @@ namespace Character
             else if (_character.IsGrounded && _animator.GetBool(IsFalling))
             {
                 _animator.SetBool(IsFalling, false);
+            }
+
+            if (_character.CurrentComboStep != _animator.GetInteger(AttackValue))
+            {
+                _animator.SetInteger(AttackValue, _character.CurrentComboStep);
             }
         }
     }

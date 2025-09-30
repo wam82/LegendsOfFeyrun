@@ -18,10 +18,36 @@ namespace Character
         [SerializeField] private float groundDrag;
         [SerializeField] private float maxSlopeAngle;
 
+        [Header("Combat Attributes")] 
+        [SerializeField] private float comboCooldown;
+        
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
+
+        public int CurrentComboStep => _currentComboStep;
+        public bool SprintRequested { get; private set; }
+        public bool IsGrounded { get; private set; }
+        public bool IsAttacking { get; private set; }
+        
+        private RaycastHit _slopeHit;
+        
+        private Rigidbody _rigidbody;
+        
+        private Vector2 _inputVector;
+        private Vector3 _desiredDirection;
+        
+        private float _lastAttackTime;
+        private float _movementSpeed;
+        private const float CharacterHeight = 1f;
+
+        private int _currentComboStep = 0;
+        
+        private bool _canJump = true;
+        private bool _jumpRequested;
+        private bool _shieldRequested;
+        private bool _comboStarted;
 
         // private enum MovementState
         // {
@@ -31,21 +57,9 @@ namespace Character
         //     Airborne
         // }
         
-#pragma warning disable CS0414 // Field is assigned but its value is never used
+// #pragma warning disable CS0414 // Field is assigned but its value is never used
         // private MovementState _movementState;
-#pragma warning restore CS0414 // Field is assigned but its value is never used
-        private RaycastHit _slopeHit;
-        private float _movementSpeed;
-        private Rigidbody _rigidbody;
-        private Vector2 _inputVector;
-        private Vector3 _desiredDirection;
-        private bool _canJump = true;
-        private bool _jumpRequested;
-        private bool _shieldRequested;
-        public bool SprintRequested { get; private set; }
-        public bool IsGrounded { get; private set; }
-
-        private const float CharacterHeight = 1f;
+// #pragma warning restore CS0414 // Field is assigned but its value is never used
 
         public void SetInputVector(Vector2 inputVector)
         {
@@ -79,13 +93,24 @@ namespace Character
         public void RequestSprint()
         {
             SprintRequested = !SprintRequested;
-            // Debug.Log("Sprint requested: " + _sprintRequested);
             
         }
 
         public void RequestShield(bool shieldRequested)
         {
             _shieldRequested = shieldRequested;
+        }
+
+        public void RequestAttack()
+        {
+            _currentComboStep++;
+            
+            if (_currentComboStep > 3)
+            {
+                _currentComboStep = 1;
+            }
+            
+            Debug.Log("Combo Step: " + _currentComboStep);
         }
 
         private void CheckIsGrounded()
