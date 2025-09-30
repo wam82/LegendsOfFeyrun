@@ -54,7 +54,7 @@ MonoBehaviour:
   sprintSpeed: 7
   rotationSpeed: 500
   jumpForce: 7.5
-  jumpCooldown: 0.5
+  jumpCooldown: 0.25
   airMultiplier: 0.4
   groundDrag: 3
   maxSlopeAngle: 40

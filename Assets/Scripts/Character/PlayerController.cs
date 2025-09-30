@@ -8,6 +8,7 @@ namespace Character
     {
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
         private static readonly int IsSprinting = Animator.StringToHash("isSprinting");
+        private static readonly int IsFalling = Animator.StringToHash("isFalling");
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -117,6 +118,18 @@ namespace Character
             
             Cursor.lockState = CursorLockMode.Locked;
             Cursor.visible = false;
+        }
+
+        private void Update()
+        {
+            if (!_character.IsGrounded)
+            {
+                _animator.SetBool(IsFalling, true);
+            }
+            else if (_character.IsGrounded && _animator.GetBool(IsFalling))
+            {
+                _animator.SetBool(IsFalling, false);
+            }
         }
     }
 }

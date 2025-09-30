@@ -21,8 +21,8 @@ namespace Character
         [SerializeField] private float movementForceFactor = 10f;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
-        
-        public enum MovementState
+
+        private enum MovementState
         {
             Walk,
             Sprint,
@@ -37,12 +37,12 @@ namespace Character
         private Rigidbody _rigidbody;
         private Vector2 _inputVector;
         private Vector3 _desiredDirection;
-        private bool _isGrounded;
         private bool _canJump = true;
         private bool _jumpRequested;
-        private bool _sprintRequested;
 
-        public bool SprintRequested => _sprintRequested;
+        public bool SprintRequested { get; private set; }
+
+        public bool IsGrounded { get; private set; }
 
         private const float CharacterHeight = 1f;
 
@@ -69,7 +69,7 @@ namespace Character
 
         public void RequestJump()
         {
-            if (_isGrounded && _canJump)
+            if (IsGrounded && _canJump)
             {
                 _jumpRequested = true;
             }
@@ -77,24 +77,24 @@ namespace Character
 
         public void RequestSprint()
         {
-            _sprintRequested = !_sprintRequested;
-            Debug.Log("Sprint requested: " + _sprintRequested);
+            SprintRequested = !SprintRequested;
+            // Debug.Log("Sprint requested: " + _sprintRequested);
             
         }
 
-        private void IsGrounded()
+        private void CheckIsGrounded()
         {
-            _isGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.3f,  groundLayerMask);
+            IsGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.3f,  groundLayerMask);
         }
         
         private void StateHandler()
         {
-            if (_isGrounded && _sprintRequested)
+            if (IsGrounded && SprintRequested)
             {
                 _movementState = MovementState.Sprint;
                 _movementSpeed = sprintSpeed;
             }
-            else if (_isGrounded)
+            else if (IsGrounded)
             {
                 _movementState = MovementState.Walk;
                 _movementSpeed = walkSpeed;
@@ -133,11 +133,11 @@ namespace Character
                 {
                     _rigidbody.AddForce(GetSlopeMoveDirection() * (_movementSpeed * 0.5f * movementForceFactor), ForceMode.Force);
                 }
-                else if (_isGrounded)
+                else if (IsGrounded)
                 {
                     _rigidbody.AddForce(_desiredDirection.normalized * (_movementSpeed * movementForceFactor), ForceMode.Force);
                 }
-                else if (!_isGrounded)
+                else if (!IsGrounded)
                 {
                     _rigidbody.AddForce(_desiredDirection.normalized * (_movementSpeed * movementForceFactor * airMultiplier), ForceMode.Force);
                 }
@@ -183,9 +183,9 @@ namespace Character
 
         private void Update()
         {
-            IsGrounded();
+            CheckIsGrounded();
 
-            if (_isGrounded)
+            if (IsGrounded)
             {
                 _rigidbody.drag = groundDrag;
             }
