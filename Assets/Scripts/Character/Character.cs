@@ -29,7 +29,7 @@ namespace Character
         public int CurrentComboStep => _currentComboStep;
         public bool SprintRequested { get; private set; }
         public bool IsGrounded { get; private set; }
-        public bool IsAttacking { get; private set; }
+        public bool IsAttacking { get; set; }
         
         private RaycastHit _slopeHit;
         
@@ -103,14 +103,19 @@ namespace Character
 
         public void RequestAttack()
         {
-            _currentComboStep++;
-            
-            if (_currentComboStep > 3)
+            if (!IsAttacking)
             {
-                _currentComboStep = 1;
-            }
+                _currentComboStep++;
             
-            Debug.Log("Combo Step: " + _currentComboStep);
+                if (_currentComboStep > 3)
+                {
+                    _currentComboStep = 1;
+                }
+            
+                Debug.Log("Combo Step: " + _currentComboStep);
+                
+                IsAttacking = true;
+            }
         }
 
         private void CheckIsGrounded()

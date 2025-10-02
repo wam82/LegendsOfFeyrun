@@ -11,6 +11,7 @@ namespace Character
         private static readonly int IsFalling = Animator.StringToHash("isFalling");
         private static readonly int IsShielding = Animator.StringToHash("isShielding");
         private static readonly int AttackValue = Animator.StringToHash("attackValue");
+        private static readonly int IsAttacking = Animator.StringToHash("isAttacking");
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -53,9 +54,10 @@ namespace Character
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.performed && !_animator.GetBool(IsAttacking))
             {
                 _character.RequestAttack();
+                _animator.SetBool(IsAttacking, _character.IsAttacking);
             }
         }
 
@@ -136,6 +138,27 @@ namespace Character
 
         private void Update()
         {
+            AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
+            if (stateInfo.IsName("Attack01") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
+            {
+                Debug.LogWarning("Attack01 Completed");
+                _character.IsAttacking = false;
+                _animator.SetBool(IsAttacking, _character.IsAttacking);
+            }
+            else if (stateInfo.IsName("Attack02") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
+            {
+                Debug.LogWarning("Attack02 Completed");
+                _character.IsAttacking = false;
+                _animator.SetBool(IsAttacking, _character.IsAttacking);
+            }
+            else if (stateInfo.IsName("Attack03") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
+            {
+                Debug.LogWarning("Attack03 Completed");
+                _character.IsAttacking = false;
+                _animator.SetBool(IsAttacking, _character.IsAttacking);
+            }
+            
+            
             if (!_character.IsGrounded)
             {
                 _animator.SetBool(IsFalling, true);
