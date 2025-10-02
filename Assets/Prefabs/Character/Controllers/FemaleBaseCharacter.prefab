@@ -60,7 +60,7 @@ MonoBehaviour:
   groundDrag: 3
   maxSlopeAngle: 40
   comboCooldown: 10
-  attackCooldown: 0.5
+  attackCooldown: 0.1
   movementForceFactor: 10
   cameraTransform: {fileID: 0}
   groundLayerMask:
@@ -207,6 +207,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 637a186c-2c8f-45f7-9a55-86d87b221bce
     m_ActionName: Game/Interact[/XboxGamepadMacOSWireless/buttonNorth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6050518998829041047}
+        m_TargetAssemblyTypeName: Character.PlayerController, Assembly-CSharp
+        m_MethodName: OnChargedAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 830d426d-2a69-4b69-a59e-635036f497de
+    m_ActionName: Game/ChargedAttack[/XboxGamepadMacOSWireless/buttonEast]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Game
@@ -356,6 +372,68 @@ PrefabInstance:
 Transform:
   m_CorrespondingSourceObject: {fileID: 5820153593837821349, guid: ac86f8ddca59acb4184d3eb42067bafa, type: 3}
   m_PrefabInstance: {fileID: 2156364385692448994}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1001 &3113082854351965511
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 4949130585696076894}
+    m_Modifications:
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5610884078883986163, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+      propertyPath: m_Name
+      value: Sword
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+--- !u!4 &7900978027670277390 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5086268201243115593, guid: 9fbe61d1f4bc091439f25f985dd189a5, type: 3}
+  m_PrefabInstance: {fileID: 3113082854351965511}
   m_PrefabAsset: {fileID: 0}
 --- !u!1001 &4204446140097741849
 PrefabInstance:
@@ -545,6 +623,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3862941319590526356, guid: 089b636885d0340c4acf3cf41e12b29a, type: 3}
       insertIndex: -1
       addedObject: {fileID: 269970287502726902}
+    - targetCorrespondingSourceObject: {fileID: 3862941319590526356, guid: 089b636885d0340c4acf3cf41e12b29a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 7900978027670277390}
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 089b636885d0340c4acf3cf41e12b29a, type: 3}
 --- !u!4 &4949130585696076894 stripped

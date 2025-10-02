@@ -12,6 +12,7 @@ namespace Character
         private static readonly int IsShielding = Animator.StringToHash("isShielding");
         private static readonly int AttackValue = Animator.StringToHash("attackValue");
         private static readonly int IsAttacking = Animator.StringToHash("isAttacking");
+        private static readonly int IsChargeAttacking = Animator.StringToHash("isChargeAttacking");
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -66,6 +67,19 @@ namespace Character
                 }
                 _character.RequestAttack();
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
+            }
+        }
+
+        public void OnChargedAttack(InputAction.CallbackContext context)
+        {
+            if (context.performed)
+            {
+                _animator.SetBool(IsChargeAttacking, true);
+            }
+
+            if (context.canceled)
+            {
+                _animator.SetBool(IsChargeAttacking, false);
             }
         }
 

@@ -77,6 +77,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "ChargedAttack",
+                    "type": "Button",
+                    "id": "830d426d-2a69-4b69-a59e-635036f497de",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "Hold",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -247,17 +256,6 @@
                 },
                 {
                     "name": "",
-                    "id": "6599c85a-b074-4fb1-93a1-7ca299a2b4b9",
-                    "path": "<Gamepad>/buttonEast",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": ";ControllerScheme",
-                    "action": "Shield",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
                     "id": "20ab401f-6c49-45fc-9dda-2c418501d09f",
                     "path": "<Gamepad>/leftTrigger",
                     "interactions": "",
@@ -308,6 +306,17 @@
                     "processors": "",
                     "groups": ";ControllerScheme",
                     "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "b238f581-7485-4230-a5ad-a6a6d6e65da0",
+                    "path": "<Gamepad>/buttonEast",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";ControllerScheme",
+                    "action": "ChargedAttack",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
