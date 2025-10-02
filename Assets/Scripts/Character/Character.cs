@@ -136,6 +136,10 @@ namespace Character
                 // _movementState = MovementState.Shield;
                 _movementSpeed = shieldSpeed;
             }
+            else if (IsGrounded && IsAttacking)
+            {
+                _movementSpeed = 0f;
+            }
             else if (IsGrounded)
             {
                 // _movementState = MovementState.Walk;

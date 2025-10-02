@@ -57,11 +57,13 @@ namespace Character
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            // Insert attack cooldown so you can void all inputs while animations plays and completes.
-            // Currently, spamming causes increments during animation transitions.
-            // As such, by spamming, you can get from stage 1 to stage 3 directly, skipping step 2.
-            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack)
+            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding))
             {
+                if (_animator.GetBool(IsSprinting))
+                {
+                    _character.RequestSprint();
+                    _animator.SetBool(IsSprinting, _character.SprintRequested);
+                }
                 _character.RequestAttack();
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
             }
