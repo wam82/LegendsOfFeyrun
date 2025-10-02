@@ -15,6 +15,9 @@ namespace Character
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
+
+        private bool _canAttack;
+        private float _lastAttackTime;
         
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -54,7 +57,10 @@ namespace Character
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_animator.GetBool(IsAttacking))
+            // Insert attack cooldown so you can void all inputs while animations plays and completes.
+            // Currently, spamming causes increments during animation transitions.
+            // As such, by spamming, you can get from stage 1 to stage 3 directly, skipping step 2.
+            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack)
             {
                 _character.RequestAttack();
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
@@ -144,20 +150,30 @@ namespace Character
                 Debug.LogWarning("Attack01 Completed");
                 _character.IsAttacking = false;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _lastAttackTime =  Time.time;
+                _canAttack = false;
             }
             else if (stateInfo.IsName("Attack02") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
                 Debug.LogWarning("Attack02 Completed");
                 _character.IsAttacking = false;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _lastAttackTime =  Time.time;
+                _canAttack = false;
             }
             else if (stateInfo.IsName("Attack03") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
                 Debug.LogWarning("Attack03 Completed");
                 _character.IsAttacking = false;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _lastAttackTime =  Time.time;
+                _canAttack = false;
             }
-            
+
+            if (Time.time - _lastAttackTime > _character.attackCooldown)
+            {
+                _canAttack = true;
+            }
             
             if (!_character.IsGrounded)
             {

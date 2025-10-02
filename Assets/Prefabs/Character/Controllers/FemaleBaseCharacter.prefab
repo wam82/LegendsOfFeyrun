@@ -60,6 +60,7 @@ MonoBehaviour:
   groundDrag: 3
   maxSlopeAngle: 40
   comboCooldown: 10
+  attackCooldown: 0.5
   movementForceFactor: 10
   cameraTransform: {fileID: 0}
   groundLayerMask:
@@ -294,7 +295,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4fce88d98e40c466d8bd878f8b3b34cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  comboResetTime: 1
 --- !u!1001 &2156364385692448994
 PrefabInstance:
   m_ObjectHideFlags: 0

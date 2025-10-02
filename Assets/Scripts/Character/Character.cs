@@ -20,6 +20,7 @@ namespace Character
 
         [Header("Combat Attributes")] 
         [SerializeField] private float comboCooldown;
+        [SerializeField] public float attackCooldown;
         
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
