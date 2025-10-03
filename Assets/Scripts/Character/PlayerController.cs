@@ -163,7 +163,7 @@ namespace Character
             AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("Attack01") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
-                Debug.LogWarning("Attack01 Completed");
+                // Debug.LogWarning("Attack01 Completed");
                 _character.IsAttacking = false;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
                 _lastAttackTime =  Time.time;
@@ -171,7 +171,7 @@ namespace Character
             }
             else if (stateInfo.IsName("Attack02") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
-                Debug.LogWarning("Attack02 Completed");
+                // Debug.LogWarning("Attack02 Completed");
                 _character.IsAttacking = false;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
                 _lastAttackTime =  Time.time;
@@ -179,7 +179,7 @@ namespace Character
             }
             else if (stateInfo.IsName("Attack03") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
-                Debug.LogWarning("Attack03 Completed");
+                // Debug.LogWarning("Attack03 Completed");
                 _character.IsAttacking = false;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
                 _lastAttackTime =  Time.time;

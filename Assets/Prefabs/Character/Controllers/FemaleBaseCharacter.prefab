@@ -59,7 +59,7 @@ MonoBehaviour:
   airMultiplier: 0.4
   groundDrag: 3
   maxSlopeAngle: 40
-  comboCooldown: 10
+  comboTimer: 3
   attackCooldown: 0.1
   movementForceFactor: 10
   cameraTransform: {fileID: 0}

@@ -19,7 +19,7 @@ namespace Character
         [SerializeField] private float maxSlopeAngle;
 
         [Header("Combat Attributes")] 
-        [SerializeField] private float comboCooldown;
+        [SerializeField] private float comboTimer;
         [SerializeField] public float attackCooldown;
         
         [Header("Character Components")] 
@@ -107,15 +107,17 @@ namespace Character
             if (!IsAttacking)
             {
                 _currentComboStep++;
-            
+                
+                Debug.Log("Combo Step: " + _currentComboStep);
+
+                _comboStarted = true;
+                IsAttacking = true;
+                _lastAttackTime = Time.time;
+                
                 if (_currentComboStep > 3)
                 {
                     _currentComboStep = 1;
                 }
-            
-                Debug.Log("Combo Step: " + _currentComboStep);
-                
-                IsAttacking = true;
             }
         }
 
@@ -229,6 +231,13 @@ namespace Character
 
         private void Update()
         {
+            if (_comboStarted && (Time.time - _lastAttackTime > comboTimer || _currentComboStep == 3))
+            {
+                _currentComboStep = 0;
+                _comboStarted = false;
+                // Debug.LogWarning("Reset combo");
+            }
+            
             CheckIsGrounded();
 
             if (IsGrounded)

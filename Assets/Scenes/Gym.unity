@@ -859,19 +859,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7602316704090055017, guid: 8d036397ed9244d3b8353be918b934c3, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0.9958168
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7602316704090055017, guid: 8d036397ed9244d3b8353be918b934c3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0.09137221
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7602316704090055017, guid: 8d036397ed9244d3b8353be918b934c3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0.000000007320968
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7602316704090055017, guid: 8d036397ed9244d3b8353be918b934c3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0.0000000013836874
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8637347697950239542, guid: 8d036397ed9244d3b8353be918b934c3, type: 3}
       propertyPath: m_LocalPosition.x
@@ -937,6 +937,10 @@ PrefabInstance:
     - target: {fileID: 1334691626993673058, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
+      propertyPath: comboTimer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 3110052586170420119, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
       propertyPath: cameraTransform
