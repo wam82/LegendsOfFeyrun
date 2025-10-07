@@ -21,16 +21,21 @@ namespace Character
         [Header("Combat Attributes")] 
         [SerializeField] private float comboTimer;
         [SerializeField] public float attackCooldown;
+        [SerializeField] public float chargedAttackMaxDuration;
+        [SerializeField] public float chargedAttackCooldown;
         
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
 
-        public int CurrentComboStep => _currentComboStep;
+        public int CurrentComboStep { get; private set; } = 0;
+
         public bool SprintRequested { get; private set; }
         public bool IsGrounded { get; private set; }
         public bool IsAttacking { get; set; }
+        
+        public bool ChargedAttackRequested { get; set; }
         
         private RaycastHit _slopeHit;
         
@@ -42,8 +47,6 @@ namespace Character
         private float _lastAttackTime;
         private float _movementSpeed;
         private const float CharacterHeight = 1f;
-
-        private int _currentComboStep = 0;
         
         private bool _canJump = true;
         private bool _jumpRequested;
@@ -106,17 +109,17 @@ namespace Character
         {
             if (!IsAttacking)
             {
-                _currentComboStep++;
+                CurrentComboStep++;
                 
-                Debug.Log("Combo Step: " + _currentComboStep);
+                Debug.Log("Combo Step: " + CurrentComboStep);
 
                 _comboStarted = true;
                 IsAttacking = true;
                 _lastAttackTime = Time.time;
                 
-                if (_currentComboStep > 3)
+                if (CurrentComboStep > 3)
                 {
-                    _currentComboStep = 1;
+                    CurrentComboStep = 1;
                 }
             }
         }
@@ -126,7 +129,7 @@ namespace Character
             IsGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.3f,  groundLayerMask);
         }
         
-        private void StateHandler()
+        private void SpeedHandler()
         {
             if (IsGrounded && SprintRequested)
             {
@@ -231,9 +234,9 @@ namespace Character
 
         private void Update()
         {
-            if (_comboStarted && (Time.time - _lastAttackTime > comboTimer || _currentComboStep == 3))
+            if (_comboStarted && (Time.time - _lastAttackTime > comboTimer || CurrentComboStep == 3))
             {
-                _currentComboStep = 0;
+                CurrentComboStep = 0;
                 _comboStarted = false;
                 // Debug.LogWarning("Reset combo");
             }
@@ -259,7 +262,7 @@ namespace Character
                 StartCoroutine(ResetJumpCoroutine());
             }
             
-            StateHandler();
+            SpeedHandler();
         }
 
         private void FixedUpdate()

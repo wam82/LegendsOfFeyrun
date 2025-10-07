@@ -19,6 +19,7 @@ namespace Character
 
         private bool _canAttack;
         private float _lastAttackTime;
+        private float _lastChargedAttackStart;
         
         public void OnMove(InputAction.CallbackContext context)
         {
@@ -72,14 +73,17 @@ namespace Character
 
         public void OnChargedAttack(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.performed && !_character.ChargedAttackRequested)
             {
-                _animator.SetBool(IsChargeAttacking, true);
+                _character.ChargedAttackRequested = true;
+                _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
+                _lastChargedAttackStart = Time.time;
             }
 
-            if (context.canceled)
+            if (context.canceled && _character.ChargedAttackRequested)
             {
-                _animator.SetBool(IsChargeAttacking, false);
+                _character.ChargedAttackRequested = false;
+                _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
             }
         }
 
@@ -160,6 +164,16 @@ namespace Character
 
         private void Update()
         {
+            if (_character.ChargedAttackRequested)
+            {
+                if (Time.time - _lastChargedAttackStart > _character.chargedAttackMaxDuration)
+                {
+                    _lastChargedAttackStart = 0;
+                    _character.ChargedAttackRequested = false;
+                    _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
+                }
+            }
+            
             AnimatorStateInfo stateInfo = _animator.GetCurrentAnimatorStateInfo(0);
             if (stateInfo.IsName("Attack01") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
