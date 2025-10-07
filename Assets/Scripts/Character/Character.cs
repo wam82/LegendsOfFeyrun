@@ -34,8 +34,8 @@ namespace Character
         public bool SprintRequested { get; private set; }
         public bool IsGrounded { get; private set; }
         public bool IsAttacking { get; set; }
-        
         public bool ChargedAttackRequested { get; set; }
+        public bool IsDizzy { get; set; } = false;
         
         private RaycastHit _slopeHit;
         
@@ -243,6 +243,11 @@ namespace Character
             
             CheckIsGrounded();
 
+            if (IsDizzy)
+            {
+                return;
+            }
+            
             if (IsGrounded)
             {
                 _rigidbody.drag = groundDrag;
@@ -267,6 +272,11 @@ namespace Character
 
         private void FixedUpdate()
         {
+            if (IsDizzy)
+            {
+                return;
+            }
+            
             MoveCharacter();
         }
     }

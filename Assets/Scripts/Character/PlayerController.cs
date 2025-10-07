@@ -13,6 +13,7 @@ namespace Character
         private static readonly int AttackValue = Animator.StringToHash("attackValue");
         private static readonly int IsAttacking = Animator.StringToHash("isAttacking");
         private static readonly int IsChargeAttacking = Animator.StringToHash("isChargeAttacking");
+        private static readonly int IsDizzy = Animator.StringToHash("isDizzy");
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -20,10 +21,11 @@ namespace Character
         private bool _canAttack;
         private float _lastAttackTime;
         private float _lastChargedAttackStart;
+        private float _lastChargedAttackTime;
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            if (_character != null)
+            if (!_character.IsDizzy)
             {
                 Vector2 movement = context.ReadValue<Vector2>();
                 _character.SetInputVector(movement);
@@ -35,11 +37,16 @@ namespace Character
                     _animator.SetBool(IsSprinting, _character.SprintRequested);
                 }
             }
+
+            if (_character.IsDizzy)
+            {
+                _character.SetInputVector(new Vector2(0,0));
+            }
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (_character != null && context.performed)
+            if (context.performed && !_character.IsDizzy)
             {
                 _character.RequestJump();
             }
@@ -47,7 +54,7 @@ namespace Character
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            if (_character != null && context.performed)
+            if (context.performed && !_character.IsDizzy)
             {
                 if (_animator.GetBool(IsWalking) && !_animator.GetBool(IsShielding))
                 {
@@ -59,7 +66,7 @@ namespace Character
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding))
+            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) && !_character.IsDizzy)
             {
                 if (_animator.GetBool(IsSprinting))
                 {
@@ -73,14 +80,14 @@ namespace Character
 
         public void OnChargedAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.ChargedAttackRequested)
+            if (context.performed && !_character.IsDizzy)
             {
                 _character.ChargedAttackRequested = true;
                 _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
                 _lastChargedAttackStart = Time.time;
             }
 
-            if (context.canceled && _character.ChargedAttackRequested)
+            if (context.canceled)
             {
                 _character.ChargedAttackRequested = false;
                 _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
@@ -89,7 +96,7 @@ namespace Character
 
         public void OnShield(InputAction.CallbackContext context)
         {
-            if (context.performed)
+            if (context.performed && !_character.IsDizzy)
             {
                 _animator.SetBool(IsShielding, true); 
                 _character.RequestShield(_animator.GetBool(IsShielding));
@@ -100,7 +107,7 @@ namespace Character
                 }
             }
 
-            if (context.canceled)
+            if (context.canceled && !_character.IsDizzy)
             {
                 _animator.SetBool(IsShielding, false);
                 _character.RequestShield(_animator.GetBool(IsShielding));
@@ -171,6 +178,25 @@ namespace Character
                     _lastChargedAttackStart = 0;
                     _character.ChargedAttackRequested = false;
                     _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
+                    
+                    _character.IsDizzy = true;
+                    _animator.SetBool(IsDizzy, _character.IsDizzy);
+                    _lastChargedAttackTime = Time.time;
+                    
+                    _animator.SetBool(IsWalking, false);
+                    _animator.SetBool(IsSprinting, false);
+                    _animator.SetBool(IsFalling, false);
+                    _animator.SetBool(IsShielding, false);
+                }
+            }
+
+            if (_character.IsDizzy)
+            {
+                if (Time.time - _lastChargedAttackTime > _character.chargedAttackCooldown)
+                {
+                    _lastChargedAttackTime = 0;
+                    _character.IsDizzy = false;
+                    _animator.SetBool(IsDizzy, _character.IsDizzy);
                 }
             }
             
