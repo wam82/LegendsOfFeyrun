@@ -1,6 +1,4 @@
-using System;
 using System.Collections;
-using TMPro;
 using UnityEngine;
 
 namespace Character
@@ -29,13 +27,13 @@ namespace Character
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
 
-        public int CurrentComboStep { get; private set; } = 0;
+        public int CurrentComboStep { get; private set; }
 
         public bool SprintRequested { get; private set; }
         public bool IsGrounded { get; private set; }
         public bool IsAttacking { get; set; }
         public bool ChargedAttackRequested { get; set; }
-        public bool IsDizzy { get; set; } = false;
+        public bool IsDizzy { get; set; }
         
         private RaycastHit _slopeHit;
         
