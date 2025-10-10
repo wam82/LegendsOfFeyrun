@@ -1,10 +1,10 @@
 using UnityEngine;
 
-namespace Enemies.MovementBehaviours
+namespace NPC.MovementBehaviours
 {
     public class FaceDirection : AIMovement
     {
-        public override SteeringOutput GetSteering(SlimeAI agent)
+        public override SteeringOutput GetSteering(AIAgent agent)
         {
             SteeringOutput output = base.GetSteering(agent);
             Quaternion angular = output.Angular;

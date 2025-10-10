@@ -10,9 +10,6 @@ GameObject:
   m_Component:
   - component: {fileID: 3282324148005834747}
   - component: {fileID: 1257397153474318229}
-  - component: {fileID: 1298485965615217589}
-  - component: {fileID: 6074816633680702593}
-  - component: {fileID: 6747231864464076083}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -57,50 +54,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &1298485965615217589
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853114080176930074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56a454c3c03c74d7ab9d9f7b1ad66333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  maxSpeed: 2
-  trackedTarget: {fileID: 0}
-  targetPosition: {x: 0, y: 0, z: 0}
---- !u!114 &6074816633680702593
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853114080176930074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ab1aa9c4cdad4ebe8942226a4ce19601, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
---- !u!114 &6747231864464076083
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8853114080176930074}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 588fc2ce5dbb49adad0039c471c549da, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  wanderAngle: 90
-  wanderInterval: 3
 --- !u!1001 &1562515841444034412
 PrefabInstance:
   m_ObjectHideFlags: 0

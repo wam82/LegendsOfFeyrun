@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemies.MovementBehaviours
+namespace NPC.MovementBehaviours
 {
     public struct SteeringOutput
     {

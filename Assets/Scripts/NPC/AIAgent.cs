@@ -1,10 +1,9 @@
-using System;
-using Enemies.MovementBehaviours;
+using NPC.MovementBehaviours;
 using UnityEngine;
 
-namespace Enemies
+namespace NPC
 {
-    public class SlimeAI : MonoBehaviour
+    public class AIAgent : MonoBehaviour
     {
         public bool debug;
         public float maxSpeed;

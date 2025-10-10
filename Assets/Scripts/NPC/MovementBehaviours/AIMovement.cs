@@ -1,17 +1,17 @@
 using UnityEngine;
 
-namespace Enemies.MovementBehaviours
+namespace NPC.MovementBehaviours
 {
     public abstract class AIMovement : MonoBehaviour
     {
         public bool debug;
 
-        public virtual SteeringOutput GetKinematic(SlimeAI agent)
+        public virtual SteeringOutput GetKinematic(AIAgent agent)
         {
             return new SteeringOutput { Angular = agent.transform.rotation };
         }
 
-        public virtual SteeringOutput GetSteering(SlimeAI agent)
+        public virtual SteeringOutput GetSteering(AIAgent agent)
         {
             return new SteeringOutput { Angular = Quaternion.identity };
         }

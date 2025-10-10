@@ -1,6 +1,6 @@
 using UnityEngine;
 
-namespace Enemies.MovementBehaviours
+namespace NPC.MovementBehaviours
 {
     public class Wander : AIMovement
     {
@@ -12,7 +12,7 @@ namespace Enemies.MovementBehaviours
         private Vector3 lastDirection;
         private Vector3 lastMovement;
 
-        public override SteeringOutput GetSteering(SlimeAI agent)
+        public override SteeringOutput GetSteering(AIAgent agent)
         {
             SteeringOutput output = base.GetSteering(agent);
             wanderTimer += Time.deltaTime;
