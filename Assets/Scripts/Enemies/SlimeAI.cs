@@ -1,0 +1,54 @@
+using System;
+using Enemies.MovementBehaviours;
+using UnityEngine;
+
+namespace Enemies
+{
+    public class SlimeAI : MonoBehaviour
+    {
+        public bool debug;
+        public float maxSpeed;
+        public Transform trackedTarget;
+        [SerializeField] private Vector3 targetPosition;
+        public Vector3 TargetPosition
+        {
+            get => trackedTarget != null ? trackedTarget.position : targetPosition;
+        }
+        public Vector3 Velocity { get; set; }
+        
+
+        private void Move()
+        {
+            GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation);
+            Velocity += steeringForceSum * Time.deltaTime;
+            Velocity = Vector3.ClampMagnitude(Velocity, maxSpeed);
+            transform.position += Velocity * Time.deltaTime;
+            transform.rotation *= rotation;
+        }
+
+        private void GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation)
+        {
+            steeringForceSum = Vector3.zero;
+            rotation = Quaternion.identity;
+            
+            AIMovement[] movements = GetComponents<AIMovement>();
+            
+            foreach (AIMovement movement in movements)
+            {
+                steeringForceSum += movement.GetSteering(this).Linear;
+                rotation *= movement.GetSteering(this).Angular;
+            }
+        }
+
+        private void Update()
+        {
+            if (debug)
+            {
+                Debug.DrawRay(transform.position, Velocity, Color.green);
+            }
+
+            Move();
+            // Debug.Log(Velocity.magnitude);
+        }
+    }
+}
