@@ -717,11 +717,6 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 2601253079486128012, guid: 8d036397ed9244d3b8353be918b934c3, type: 3}
   m_PrefabInstance: {fileID: 6947439667170679970}
   m_PrefabAsset: {fileID: 0}
---- !u!4 &1368378011 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 3939350140232130559, guid: 09cdb593fa8984fb38259db085f8d35a, type: 3}
-  m_PrefabInstance: {fileID: 5435899404126175177}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1488416628
 GameObject:
   m_ObjectHideFlags: 0
@@ -731,7 +726,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1488416632}
-  - component: {fileID: 1488416631}
   - component: {fileID: 1488416630}
   - component: {fileID: 1488416633}
   m_Layer: 0
@@ -754,22 +748,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
---- !u!114 &1488416631
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1488416628}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 56a454c3c03c74d7ab9d9f7b1ad66333, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  debug: 0
-  maxSpeed: 2
-  trackedTarget: {fileID: 1368378011}
-  targetPosition: {x: 0, y: 0, z: 0}
 --- !u!4 &1488416632
 Transform:
   m_ObjectHideFlags: 0
@@ -1186,10 +1164,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 1298485965615217589, guid: 8de1c044003855c468008595d6f30b62, type: 3}
-      propertyPath: trackedTarget
-      value: 
-      objectReference: {fileID: 1368378011}
     - target: {fileID: 3282324148005834747, guid: 8de1c044003855c468008595d6f30b62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.75
