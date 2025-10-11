@@ -118,8 +118,9 @@ namespace Enemy
             }
         }
 
-        private void Start()
+        protected override void Start()
         {
+            base.Start();
             StartCoroutine(BaseCycle());
         }
 
@@ -132,7 +133,7 @@ namespace Enemy
 
             if (currentState == SlimeState.Wandering)
             {
-                movements = movements.Where(m => m is Wander || m is FaceDirection).ToArray();
+                movements = movements.Where(m => m is Wander || m is FaceDirection || m is Avoid).ToArray();
             }
             
             foreach (AIMovement movement in movements)

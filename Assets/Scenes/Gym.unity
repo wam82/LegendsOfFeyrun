@@ -785,6 +785,26 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 1334691626993673058, guid: 16b624a37a4864894a579311c19cc4c8, type: 3}
   m_PrefabInstance: {fileID: 9026834870733845190}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &2083759634 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 8853114080176930074, guid: 8de1c044003855c468008595d6f30b62, type: 3}
+  m_PrefabInstance: {fileID: 8907800508459765416}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2083759643
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2083759634}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 730bc95d90d64c828da0ee38dec3a356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+  avoidanceRadius: 3
+  avoidanceFactor: 5
 --- !u!1001 &3873852359180950166
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -837,6 +857,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: CharacterScale
       objectReference: {fileID: 0}
+    - target: {fileID: 6737456603556080866, guid: 9c11778180d174caeb67a33ab8feca73, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -853,6 +877,10 @@ PrefabInstance:
     - target: {fileID: 3722884098861832619, guid: 09cdb593fa8984fb38259db085f8d35a, type: 3}
       propertyPath: m_Name
       value: Cube (1m)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3722884098861832619, guid: 09cdb593fa8984fb38259db085f8d35a, type: 3}
+      propertyPath: m_TagString
+      value: Obstacle
       objectReference: {fileID: 0}
     - target: {fileID: 3939350140232130559, guid: 09cdb593fa8984fb38259db085f8d35a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1211,7 +1239,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8853114080176930074, guid: 8de1c044003855c468008595d6f30b62, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2083759643}
   m_SourcePrefab: {fileID: 100100000, guid: 8de1c044003855c468008595d6f30b62, type: 3}
 --- !u!1001 &9026834870733845190
 PrefabInstance:

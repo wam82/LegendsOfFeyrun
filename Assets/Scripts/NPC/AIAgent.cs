@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using NPC.MovementBehaviours;
 using UnityEngine;
 
@@ -9,13 +10,14 @@ namespace NPC
         public float maxSpeed;
         public Transform trackedTarget;
         private Vector3 _targetPosition;
+        public List<GameObject> obstacles =  new();
         public Vector3 TargetPosition
         {
             get => trackedTarget != null ? trackedTarget.position : _targetPosition;
         }
         public Vector3 Velocity { get; set; }
         
-
+        
         protected virtual void Move()
         {
             GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation);
@@ -37,6 +39,11 @@ namespace NPC
                 steeringForceSum += movement.GetSteering(this).Linear;
                 rotation *= movement.GetSteering(this).Angular;
             }
+        }
+
+        protected virtual void Start()
+        {
+            obstacles.AddRange(GameObject.FindGameObjectsWithTag("Obstacle"));
         }
 
         protected virtual void Update()
