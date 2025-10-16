@@ -34,16 +34,19 @@ namespace Enemy
         [SerializeField] private SlimeState currentState;
         
         [Header("Slime Attributes")]
+        [SerializeField] private float walkSpeed;
+        [SerializeField] private float sneakSpeed;
+        [SerializeField] private float runSpeed;
         [SerializeField] private float detectionRadius;
         [SerializeField] private float attackRadius;
         [SerializeField] private float attackCooldown;
-        [SerializeField] private float walkSpeed;
-        [SerializeField] private float runSpeed;
+        
 
         [Header("Slime Behaviour Attributes")] 
         [SerializeField] private float sleepDuration;
         [SerializeField] private float awakeningDuration;
         [SerializeField] private float searchingDuration;
+        [SerializeField] private float sensingDuration;
         [SerializeField] [Min(0)] private float minimumWanderDuration;
         [SerializeField] [Min(0)] private float maximumWanderDuration;
         
@@ -64,7 +67,7 @@ namespace Enemy
             Searching,
             Running,
             Taunting,
-            Seeking,
+            Sneaking,
             Attacking
         }
 
@@ -137,7 +140,7 @@ namespace Enemy
             currentState = SlimeState.Sensing;
             ResetAllAnimatorBooleans();
             _animator.SetBool(IsSensing, true);
-            yield return new WaitForSeconds(1f);
+            yield return new WaitForSeconds(sensingDuration);
         }
 
         private IEnumerator ChaseBehaviour1()
@@ -181,6 +184,8 @@ namespace Enemy
                 }
                 else
                 {
+                    moveSpeed = 0f;
+                    Move();
                     ResetAllAnimatorBooleans();
                     currentState = SlimeState.Attacking;
                     if (_canAttack)
@@ -266,7 +271,7 @@ namespace Enemy
 
             if (currentState == SlimeState.Attacking)
             {
-                movements = movements.Where(m => m is FaceDirection).ToArray();
+                movements = movements.Where(m => m is LookAt).ToArray();
             }
             
             foreach (AIMovement movement in movements)

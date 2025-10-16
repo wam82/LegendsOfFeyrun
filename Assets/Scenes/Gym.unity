@@ -1168,10 +1168,6 @@ PrefabInstance:
       propertyPath: trackedTarget
       value: 
       objectReference: {fileID: 2064517176}
-    - target: {fileID: 952329771672064894, guid: 8de1c044003855c468008595d6f30b62, type: 3}
-      propertyPath: attackCooldown
-      value: 2
-      objectReference: {fileID: 0}
     - target: {fileID: 3282324148005834747, guid: 8de1c044003855c468008595d6f30b62, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0.75

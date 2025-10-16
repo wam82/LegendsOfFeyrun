@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 3077503714895284825}
   - component: {fileID: 595885739453888073}
   - component: {fileID: 8976721858540472832}
+  - component: {fileID: 6996283673546568288}
   m_Layer: 0
   m_Name: Slime
   m_TagString: Enemy
@@ -76,13 +77,16 @@ MonoBehaviour:
   trackedTarget: {fileID: 0}
   obstacles: []
   currentState: 0
+  walkSpeed: 2
+  sneakSpeed: 2.5
+  runSpeed: 3
   detectionRadius: 5
   attackRadius: 2
-  walkSpeed: 2
-  runSpeed: 3
+  attackCooldown: 2
   sleepDuration: 3
   awakeningDuration: 1
   searchingDuration: 2
+  sensingDuration: 2
   minimumWanderDuration: 4
   maximumWanderDuration: 7
 --- !u!114 &4151521429686508637
@@ -138,6 +142,19 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 34585451f505478d85c4b6b97103ee89, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  debug: 0
+--- !u!114 &6996283673546568288
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853114080176930074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 98137e6340b04e38913aed447851758b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0

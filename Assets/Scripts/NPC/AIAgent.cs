@@ -11,11 +11,8 @@ namespace NPC
         public Transform trackedTarget;
         private Vector3 _targetPosition;
         public List<GameObject> obstacles =  new();
-        public Vector3 TargetPosition
-        {
-            get => trackedTarget != null ? trackedTarget.position : _targetPosition;
-        }
-        public Vector3 Velocity { get; set; }
+        public Vector3 TargetPosition => trackedTarget ? trackedTarget.position : _targetPosition;
+        public Vector3 Velocity { get; private set; }
         
         
         protected virtual void Move()
