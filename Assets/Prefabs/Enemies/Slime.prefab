@@ -81,12 +81,14 @@ MonoBehaviour:
   sneakSpeed: 2.5
   runSpeed: 3
   detectionRadius: 5
-  attackRadius: 2
+  attack1Radius: 2
+  attack2Radius: 1.25
   attackCooldown: 2
   sleepDuration: 3
   awakeningDuration: 1
   searchingDuration: 2
   sensingDuration: 2
+  tauntDuration: 2
   minimumWanderDuration: 4
   maximumWanderDuration: 7
 --- !u!114 &4151521429686508637

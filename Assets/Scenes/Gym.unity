@@ -1165,6 +1165,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 952329771672064894, guid: 8de1c044003855c468008595d6f30b62, type: 3}
+      propertyPath: attack1Radius
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 952329771672064894, guid: 8de1c044003855c468008595d6f30b62, type: 3}
+      propertyPath: attack2Radius
+      value: 1.25
+      objectReference: {fileID: 0}
+    - target: {fileID: 952329771672064894, guid: 8de1c044003855c468008595d6f30b62, type: 3}
+      propertyPath: tauntDuration
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 952329771672064894, guid: 8de1c044003855c468008595d6f30b62, type: 3}
       propertyPath: trackedTarget
       value: 
       objectReference: {fileID: 2064517176}
