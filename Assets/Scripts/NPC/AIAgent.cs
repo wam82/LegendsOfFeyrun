@@ -7,7 +7,7 @@ namespace NPC
     public abstract class AIAgent : MonoBehaviour
     {
         public bool debug;
-        public float maxSpeed;
+        public float moveSpeed;
         public Transform trackedTarget;
         private Vector3 _targetPosition;
         public List<GameObject> obstacles =  new();
@@ -22,7 +22,7 @@ namespace NPC
         {
             GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation);
             Velocity += steeringForceSum * Time.deltaTime;
-            Velocity = Vector3.ClampMagnitude(Velocity, maxSpeed);
+            Velocity = Vector3.ClampMagnitude(Velocity, moveSpeed);
             transform.position += Velocity * Time.deltaTime;
             transform.rotation *= rotation;
         }

@@ -19,7 +19,7 @@ namespace NPC.MovementBehaviours
 
             if (lastDirection == Vector3.zero)
             {
-                lastDirection = agent.transform.forward.normalized * agent.maxSpeed;
+                lastDirection = agent.transform.forward.normalized * agent.moveSpeed;
             }
             
             if (lastMovement == Vector3.zero)
@@ -36,7 +36,7 @@ namespace NPC.MovementBehaviours
                 Vector3 destination = circleCenter + direction.normalized;
 
                 desiredVelocity = destination - agent.transform.position;
-                desiredVelocity = desiredVelocity.normalized * agent.maxSpeed;
+                desiredVelocity = desiredVelocity.normalized * agent.moveSpeed;
 
                 lastMovement = desiredVelocity;
                 lastDirection = direction;

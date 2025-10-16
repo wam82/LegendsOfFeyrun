@@ -10,10 +10,10 @@ namespace Enemy
     public class SlimeAI : AIAgent
     {
         private static readonly int IsSleeping = Animator.StringToHash("isSleeping");
-
         private static readonly int IsSearching = Animator.StringToHash("isSearching");
-
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
+        private static readonly int IsSensing = Animator.StringToHash("isSensing");
+        private static readonly int IsRunning = Animator.StringToHash("isRunning");
         // Sequence:
         // 1. Idle - Sleep
         // 2. Idle - Wake up
@@ -29,8 +29,13 @@ namespace Enemy
         // 8. Taunt
         // 9. Walk towards player
         
+        [SerializeField] private SlimeState currentState;
+        
         [Header("Slime Attributes")]
         [SerializeField] private float detectionRadius;
+        [SerializeField] private float attackRadius;
+        [SerializeField] private float walkSpeed;
+        [SerializeField] private float runSpeed;
 
         [Header("Slime Behaviour Attributes")] 
         [SerializeField] private float sleepDuration;
@@ -40,8 +45,9 @@ namespace Enemy
         [SerializeField] [Min(0)] private float maximumWanderDuration;
         
         private Animator _animator;
+        private Coroutine _activeBehaviour;
         
-        private SlimeState currentState;
+        private bool _inCombat;
         
         private enum SlimeState
         {
@@ -69,8 +75,8 @@ namespace Enemy
         private IEnumerator Sleep()
         {
             currentState = SlimeState.Sleeping;
+            ResetAllAnimatorBooleans();
             _animator.SetBool(IsSleeping, true);
-            _animator.SetBool(IsWalking, false);
             // Debug.Log("Slime sleeping...");
             yield return new WaitForSeconds(sleepDuration);
         }
@@ -78,7 +84,8 @@ namespace Enemy
         private IEnumerator WakeUp()
         {
             currentState = SlimeState.Awakening;
-            _animator.SetBool(IsSleeping, false);
+            ResetAllAnimatorBooleans();
+            // _animator.SetBool(IsSleeping, false);
             // Debug.Log("Slime waking up...");
             yield return new WaitForSeconds(awakeningDuration);
         }
@@ -86,6 +93,7 @@ namespace Enemy
         private IEnumerator Search()
         {
             currentState = SlimeState.Searching;
+            ResetAllAnimatorBooleans();
             _animator.SetBool(IsSearching, true);
             // Debug.Log("Slime searching...");
             yield return new WaitForSeconds(searchingDuration);
@@ -94,19 +102,108 @@ namespace Enemy
         private IEnumerator Wander()
         {
             currentState = SlimeState.Wandering;
+            ResetAllAnimatorBooleans();
             _animator.SetBool(IsWalking, true);
-            _animator.SetBool(IsSearching, false);
             float duration = Random.Range(minimumWanderDuration, maximumWanderDuration);
             // Debug.Log($"Slime wandering for {duration} seconds...");
             float elapsed = 0f;
+            moveSpeed = walkSpeed;
 
             while (elapsed < duration)
             {
                 Move();
+
+                // if (PlayerDetected())
+                // {
+                //     _animator.SetBool(IsWalking, false);
+                //     SwitchCoroutine(ChaseBehaviour1());
+                //     yield break;
+                // }
                 
                 elapsed += Time.deltaTime;
                 yield return null;
             }
+        }
+
+        private IEnumerator Sense()
+        {
+            currentState = SlimeState.Sensing;
+            ResetAllAnimatorBooleans();
+            _animator.SetBool(IsSensing, true);
+            yield return new WaitForSeconds(1f);
+        }
+
+        private IEnumerator ChaseBehaviour1()
+        {
+            yield return Sense();
+            ResetAllAnimatorBooleans();
+            // _animator.SetBool(IsSensing, false);
+            
+            // Combat sequence:
+            // 1. Sense (Done above)
+            // 2. Start combat loop:
+            // Case 1: Player (Tracked Target) is no longer within detection radius --> Exit combat loop, player has escaped
+            // Case 2: Player is outside attack range --> Enter running state, try to close the gap to the player (setting move speed to run speed). 
+            // Case 3: Player is within attack range --> Enter attack state (maybe?), stop movement, play attack animation. Attack logic TBD
+            _inCombat = true;
+            while (_inCombat)
+            {
+                if (!PlayerDetected())
+                {
+                    _inCombat = false;
+                    ResetAllAnimatorBooleans();
+                    _animator.SetBool(IsSleeping, true);
+                    SwitchCoroutine(BaseCycle());
+                    yield break;
+                }
+                
+                float distance = Vector3.Distance(transform.position, trackedTarget.position);
+
+                if (distance > attackRadius)
+                {
+                    currentState = SlimeState.Running;
+                    moveSpeed = runSpeed;
+                    Move();
+                    _animator.SetBool(IsRunning, true);
+                }
+                else
+                {
+                    moveSpeed = 0;
+                    _animator.SetBool(IsRunning, false);
+                    // e.g. yield return Attack();
+                }
+
+                yield return null;
+            }
+        }
+        
+        private bool PlayerDetected()
+        {
+            if (trackedTarget == null)
+            {
+                return false;
+            }
+            float dist = Vector3.Distance(transform.position, trackedTarget.position);
+            return dist < detectionRadius;
+        }
+        
+        private void ResetAllAnimatorBooleans()
+        {
+            _animator.SetBool(IsSleeping, false);
+            _animator.SetBool(IsSearching, false);
+            _animator.SetBool(IsWalking, false);
+            _animator.SetBool(IsSensing, false);
+            _animator.SetBool(IsRunning, false);
+        }
+
+        private void SwitchCoroutine(IEnumerator newBehaviour)
+        {
+            if (_activeBehaviour != null)
+            {
+                StopCoroutine(_activeBehaviour);
+            }
+
+            _activeBehaviour = StartCoroutine(newBehaviour);
         }
 
         private void Awake()
@@ -121,7 +218,7 @@ namespace Enemy
         protected override void Start()
         {
             base.Start();
-            StartCoroutine(BaseCycle());
+            _activeBehaviour = StartCoroutine(BaseCycle());
         }
 
         protected override void GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation)
@@ -135,6 +232,11 @@ namespace Enemy
             {
                 movements = movements.Where(m => m is Wander || m is FaceDirection || m is Avoid).ToArray();
             }
+
+            if (currentState == SlimeState.Running)
+            {
+                movements = movements.Where(m => m is Seek || m is FaceDirection || m is Avoid).ToArray();
+            }
             
             foreach (AIMovement movement in movements)
             {
@@ -145,7 +247,16 @@ namespace Enemy
 
         protected override void Update()
         {
+            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.yellow, detectionRadius);
+            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.red, attackRadius);
             
+            if (!_inCombat && PlayerDetected())
+            {
+                if (currentState == SlimeState.Sleeping || currentState == SlimeState.Wandering)
+                {
+                    SwitchCoroutine(ChaseBehaviour1());
+                }
+            }
         }
     }
 }

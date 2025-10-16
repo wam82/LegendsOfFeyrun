@@ -8,7 +8,7 @@ namespace NPC.MovementBehaviours
         {
             SteeringOutput output = base.GetSteering(agent);
             Vector3 desiredVelocity = agent.TargetPosition - transform.position;
-            desiredVelocity = desiredVelocity.normalized * agent.maxSpeed;
+            desiredVelocity = desiredVelocity.normalized * agent.moveSpeed;
             Vector3 steering = desiredVelocity - agent.Velocity;
             output.Linear = steering;
 
