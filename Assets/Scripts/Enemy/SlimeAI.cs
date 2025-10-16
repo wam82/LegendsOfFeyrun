@@ -203,6 +203,7 @@ namespace Enemy
                 StopCoroutine(_activeBehaviour);
             }
 
+            ResetAllAnimatorBooleans();
             _activeBehaviour = StartCoroutine(newBehaviour);
         }
 
