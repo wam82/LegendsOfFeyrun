@@ -14,7 +14,9 @@ namespace NPC.MovementBehaviours
             }
 
             if (agent.Velocity != Vector3.zero)
+            {
                 angular = Quaternion.LookRotation(agent.Velocity);
+            }
 
             Vector3 from = Vector3.ProjectOnPlane(agent.transform.forward, Vector3.up);
             Vector3 to = angular * Vector3.forward;

@@ -14,6 +14,8 @@ namespace Enemy
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
         private static readonly int IsSensing = Animator.StringToHash("isSensing");
         private static readonly int IsRunning = Animator.StringToHash("isRunning");
+
+        private static readonly int IsAttacking1 = Animator.StringToHash("isAttacking1");
         // Sequence:
         // 1. Idle - Sleep
         // 2. Idle - Wake up
@@ -34,6 +36,7 @@ namespace Enemy
         [Header("Slime Attributes")]
         [SerializeField] private float detectionRadius;
         [SerializeField] private float attackRadius;
+        [SerializeField] private float attackCooldown;
         [SerializeField] private float walkSpeed;
         [SerializeField] private float runSpeed;
 
@@ -48,6 +51,9 @@ namespace Enemy
         private Coroutine _activeBehaviour;
         
         private bool _inCombat;
+        private bool _canAttack = true;
+
+        private float _attack1Time;
         
         private enum SlimeState
         {
@@ -58,7 +64,8 @@ namespace Enemy
             Searching,
             Running,
             Taunting,
-            Seeking
+            Seeking,
+            Attacking
         }
 
         private IEnumerator BaseCycle()
@@ -148,6 +155,11 @@ namespace Enemy
             _inCombat = true;
             while (_inCombat)
             {
+                if (Time.time - _attack1Time > attackCooldown)
+                {
+                    _canAttack =  true;
+                }
+                
                 if (!PlayerDetected())
                 {
                     _inCombat = false;
@@ -161,6 +173,7 @@ namespace Enemy
 
                 if (distance > attackRadius)
                 {
+                    ResetAllAnimatorBooleans();
                     currentState = SlimeState.Running;
                     moveSpeed = runSpeed;
                     Move();
@@ -168,14 +181,25 @@ namespace Enemy
                 }
                 else
                 {
-                    moveSpeed = 0;
-                    _animator.SetBool(IsRunning, false);
-                    // e.g. yield return Attack();
+                    ResetAllAnimatorBooleans();
+                    currentState = SlimeState.Attacking;
+                    if (_canAttack)
+                    {
+                        _animator.SetBool(IsAttacking1, true);
+                        _canAttack = false;
+                        _attack1Time = Time.time;
+                    }
                 }
 
                 yield return null;
             }
         }
+        
+        public void OnAttack1AnimationConnection()
+        {
+            Debug.Log("Attack1 connected");
+        }
+
         
         private bool PlayerDetected()
         {
@@ -194,6 +218,7 @@ namespace Enemy
             _animator.SetBool(IsWalking, false);
             _animator.SetBool(IsSensing, false);
             _animator.SetBool(IsRunning, false);
+            _animator.SetBool(IsAttacking1, false);
         }
 
         private void SwitchCoroutine(IEnumerator newBehaviour)
@@ -237,6 +262,11 @@ namespace Enemy
             if (currentState == SlimeState.Running)
             {
                 movements = movements.Where(m => m is Seek || m is FaceDirection || m is Avoid).ToArray();
+            }
+
+            if (currentState == SlimeState.Attacking)
+            {
+                movements = movements.Where(m => m is FaceDirection).ToArray();
             }
             
             foreach (AIMovement movement in movements)
