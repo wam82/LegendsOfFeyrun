@@ -2,7 +2,6 @@ using System.Collections;
 using System.Linq;
 using NPC;
 using NPC.MovementBehaviours;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -19,6 +18,7 @@ namespace Enemy
         private static readonly int IsAttacking2 = Animator.StringToHash("isAttacking2");
         private static readonly int IsSneaking = Animator.StringToHash("isSneaking");
         private static readonly int IsTaunting = Animator.StringToHash("isTaunting");
+        
         // Sequence:
         // 1. Idle - Sleep
         // 2. Idle - Wake up
@@ -78,7 +78,7 @@ namespace Enemy
             Attacking
         }
 
-        private IEnumerator BaseCycle()
+        private IEnumerator BaseBehaviour()
         {
             while (true)
             {
@@ -94,7 +94,6 @@ namespace Enemy
             currentState = SlimeState.Sleeping;
             ResetAllAnimatorBooleans();
             _animator.SetBool(IsSleeping, true);
-            // Debug.Log("Slime sleeping...");
             yield return new WaitForSeconds(sleepDuration);
         }
 
@@ -102,8 +101,6 @@ namespace Enemy
         {
             currentState = SlimeState.Awakening;
             ResetAllAnimatorBooleans();
-            // _animator.SetBool(IsSleeping, false);
-            // Debug.Log("Slime waking up...");
             yield return new WaitForSeconds(awakeningDuration);
         }
 
@@ -112,7 +109,6 @@ namespace Enemy
             currentState = SlimeState.Searching;
             ResetAllAnimatorBooleans();
             _animator.SetBool(IsSearching, true);
-            // Debug.Log("Slime searching...");
             yield return new WaitForSeconds(searchingDuration);
         }
 
@@ -122,21 +118,12 @@ namespace Enemy
             ResetAllAnimatorBooleans();
             _animator.SetBool(IsWalking, true);
             float duration = Random.Range(minimumWanderDuration, maximumWanderDuration);
-            // Debug.Log($"Slime wandering for {duration} seconds...");
             float elapsed = 0f;
             moveSpeed = walkSpeed;
 
             while (elapsed < duration)
             {
                 Move();
-
-                // if (PlayerDetected())
-                // {
-                //     _animator.SetBool(IsWalking, false);
-                //     SwitchCoroutine(ChaseBehaviour1());
-                //     yield break;
-                // }
-                
                 elapsed += Time.deltaTime;
                 yield return null;
             }
@@ -160,16 +147,15 @@ namespace Enemy
 
         private IEnumerator ChaseBehaviour1()
         {
-            yield return Sense();
-            ResetAllAnimatorBooleans();
-            // _animator.SetBool(IsSensing, false);
-            
             // Combat sequence:
             // 1. Sense
             // 2. Start combat loop:
             // Case 1: Player (Tracked Target) is no longer within detection radius --> Exit combat loop, player has escaped
             // Case 2: Player is outside attack range --> Enter running state, try to close the gap to the player (setting move speed to run speed). 
             // Case 3: Player is within attack range --> Enter attack state, stop movement, play attack animation.
+            
+            yield return Sense();
+            ResetAllAnimatorBooleans();
             _inCombat = true;
             while (_inCombat)
             {
@@ -183,7 +169,7 @@ namespace Enemy
                     _inCombat = false;
                     ResetAllAnimatorBooleans();
                     _animator.SetBool(IsSleeping, true);
-                    SwitchCoroutine(BaseCycle());
+                    SwitchCoroutine(BaseBehaviour());
                     yield break;
                 }
                 
@@ -217,6 +203,12 @@ namespace Enemy
 
         private IEnumerator ChaseBehaviour2()
         {
+            // Combat sequence:
+            // 1. Taunt
+            // 2. Start combat loop:
+            // Case 1: Player (Tracked Target) is no longer within detection radius --> Exit combat loop, player has escaped
+            // Case 2: Player is outside attack range --> Enter sneak state, try to close the gap to the player (setting move speed to sneak speed). 
+            // Case 3: Player is within attack range --> Enter attack state, stop movement, play attack animation.
             yield return Taunt();
             ResetAllAnimatorBooleans();
             _inCombat =  true;
@@ -233,7 +225,7 @@ namespace Enemy
                     _inCombat = false;
                     ResetAllAnimatorBooleans();
                     _animator.SetBool(IsSleeping, true);
-                    SwitchCoroutine(BaseCycle());
+                    SwitchCoroutine(BaseBehaviour());
                     yield break;
                 }
                 
@@ -276,11 +268,11 @@ namespace Enemy
         
         private bool PlayerDetected()
         {
-            if (trackedTarget == null)
+            if (!trackedTarget)
             {
                 return false;
             }
-            float dist = Vector3.Distance(transform.position, trackedTarget.position);
+            float dist = Vector3.Distance(transform.position, TargetPosition);
             return dist < detectionRadius;
         }
         
@@ -320,7 +312,7 @@ namespace Enemy
         protected override void Start()
         {
             base.Start();
-            _activeBehaviour = StartCoroutine(BaseCycle());
+            _activeBehaviour = StartCoroutine(BaseBehaviour());
         }
 
         protected override void GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation)

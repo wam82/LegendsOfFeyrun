@@ -20,7 +20,7 @@ namespace NPC.MovementBehaviours
             {
                 // Try to get the collider from the obstacle
                 Collider obstacleCollider = obstacle.GetComponent<Collider>();
-                if (obstacleCollider == null)
+                if (!obstacleCollider)
                 {
                     // If there's no collider, fallback to using the transform position
                     Debug.LogWarning("Obstacle " + obstacle.name + " does not have a Collider component.");
