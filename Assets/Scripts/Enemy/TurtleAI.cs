@@ -10,6 +10,9 @@ namespace Enemy
     public class TurtleAI : AIAgent
     {
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
+        private static readonly int IsMeleeAttacking = Animator.StringToHash("isMeleeAttacking");
+        private static readonly int IsRangeAttacking = Animator.StringToHash("isRangeAttacking");
+        
         // Sequence:
         // 1. Walk "forward" until you're "in range" of a wall (forward direction + X units in front for the check) 
         // 2. Rotate right by a random angle between 90° & 180° (needs to be a check at each frame that calls rotate method instead of a simple boolean condition)
@@ -63,65 +66,18 @@ namespace Enemy
             while (true)
             {
                 Move();
-                
-                // if (PlayerDetected())
-                // {
-                //     SwitchCoroutine(CombatLoop());
-                //     yield break;
-                // }
+
+                if (PlayerDetected())
+                {
+                    ResetAllAnimatorBooleans();
+                    moveSpeed = 0f;
+                    currentState = TurtleState.Melee;
+                }
                 
                 yield return null;
             }
         }
-
-        private IEnumerator CombatLoop()
-        {
-            _inCombat = true;
-
-            while (_inCombat)
-            {
-                if (Time.time - _lastAttackTime > attackCooldown)
-                {
-                    _canAttack =  true;
-                }
-                if (!PlayerDetected())
-                {
-                    _inCombat = false;
-                    ResetAllAnimatorBooleans();
-                    SwitchCoroutine(BaseBehaviour());
-                    yield break;
-                }
-                
-                float distance = Vector3.Distance(transform.position, TargetPosition);
-                
-                if (_canAttack)
-                {
-                    if (distance <= meleeAttackRadius)
-                    {
-                        yield return MeleeAttack();
-                    }
-                    else
-                    {
-                        yield return RangedAttack();
-                    }
-
-                    _lastAttackTime = Time.time;
-                    _canAttack = false;
-                }
-            }
-            yield return null;
-        }
-
-        private IEnumerator MeleeAttack()
-        {
-            yield return null;
-        }
-
-        private IEnumerator RangedAttack()
-        {
-            yield return null;
-        }
-
+        
         private bool PlayerDetected()
         {
             // To check if the player is detected:
@@ -143,9 +99,9 @@ namespace Enemy
             }
             
             Vector3 direction = TargetPosition - transform.position;
-            float angle = Vector3.Angle(transform.forward, direction.normalized);
+            float angle = Vector3.Angle(transform.forward, direction);
 
-            if (angle < detectionAngle)
+            if (Mathf.Abs(angle) > detectionAngle)
             {
                 return false;
             }
@@ -162,7 +118,9 @@ namespace Enemy
         }
         private void ResetAllAnimatorBooleans()
         {
-            
+            _animator.SetBool(IsWalking, false);
+            _animator.SetBool(IsMeleeAttacking, false);
+            _animator.SetBool(IsRangeAttacking, false);
         }
         
         private void SwitchCoroutine(IEnumerator newBehaviour)
@@ -190,7 +148,7 @@ namespace Enemy
 
             if (currentState is TurtleState.Melee or TurtleState.Ranged)
             {
-                
+                movements = movements.Where(m => m is LookAt).ToArray();
             }
         
             foreach (AIMovement movement in movements)

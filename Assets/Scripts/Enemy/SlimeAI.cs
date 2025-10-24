@@ -173,7 +173,7 @@ namespace Enemy
                     yield break;
                 }
                 
-                float distance = Vector3.Distance(transform.position, trackedTarget.position);
+                float distance = Vector3.Distance(transform.position, TargetPosition);
 
                 if (distance > attack1Radius)
                 {
