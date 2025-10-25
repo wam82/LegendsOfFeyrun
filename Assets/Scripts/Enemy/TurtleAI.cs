@@ -12,7 +12,8 @@ namespace Enemy
         private static readonly int IsWalking = Animator.StringToHash("isWalking");
         private static readonly int IsMeleeAttacking = Animator.StringToHash("isMeleeAttacking");
         private static readonly int IsRangeAttacking = Animator.StringToHash("isRangeAttacking");
-        
+        private static readonly int IsRunning = Animator.StringToHash("isRunning");
+
         // Sequence:
         // 1. Walk "forward" until you're "in range" of a wall (forward direction + X units in front for the check) 
         // 2. Rotate right by a random angle between 90° & 180° (needs to be a check at each frame that calls rotate method instead of a simple boolean condition)
@@ -30,10 +31,12 @@ namespace Enemy
         
         [Header("Turtle Attributes")]
         [SerializeField] private float walkSpeed;
+        [SerializeField] private float runSpeed;
         [SerializeField] private float detectionRadius;
         [SerializeField] private float detectionAngle;
         [SerializeField] private float attackCooldown;
         [SerializeField] private float meleeAttackRadius;
+        [SerializeField] private float rangedAttackRadius;
         
         [Header("Turtle Behaviour Settings")]
         [SerializeField] private LayerMask obstacleLayerMask;
@@ -51,6 +54,7 @@ namespace Enemy
         private enum TurtleState
         {
             Walking,
+            Running,
             Idle,
             Melee,
             Ranged
@@ -72,6 +76,74 @@ namespace Enemy
                     ResetAllAnimatorBooleans();
                     moveSpeed = 0f;
                     currentState = TurtleState.Melee;
+                }
+                
+                yield return null;
+            }
+        }
+
+        private IEnumerator CombatBehaviour()
+        {
+            ResetAllAnimatorBooleans();
+            _inCombat = true;
+
+            while (_inCombat)
+            {
+                if (Time.time - _lastAttackTime > attackCooldown)
+                {
+                    _canAttack = true;
+                }
+
+                if (!PlayerDetected())
+                {
+                    _inCombat = false;
+                    ResetAllAnimatorBooleans();
+                    SwitchCoroutine(BaseBehaviour());
+                    yield break;
+                }
+
+                float distance = Vector3.Distance(transform.position, TargetPosition);
+
+                if (distance > rangedAttackRadius)
+                {
+                    // Run to try and catch up
+                    ResetAllAnimatorBooleans();
+                    currentState = TurtleState.Running;
+                    moveSpeed = runSpeed;
+                    Move();
+                    _animator.SetBool(IsRunning, true);
+                }
+                else if (distance < rangedAttackRadius && distance > meleeAttackRadius)
+                {
+                    // Ranged attack
+                    moveSpeed = 0f;
+                    Move();
+                    ResetAllAnimatorBooleans();
+                    currentState = TurtleState.Ranged;
+                    if (_canAttack)
+                    {
+                        _animator.SetBool(IsRangeAttacking, true);
+                        _canAttack = false;
+                        _lastAttackTime = Time.time;
+                    }
+                }
+                else if (distance <  meleeAttackRadius)
+                {
+                    // Melee attack
+                    moveSpeed = 0f;
+                    Move();
+                    ResetAllAnimatorBooleans();
+                    currentState = TurtleState.Melee;
+                    if (_canAttack)
+                    {
+                        _animator.SetBool(IsMeleeAttacking, true);
+                        _canAttack = false;
+                        _lastAttackTime = Time.time;
+                    }
+                }
+                else
+                {
+                    Debug.Log("Something went wrong");
                 }
                 
                 yield return null;
@@ -116,9 +188,11 @@ namespace Enemy
 
             return true;
         }
+        
         private void ResetAllAnimatorBooleans()
         {
             _animator.SetBool(IsWalking, false);
+            _animator.SetBool(IsRunning, false);
             _animator.SetBool(IsMeleeAttacking, false);
             _animator.SetBool(IsRangeAttacking, false);
         }
@@ -150,6 +224,11 @@ namespace Enemy
             {
                 movements = movements.Where(m => m is LookAt).ToArray();
             }
+
+            if (currentState == TurtleState.Running)
+            {
+                movements = movements.Where(m => m is Seek || m is Avoid || m is FaceDirection).ToArray();
+            }
         
             foreach (AIMovement movement in movements)
             {
@@ -174,7 +253,10 @@ namespace Enemy
         }
         protected override void Update()
         {
-            
+            if (!_inCombat && PlayerDetected())
+            {
+                SwitchCoroutine(CombatBehaviour());
+            }
         }
     }
 }
