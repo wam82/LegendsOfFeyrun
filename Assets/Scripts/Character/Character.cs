@@ -109,7 +109,7 @@ namespace Character
             {
                 CurrentComboStep++;
                 
-                Debug.Log("Combo Step: " + CurrentComboStep);
+                // Debug.Log("Combo Step: " + CurrentComboStep);
 
                 _comboStarted = true;
                 IsAttacking = true;

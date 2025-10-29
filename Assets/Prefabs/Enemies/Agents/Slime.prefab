@@ -10,13 +10,15 @@ GameObject:
   m_Component:
   - component: {fileID: 3282324148005834747}
   - component: {fileID: 1257397153474318229}
+  - component: {fileID: 7222391969382661272}
   - component: {fileID: 952329771672064894}
   - component: {fileID: 4151521429686508637}
   - component: {fileID: 3077503714895284825}
   - component: {fileID: 595885739453888073}
   - component: {fileID: 8976721858540472832}
   - component: {fileID: 6996283673546568288}
-  m_Layer: 0
+  - component: {fileID: 1440295557733324620}
+  m_Layer: 8
   m_Name: Slime
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -60,6 +62,28 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &7222391969382661272
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853114080176930074}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7bb19ebfc00ef4132bc13055d8b9c4b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  walkSpeed: 2
+  sneakSpeed: 2.5
+  runSpeed: 3
+  detectionRadius: 5
+  attack1Radius: 2
+  attack2Radius: 1.25
+  attackCooldown: 2
+  attack1Damage: 0
+  attack2Damage: 0
 --- !u!114 &952329771672064894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -77,13 +101,6 @@ MonoBehaviour:
   trackedTarget: {fileID: 0}
   obstacles: []
   currentState: 0
-  walkSpeed: 2
-  sneakSpeed: 2.5
-  runSpeed: 3
-  detectionRadius: 5
-  attack1Radius: 2
-  attack2Radius: 1.25
-  attackCooldown: 2
   sleepDuration: 3
   awakeningDuration: 1
   searchingDuration: 2
@@ -160,6 +177,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+--- !u!136 &1440295557733324620
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8853114080176930074}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.4, z: 0}
 --- !u!1001 &1562515841444034412
 PrefabInstance:
   m_ObjectHideFlags: 0

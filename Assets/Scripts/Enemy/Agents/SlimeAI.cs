@@ -1,11 +1,13 @@
 using System.Collections;
 using System.Linq;
+using Combat;
+using Enemy.Entities;
 using NPC;
 using NPC.MovementBehaviours;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-namespace Enemy
+namespace Enemy.Agents
 {
     public class SlimeAI : AIAgent
     {
@@ -18,6 +20,8 @@ namespace Enemy
         private static readonly int IsAttacking2 = Animator.StringToHash("isAttacking2");
         private static readonly int IsSneaking = Animator.StringToHash("isSneaking");
         private static readonly int IsTaunting = Animator.StringToHash("isTaunting");
+        private static readonly int IsDead = Animator.StringToHash("isDead");
+        private static readonly int IsHurt = Animator.StringToHash("isHurt");
         
         // Sequence:
         // 1. Idle - Sleep
@@ -35,16 +39,6 @@ namespace Enemy
         // 9. Walk towards player
         
         [SerializeField] private SlimeState currentState;
-        
-        [Header("Slime Attributes")]
-        [SerializeField] private float walkSpeed;
-        [SerializeField] private float sneakSpeed;
-        [SerializeField] private float runSpeed;
-        [SerializeField] private float detectionRadius;
-        [SerializeField] private float attack1Radius;
-        [SerializeField] private float attack2Radius;
-        [SerializeField] private float attackCooldown;
-        
 
         [Header("Slime Behaviour Attributes")] 
         [SerializeField] private float sleepDuration;
@@ -57,6 +51,7 @@ namespace Enemy
         
         private Animator _animator;
         private Coroutine _activeBehaviour;
+        private SlimeEntity _entity;
         
         private bool _inCombat;
         private bool _canAttack1 = true;
@@ -75,7 +70,9 @@ namespace Enemy
             Running,
             Taunting,
             Sneaking,
-            Attacking
+            Attacking,
+            Hurt,
+            Dead
         }
 
         private IEnumerator BaseBehaviour()
@@ -119,7 +116,7 @@ namespace Enemy
             _animator.SetBool(IsWalking, true);
             float duration = Random.Range(minimumWanderDuration, maximumWanderDuration);
             float elapsed = 0f;
-            moveSpeed = walkSpeed;
+            moveSpeed = _entity.WalkSpeed;
 
             while (elapsed < duration)
             {
@@ -145,6 +142,28 @@ namespace Enemy
             yield return new WaitForSeconds(tauntDuration);
         }
 
+        public void Die()
+        {
+            currentState = SlimeState.Dead;
+            if (_activeBehaviour != null)
+            {
+                StopCoroutine(_activeBehaviour);
+            }
+            ResetAllAnimatorBooleans();
+            _animator.SetBool(IsDead, true);
+        }
+
+        public void GetHurt()
+        {
+            currentState = SlimeState.Hurt;
+            if (_activeBehaviour != null)
+            {
+                StopCoroutine(_activeBehaviour);
+            }
+            ResetAllAnimatorBooleans();
+            _animator.SetTrigger(IsHurt);
+        }
+
         private IEnumerator ChaseBehaviour1()
         {
             // Combat sequence:
@@ -159,7 +178,7 @@ namespace Enemy
             _inCombat = true;
             while (_inCombat)
             {
-                if (Time.time - _attack1Time > attackCooldown)
+                if (Time.time - _attack1Time > _entity.AttackCooldown)
                 {
                     _canAttack1 =  true;
                 }
@@ -175,11 +194,11 @@ namespace Enemy
                 
                 float distance = Vector3.Distance(transform.position, TargetPosition);
 
-                if (distance > attack1Radius)
+                if (distance > _entity.Attack1Radius)
                 {
                     ResetAllAnimatorBooleans();
                     currentState = SlimeState.Running;
-                    moveSpeed = runSpeed;
+                    moveSpeed = _entity.RunSpeed;
                     Move();
                     _animator.SetBool(IsRunning, true);
                 }
@@ -215,7 +234,7 @@ namespace Enemy
             
             while (_inCombat)
             {
-                if (Time.time - _attack2Time > attackCooldown)
+                if (Time.time - _attack2Time > _entity.AttackCooldown)
                 {
                     _canAttack2 =  true;
                 }
@@ -230,11 +249,11 @@ namespace Enemy
                 }
                 
                 float distance = Vector3.Distance(transform.position, trackedTarget.position);
-                if (distance > attack2Radius)
+                if (distance > _entity.Attack2Radius)
                 {
                     ResetAllAnimatorBooleans();
                     currentState = SlimeState.Sneaking;
-                    moveSpeed = sneakSpeed;
+                    moveSpeed = _entity.SneakSpeed;
                     Move();
                     _animator.SetBool(IsSneaking, true);
                 }
@@ -258,12 +277,12 @@ namespace Enemy
         
         public void OnAttack1AnimationConnection()
         {
-            Debug.Log("Attack1 connected");
+            // Debug.Log("Attack1 connected");
         }
 
         public void OnAttack2AnimationConnection()
         {
-            Debug.Log("Attack2 connected");
+            // Debug.Log("Attack2 connected");
         }
         
         private bool PlayerDetected()
@@ -273,7 +292,7 @@ namespace Enemy
                 return false;
             }
             float dist = Vector3.Distance(transform.position, TargetPosition);
-            return dist < detectionRadius;
+            return dist < _entity.DetectionRadius;
         }
         
         private void ResetAllAnimatorBooleans()
@@ -287,6 +306,7 @@ namespace Enemy
             _animator.SetBool(IsSneaking, false);
             _animator.SetBool(IsAttacking1, false);
             _animator.SetBool(IsAttacking2, false);
+            _animator.ResetTrigger(IsHurt);
         }
 
         private void SwitchCoroutine(IEnumerator newBehaviour)
@@ -306,6 +326,24 @@ namespace Enemy
             if (_animator == null)
             {
                 Debug.LogError("No animator found");
+            }
+
+            _entity = GetComponent<SlimeEntity>();
+            if (_entity == null)
+            {
+                Debug.LogError("No creature entity found");
+            }
+
+            if (!trackedTarget)
+            {
+                if (CombatManager.Instance.player != null)
+                {
+                    trackedTarget = CombatManager.Instance.player;
+                }
+                else
+                {
+                    Debug.LogError("No tracked target for " + gameObject.name);
+                }
             }
         }
 
@@ -351,9 +389,9 @@ namespace Enemy
 
         protected override void Update()
         {
-            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.yellow, detectionRadius);
-            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.red, attack1Radius);
-            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.cyan, attack2Radius);
+            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.yellow, _entity.DetectionRadius);
+            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.red, _entity.Attack1Radius);
+            DebugUtils.DrawCircle(transform.position, Vector3.up, Color.cyan, _entity.Attack2Radius);
             
             if (!_inCombat && PlayerDetected())
             {
