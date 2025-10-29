@@ -31,7 +31,7 @@ namespace Enemy.Entities
         private float currentHealth;
         private bool wasTriggered;
         
-        public void TakeDamage(int amount)
+        public void TakeDamage(float amount)
         {
             if (!wasTriggered)
             {

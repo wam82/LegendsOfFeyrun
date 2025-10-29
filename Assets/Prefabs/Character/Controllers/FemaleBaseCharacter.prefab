@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f04e5384c90041dabdd1d4a293c5bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  maxHealth: 100
   walkSpeed: 4
   shieldSpeed: 2
   sprintSpeed: 7
@@ -61,8 +62,12 @@ MonoBehaviour:
   maxSlopeAngle: 40
   comboTimer: 3
   attackCooldown: 0.1
+  comboStep1Damage: 10
+  comboStep2Damage: 15
+  comboStep3Damage: 25
   chargedAttackMaxDuration: 3
   chargedAttackCooldown: 3
+  chargedAttackDamage: 0
   movementForceFactor: 10
   cameraTransform: {fileID: 0}
   groundLayerMask:

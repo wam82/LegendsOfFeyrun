@@ -7,13 +7,13 @@ namespace Combat
         public static CombatManager Instance;
         public Transform player;
 
-        public static void SmallCharacterAttack(GameObject target)
+        public static void CharacterAttack(GameObject target, float damage)
         {
             IDamageable damageable = target.GetComponent<IDamageable>();
             
             if (damageable != null)
             {
-                damageable.TakeDamage(50);
+                damageable.TakeDamage(damage);
             }
             else
             {
@@ -26,6 +26,7 @@ namespace Combat
             if (Instance == null)
             {
                 Instance = this;
+                // DontDestroyOnLoad(gameObject);
             }
             else
             {

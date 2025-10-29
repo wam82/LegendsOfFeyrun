@@ -13,7 +13,7 @@ namespace Character
             {
                 if (character.IsAttacking)
                 {
-                    CombatManager.SmallCharacterAttack(other.gameObject);
+                    CombatManager.CharacterAttack(other.gameObject, character.GetSmallAttackDamage());
                     Debug.Log("Hit enemy: " + other.name);   
                 }
             }

@@ -5,7 +5,8 @@ namespace Character
 {
     public class Character : MonoBehaviour
     {
-        [Header("Character Attributes")]
+        [Header("Character Attributes")] 
+        [SerializeField] private float maxHealth;
         [SerializeField] private float walkSpeed;
         [SerializeField] private float shieldSpeed;
         [SerializeField] private float sprintSpeed;
@@ -19,8 +20,12 @@ namespace Character
         [Header("Combat Attributes")] 
         [SerializeField] private float comboTimer;
         [SerializeField] public float attackCooldown;
+        [SerializeField] private float comboStep1Damage;
+        [SerializeField] private float comboStep2Damage;
+        [SerializeField] private float comboStep3Damage;
         [SerializeField] public float chargedAttackMaxDuration;
         [SerializeField] public float chargedAttackCooldown;
+        [SerializeField] private float chargedAttackDamage;
         
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
@@ -44,6 +49,7 @@ namespace Character
         
         private float _lastAttackTime;
         private float _movementSpeed;
+        private float _currentHealth;
         private const float CharacterHeight = 1f;
         
         private bool _canJump = true;
@@ -122,9 +128,44 @@ namespace Character
             }
         }
 
+        public float GetSmallAttackDamage()
+        {
+            float damage = 0;
+            switch (CurrentComboStep)
+            {
+                case 1:
+                    damage = comboStep1Damage;
+                    break;
+                case 2:
+                    damage = comboStep2Damage;
+                    break;
+                case 3:
+                    damage = comboStep3Damage;
+                    break;
+                default:
+                    damage = 0;
+                    break;
+            }
+            return damage;
+        }
+
         private void CheckIsGrounded()
         {
             IsGrounded = Physics.Raycast(transform.position, Vector3.down,  CharacterHeight * 0.5f + 0.3f,  groundLayerMask);
+        }
+
+        private void Jump()
+        {
+            // Reset Y velocity so jump is consistent
+            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+            
+            _rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
+        }
+        
+        private IEnumerator ResetJumpCoroutine()
+        {
+            yield return new WaitForSeconds(jumpCooldown);
+            _canJump = true;
         }
         
         private void SpeedHandler()
@@ -153,7 +194,7 @@ namespace Character
                 // _movementState =  MovementState.Airborne;
             }
         }
-
+        
         private void MoveCharacter()
         {
             // 1. Get camera's forward and right, ignoring vertical component
@@ -201,25 +242,6 @@ namespace Character
             }
         }
 
-        private void Jump()
-        {
-            // Reset Y velocity so jump is consistent
-            _rigidbody.velocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
-            
-            _rigidbody.AddForce(transform.up * jumpForce, ForceMode.Impulse);
-        }
-        
-        private IEnumerator ResetJumpCoroutine()
-        {
-            yield return new WaitForSeconds(jumpCooldown);
-            ResetJump();
-        }
-
-        private void ResetJump()
-        {
-            _canJump = true;
-        }
-
         private void Awake()
         {
             _rigidbody =  GetComponent<Rigidbody>();
@@ -228,6 +250,8 @@ namespace Character
                 Debug.LogError("Rigid body not found");
             }
             _rigidbody.freezeRotation = true;
+            
+            _currentHealth = maxHealth;
         }
 
         private void Update()

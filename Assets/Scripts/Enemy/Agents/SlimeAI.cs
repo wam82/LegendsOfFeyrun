@@ -56,6 +56,7 @@ namespace Enemy.Agents
         private bool _inCombat;
         private bool _canAttack1 = true;
         private bool _canAttack2 = true;
+        private bool _hasTaunted;
 
         private float _attack1Time;
         private float _attack2Time;
@@ -89,7 +90,7 @@ namespace Enemy.Agents
         private IEnumerator Sleep()
         {
             currentState = SlimeState.Sleeping;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsSleeping, true);
             yield return new WaitForSeconds(sleepDuration);
         }
@@ -97,14 +98,14 @@ namespace Enemy.Agents
         private IEnumerator WakeUp()
         {
             currentState = SlimeState.Awakening;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             yield return new WaitForSeconds(awakeningDuration);
         }
 
         private IEnumerator Search()
         {
             currentState = SlimeState.Searching;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsSearching, true);
             yield return new WaitForSeconds(searchingDuration);
         }
@@ -112,7 +113,7 @@ namespace Enemy.Agents
         private IEnumerator Wander()
         {
             currentState = SlimeState.Wandering;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsWalking, true);
             float duration = Random.Range(minimumWanderDuration, maximumWanderDuration);
             float elapsed = 0f;
@@ -129,7 +130,7 @@ namespace Enemy.Agents
         private IEnumerator Sense()
         {
             currentState = SlimeState.Sensing;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsSensing, true);
             yield return new WaitForSeconds(sensingDuration);
         }
@@ -137,7 +138,7 @@ namespace Enemy.Agents
         private IEnumerator Taunt()
         {
             currentState = SlimeState.Taunting;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsTaunting, true);
             yield return new WaitForSeconds(tauntDuration);
         }
@@ -149,7 +150,7 @@ namespace Enemy.Agents
             {
                 StopCoroutine(_activeBehaviour);
             }
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsDead, true);
         }
 
@@ -160,7 +161,8 @@ namespace Enemy.Agents
             {
                 StopCoroutine(_activeBehaviour);
             }
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
+            _inCombat = false;
             _animator.SetTrigger(IsHurt);
         }
 
@@ -174,7 +176,7 @@ namespace Enemy.Agents
             // Case 3: Player is within attack range --> Enter attack state, stop movement, play attack animation.
             
             yield return Sense();
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _inCombat = true;
             while (_inCombat)
             {
@@ -186,7 +188,7 @@ namespace Enemy.Agents
                 if (!PlayerDetected())
                 {
                     _inCombat = false;
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     _animator.SetBool(IsSleeping, true);
                     SwitchCoroutine(BaseBehaviour());
                     yield break;
@@ -196,7 +198,7 @@ namespace Enemy.Agents
 
                 if (distance > _entity.Attack1Radius)
                 {
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = SlimeState.Running;
                     moveSpeed = _entity.RunSpeed;
                     Move();
@@ -206,7 +208,7 @@ namespace Enemy.Agents
                 {
                     moveSpeed = 0f;
                     Move();
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = SlimeState.Attacking;
                     if (_canAttack1)
                     {
@@ -228,8 +230,14 @@ namespace Enemy.Agents
             // Case 1: Player (Tracked Target) is no longer within detection radius --> Exit combat loop, player has escaped
             // Case 2: Player is outside attack range --> Enter sneak state, try to close the gap to the player (setting move speed to sneak speed). 
             // Case 3: Player is within attack range --> Enter attack state, stop movement, play attack animation.
-            yield return Taunt();
-            ResetAllAnimatorBooleans();
+            
+            if (!_hasTaunted)
+            {
+                _hasTaunted = true;
+                yield return Taunt();
+            }
+            
+            ResetAllAnimatorParameters();
             _inCombat =  true;
             
             while (_inCombat)
@@ -241,8 +249,9 @@ namespace Enemy.Agents
                 
                 if (!PlayerDetected())
                 {
+                    _hasTaunted = false;
                     _inCombat = false;
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     _animator.SetBool(IsSleeping, true);
                     SwitchCoroutine(BaseBehaviour());
                     yield break;
@@ -251,7 +260,7 @@ namespace Enemy.Agents
                 float distance = Vector3.Distance(transform.position, trackedTarget.position);
                 if (distance > _entity.Attack2Radius)
                 {
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = SlimeState.Sneaking;
                     moveSpeed = _entity.SneakSpeed;
                     Move();
@@ -261,7 +270,7 @@ namespace Enemy.Agents
                 {
                     moveSpeed = 0f;
                     Move();
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = SlimeState.Attacking;
                     if (_canAttack2)
                     {
@@ -284,6 +293,12 @@ namespace Enemy.Agents
         {
             // Debug.Log("Attack2 connected");
         }
+
+        public void OnHurtAnimationComplete()
+        {
+            ResetAllAnimatorParameters();
+            SwitchCoroutine(ChaseBehaviour2());
+        }
         
         private bool PlayerDetected()
         {
@@ -295,7 +310,7 @@ namespace Enemy.Agents
             return dist < _entity.DetectionRadius;
         }
         
-        private void ResetAllAnimatorBooleans()
+        private void ResetAllAnimatorParameters()
         {
             _animator.SetBool(IsSleeping, false);
             _animator.SetBool(IsSearching, false);
@@ -316,7 +331,7 @@ namespace Enemy.Agents
                 StopCoroutine(_activeBehaviour);
             }
 
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _activeBehaviour = StartCoroutine(newBehaviour);
         }
 
@@ -333,7 +348,12 @@ namespace Enemy.Agents
             {
                 Debug.LogError("No creature entity found");
             }
+        }
 
+        protected override void Start()
+        {
+            base.Start();
+            
             if (!trackedTarget)
             {
                 if (CombatManager.Instance.player != null)
@@ -345,11 +365,7 @@ namespace Enemy.Agents
                     Debug.LogError("No tracked target for " + gameObject.name);
                 }
             }
-        }
-
-        protected override void Start()
-        {
-            base.Start();
+            
             _activeBehaviour = StartCoroutine(BaseBehaviour());
         }
 
