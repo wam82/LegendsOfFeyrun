@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 8578739153429781154}
   - component: {fileID: 4869658594940302483}
+  - component: {fileID: 5356906087819017588}
   - component: {fileID: 364999277970240464}
   - component: {fileID: 3901672137814120507}
   - component: {fileID: 3207713717420363474}
@@ -17,7 +18,8 @@ GameObject:
   - component: {fileID: 6469632882738515617}
   - component: {fileID: 4000999534185904024}
   - component: {fileID: 5978177317109737889}
-  m_Layer: 0
+  - component: {fileID: 6803750094315112489}
+  m_Layer: 8
   m_Name: Turtle
   m_TagString: Enemy
   m_Icon: {fileID: 0}
@@ -61,6 +63,24 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5356906087819017588
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4165629321208976452}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f9fc70608db4d6f9824841e8c8d4e9a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  maxHealth: 100
+  walkSpeed: 2
+  runSpeed: 4
+  attackCooldown: 1.5
+  meleeAttackRadius: 2
+  rangedAttackRadius: 3
 --- !u!114 &364999277970240464
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,13 +98,8 @@ MonoBehaviour:
   trackedTarget: {fileID: 0}
   obstacles: []
   currentState: 2
-  walkSpeed: 2
-  runSpeed: 4
   detectionRadius: 7
   detectionAngle: 90
-  attackCooldown: 1.5
-  meleeAttackRadius: 2
-  rangedAttackRadius: 2.5
   obstacleLayerMask:
     serializedVersion: 2
     m_Bits: 192
@@ -177,6 +192,29 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   debug: 0
+--- !u!136 &6803750094315112489
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4165629321208976452}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.55
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.4, z: 0.55}
 --- !u!1001 &2936275220106136206
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Linq;
 using Combat;
+using Enemy.Entities;
 using NPC;
 using NPC.MovementBehaviours;
 using UnityEngine;
@@ -13,6 +14,9 @@ namespace Enemy.Agents
         private static readonly int IsMeleeAttacking = Animator.StringToHash("isMeleeAttacking");
         private static readonly int IsRangeAttacking = Animator.StringToHash("isRangeAttacking");
         private static readonly int IsRunning = Animator.StringToHash("isRunning");
+        private static readonly int IsDead = Animator.StringToHash("isDead");
+        private static readonly int IsHurt = Animator.StringToHash("isHurt");
+        private static readonly int IsDefending = Animator.StringToHash("isDefending");
 
         // Sequence:
         // 1. Walk "forward" until you're "in range" of a wall (forward direction + X units in front for the check) 
@@ -29,16 +33,9 @@ namespace Enemy.Agents
         
         [SerializeField] private TurtleState currentState = TurtleState.Idle;
         
-        [Header("Turtle Attributes")]
-        [SerializeField] private float walkSpeed;
-        [SerializeField] private float runSpeed;
+        [Header("Turtle Behaviour Settings")]
         [SerializeField] private float detectionRadius;
         [SerializeField] private float detectionAngle;
-        [SerializeField] private float attackCooldown;
-        [SerializeField] private float meleeAttackRadius;
-        [SerializeField] private float rangedAttackRadius;
-        
-        [Header("Turtle Behaviour Settings")]
         [SerializeField] private LayerMask obstacleLayerMask;
 
         private bool _inCombat;
@@ -48,7 +45,7 @@ namespace Enemy.Agents
         
         private Animator _animator;
         private Coroutine _activeBehaviour;
-        
+        private TurtleEntity _entity;
         
         
         private enum TurtleState
@@ -57,15 +54,18 @@ namespace Enemy.Agents
             Running,
             Idle,
             Melee,
-            Ranged
+            Ranged,
+            Dead,
+            Hurt,
+            Defending
         }
 
         private IEnumerator BaseBehaviour()
         {
             currentState = TurtleState.Walking;
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _animator.SetBool(IsWalking, true);
-            moveSpeed =  walkSpeed;
+            moveSpeed =  _entity.WalkSpeed;
 
             while (true)
             {
@@ -77,12 +77,12 @@ namespace Enemy.Agents
 
         private IEnumerator CombatBehaviour()
         {
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _inCombat = true;
 
             while (_inCombat)
             {
-                if (Time.time - _lastAttackTime > attackCooldown)
+                if (Time.time - _lastAttackTime > _entity.AttackCooldown)
                 {
                     _canAttack = true;
                 }
@@ -90,7 +90,7 @@ namespace Enemy.Agents
                 if (!PlayerDetected())
                 {
                     _inCombat = false;
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     _animator.SetBool(IsWalking, true);
                     SwitchCoroutine(BaseBehaviour());
                     yield break;
@@ -98,21 +98,21 @@ namespace Enemy.Agents
 
                 float distance = Vector3.Distance(transform.position, TargetPosition);
 
-                if (distance > rangedAttackRadius)
+                if (distance > _entity.RangedAttackRadius)
                 {
                     // Run to try and catch up
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = TurtleState.Running;
-                    moveSpeed = runSpeed;
+                    moveSpeed = _entity.RunSpeed;
                     Move();
                     _animator.SetBool(IsRunning, true);
                 }
-                else if (distance <= rangedAttackRadius && distance > meleeAttackRadius)
+                else if (distance <= _entity.RangedAttackRadius && distance > _entity.MeleeAttackRadius)
                 {
                     // Ranged attack
                     moveSpeed = 0f;
                     Move();
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = TurtleState.Ranged;
                     if (_canAttack)
                     {
@@ -121,13 +121,12 @@ namespace Enemy.Agents
                         _lastAttackTime = Time.time;
                     }
                 }
-                else if (distance <=  meleeAttackRadius)
+                else if (distance <=  _entity.MeleeAttackRadius)
                 {
-                    Debug.Log(distance);
                     // Melee attack
                     moveSpeed = 0f;
                     Move();
-                    ResetAllAnimatorBooleans();
+                    ResetAllAnimatorParameters();
                     currentState = TurtleState.Melee;
                     if (_canAttack)
                     {
@@ -143,6 +142,35 @@ namespace Enemy.Agents
                 
                 yield return null;
             }
+        }
+        
+        public void Die()
+        {
+            currentState = TurtleState.Dead;
+            if (_activeBehaviour != null)
+            {
+                StopCoroutine(_activeBehaviour);
+            }
+            ResetAllAnimatorParameters();
+            _animator.SetBool(IsDead, true);
+        }
+
+        public void GetHurt()
+        {
+            currentState = TurtleState.Hurt;
+            if (_activeBehaviour != null)
+            {
+                StopCoroutine(_activeBehaviour);
+            }
+            ResetAllAnimatorParameters();
+            _inCombat = false;
+            _animator.SetTrigger(IsHurt);
+        }
+
+        public void OnHurtAnimationComplete()
+        {
+            ResetAllAnimatorParameters();
+            SwitchCoroutine(BaseBehaviour());
         }
         
         private bool PlayerDetected()
@@ -184,12 +212,14 @@ namespace Enemy.Agents
             return true;
         }
         
-        private void ResetAllAnimatorBooleans()
+        private void ResetAllAnimatorParameters()
         {
             _animator.SetBool(IsWalking, false);
             _animator.SetBool(IsRunning, false);
             _animator.SetBool(IsMeleeAttacking, false);
             _animator.SetBool(IsRangeAttacking, false);
+            _animator.ResetTrigger(IsHurt);
+            _animator.ResetTrigger(IsDefending);
         }
         
         private void SwitchCoroutine(IEnumerator newBehaviour)
@@ -199,7 +229,7 @@ namespace Enemy.Agents
                 StopCoroutine(_activeBehaviour);
             }
 
-            ResetAllAnimatorBooleans();
+            ResetAllAnimatorParameters();
             _activeBehaviour = StartCoroutine(newBehaviour);
         }
         
@@ -238,6 +268,12 @@ namespace Enemy.Agents
             if (_animator == null)
             {
                 Debug.LogError("No animator found");
+            }
+            
+            _entity = GetComponent<TurtleEntity>();
+            if (_entity == null)
+            {
+                Debug.LogError("No creature entity found");
             }
         }
         

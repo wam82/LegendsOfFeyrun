@@ -28,17 +28,17 @@ namespace Enemy.Entities
         public float AttackCooldown => attackCooldown;
 
 
-        private float currentHealth;
-        private bool wasTriggered;
+        private float _currentHealth;
+        private bool _wasTriggered;
         
         public void TakeDamage(float amount)
         {
-            if (!wasTriggered)
+            if (!_wasTriggered)
             {
-                wasTriggered = true;
-                currentHealth -= amount;
+                _wasTriggered = true;
+                _currentHealth -= amount;
 
-                if (currentHealth <= 0)
+                if (_currentHealth <= 0)
                 {
                     gameObject.GetComponent<SlimeAI>().Die();
                 }
@@ -46,13 +46,13 @@ namespace Enemy.Entities
                 {
                     gameObject.GetComponent<SlimeAI>().GetHurt();
                 }
-                wasTriggered = false;
+                _wasTriggered = false;
             }
         }
         
         private void Awake()
         {
-            currentHealth = maxHealth;
+            _currentHealth = maxHealth;
         }
     }
 }
