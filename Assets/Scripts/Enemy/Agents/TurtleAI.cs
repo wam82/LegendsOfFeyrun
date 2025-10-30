@@ -1,11 +1,11 @@
 using System.Collections;
 using System.Linq;
+using Combat;
 using NPC;
 using NPC.MovementBehaviours;
-using Unity.VisualScripting;
 using UnityEngine;
 
-namespace Enemy
+namespace Enemy.Agents
 {
     public class TurtleAI : AIAgent
     {
@@ -27,7 +27,7 @@ namespace Enemy
         // NOTE: Attacks are continuous (with a small cooldown) as long as player is detected and turtle should be able to swap between attacks.
         // NOTE: Attacking a player is always more important than avoiding a wall.
         
-        [SerializeField] TurtleState currentState = TurtleState.Idle;
+        [SerializeField] private TurtleState currentState = TurtleState.Idle;
         
         [Header("Turtle Attributes")]
         [SerializeField] private float walkSpeed;
@@ -70,13 +70,6 @@ namespace Enemy
             while (true)
             {
                 Move();
-
-                if (PlayerDetected())
-                {
-                    ResetAllAnimatorBooleans();
-                    moveSpeed = 0f;
-                    currentState = TurtleState.Melee;
-                }
                 
                 yield return null;
             }
@@ -98,6 +91,7 @@ namespace Enemy
                 {
                     _inCombat = false;
                     ResetAllAnimatorBooleans();
+                    _animator.SetBool(IsWalking, true);
                     SwitchCoroutine(BaseBehaviour());
                     yield break;
                 }
@@ -113,7 +107,7 @@ namespace Enemy
                     Move();
                     _animator.SetBool(IsRunning, true);
                 }
-                else if (distance < rangedAttackRadius && distance > meleeAttackRadius)
+                else if (distance <= rangedAttackRadius && distance > meleeAttackRadius)
                 {
                     // Ranged attack
                     moveSpeed = 0f;
@@ -127,8 +121,9 @@ namespace Enemy
                         _lastAttackTime = Time.time;
                     }
                 }
-                else if (distance <  meleeAttackRadius)
+                else if (distance <=  meleeAttackRadius)
                 {
+                    Debug.Log(distance);
                     // Melee attack
                     moveSpeed = 0f;
                     Move();
@@ -249,6 +244,19 @@ namespace Enemy
         protected override void Start()
         {
             base.Start();
+            
+            if (!trackedTarget)
+            {
+                if (CombatManager.Instance.player != null)
+                {
+                    trackedTarget = CombatManager.Instance.player;
+                }
+                else
+                {
+                    Debug.LogError("No tracked target for " + gameObject.name);
+                }
+            }
+            
             _activeBehaviour = StartCoroutine(BaseBehaviour());
         }
         protected override void Update()
