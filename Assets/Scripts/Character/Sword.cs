@@ -14,7 +14,12 @@ namespace Character
                 if (character.IsAttacking)
                 {
                     CombatManager.CharacterAttack(other.gameObject, character.GetSmallAttackDamage());
-                    Debug.Log("Hit enemy: " + other.name);   
+                    // Debug.Log("Hit enemy: " + other.name);   
+                }
+
+                if (character.IsChargedAttacking)
+                {
+                    CombatManager.CharacterAttack(other.gameObject, character.ChargedAttackDamage);
                 }
             }
         }

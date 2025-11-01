@@ -31,19 +31,22 @@ namespace Character
         [SerializeField] public float chargedAttackMaxDuration;
         [SerializeField] public float chargedAttackCooldown;
         [SerializeField] private float chargedAttackDamage;
-        
+
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
         [SerializeField] private Transform cameraTransform;
         [SerializeField] private LayerMask groundLayerMask;
+        [SerializeField] private PlayerController controller;
 
         public int CurrentComboStep { get; private set; }
+        public float ChargedAttackDamage => chargedAttackDamage;
 
         public bool SprintRequested { get; private set; }
         public bool IsGrounded { get; private set; }
         public bool IsAttacking { get; set; }
-        public bool ChargedAttackRequested { get; set; }
+        public bool IsChargedAttacking { get; set; }
         public bool IsDizzy { get; set; }
+        public bool IsDead { get; set; }
         
         private RaycastHit _slopeHit;
         
@@ -299,7 +302,7 @@ namespace Character
 
         private void FixedUpdate()
         {
-            if (IsDizzy)
+            if (IsDizzy || IsDead)
             {
                 return;
             }
@@ -309,7 +312,21 @@ namespace Character
 
         public void TakeDamage(float amount)
         {
+            if (_shieldRequested)
+            {
+                if (Random.value < 0.5f)
+                {
+                    amount /= 2;
+                }
+            }
+            
             _currentHealth -= amount;
+
+            if (_currentHealth <= 0)
+            {
+                IsDead = true;
+                controller.Die();
+            }
         }
     }
 }

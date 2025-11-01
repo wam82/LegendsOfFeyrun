@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,9 @@ namespace Character
         private static readonly int IsAttacking = Animator.StringToHash("isAttacking");
         private static readonly int IsChargeAttacking = Animator.StringToHash("isChargeAttacking");
         private static readonly int IsDizzy = Animator.StringToHash("isDizzy");
+        private static readonly int IsDead =  Animator.StringToHash("isDead");
+        private static readonly int IsSleeping = Animator.StringToHash("isSleeping");
+        
         private PlayerInput _playerInput;
         private Character _character;
         private Animator _animator;
@@ -24,7 +28,7 @@ namespace Character
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            if (!_character.IsDizzy)
+            if (!_character.IsDizzy && !_character.IsDead)
             {
                 Vector2 movement = context.ReadValue<Vector2>();
                 _character.SetInputVector(movement);
@@ -46,7 +50,7 @@ namespace Character
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy)
+            if (context.performed && !_character.IsDizzy && !_character.IsDead)
             {
                 _character.movementState = Character.MovementState.Jump;
                 _character.RequestJump();
@@ -55,7 +59,7 @@ namespace Character
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy)
+            if (context.performed && !_character.IsDizzy && !_character.IsDead)
             {
                 if (_animator.GetBool(IsWalking) && !_animator.GetBool(IsShielding))
                 {
@@ -68,7 +72,7 @@ namespace Character
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) && !_character.IsDizzy)
+            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) && !_character.IsDizzy && !_character.IsDead)
             {
                 if (_animator.GetBool(IsSprinting))
                 {
@@ -83,24 +87,24 @@ namespace Character
 
         public void OnChargedAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy)
+            if (context.performed && !_character.IsDizzy && !_character.IsDead)
             {
-                _character.ChargedAttackRequested = true;
+                _character.IsChargedAttacking = true;
                 _character.movementState = Character.MovementState.ChargedAttack;
-                _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
+                _animator.SetBool(IsChargeAttacking, _character.IsChargedAttacking);
                 _lastChargedAttackStart = Time.time;
             }
 
             if (context.canceled)
             {
-                _character.ChargedAttackRequested = false;
-                _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
+                _character.IsChargedAttacking = false;
+                _animator.SetBool(IsChargeAttacking, _character.IsChargedAttacking);
             }
         }
 
         public void OnShield(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy)
+            if (context.performed && !_character.IsDizzy && !_character.IsDead)
             {
                 _animator.SetBool(IsShielding, true);
                 _character.movementState = Character.MovementState.Shield;
@@ -112,7 +116,7 @@ namespace Character
                 }
             }
 
-            if (context.canceled && !_character.IsDizzy)
+            if (context.canceled && !_character.IsDizzy && !_character.IsDead)
             {
                 _animator.SetBool(IsShielding, false);
                 _character.RequestShield(_animator.GetBool(IsShielding));
@@ -133,6 +137,17 @@ namespace Character
             {
                 
             }
+        }
+
+        private IEnumerator DelaySleep(float amount)
+        {
+            yield return new WaitForSeconds(amount);
+            _animator.SetBool(IsSleeping,true);
+        }
+        public void Die()
+        {
+            _animator.SetBool(IsDead, true);
+            StartCoroutine(DelaySleep(1));
         }
 
         private void Awake()
@@ -176,13 +191,13 @@ namespace Character
 
         private void Update()
         {
-            if (_character.ChargedAttackRequested)
+            if (_character.IsChargedAttacking)
             {
                 if (Time.time - _lastChargedAttackStart > _character.chargedAttackMaxDuration)
                 {
                     _lastChargedAttackStart = 0;
-                    _character.ChargedAttackRequested = false;
-                    _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
+                    _character.IsChargedAttacking = false;
+                    _animator.SetBool(IsChargeAttacking, _character.IsChargedAttacking);
                     
                     _character.IsDizzy = true;
                     _character.movementState = Character.MovementState.Dizzy;

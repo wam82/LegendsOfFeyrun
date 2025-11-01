@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 3033074243099445923}
   - component: {fileID: 4122242146971264991}
   - component: {fileID: 685807253218164029}
+  - component: {fileID: 2712223623447064234}
   - component: {fileID: 6050518998829041047}
   m_Layer: 0
   m_Name: FemaleBaseCharacter
@@ -73,7 +74,8 @@ MonoBehaviour:
   cameraTransform: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
-    m_Bits: 200
+    m_Bits: 456
+  controller: {fileID: 6050518998829041047}
 --- !u!114 &989907739582815307
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -304,6 +306,29 @@ CapsuleCollider:
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.4
+  m_Height: 1.5
+  m_Direction: 1
+  m_Center: {x: 0, y: 0.7, z: 0}
+--- !u!136 &2712223623447064234
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6106056109905195665}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.35
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}
