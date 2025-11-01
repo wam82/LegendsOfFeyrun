@@ -6,20 +6,20 @@ namespace Character
     public class Sword : MonoBehaviour
     {
         [SerializeField] private LayerMask enemyLayer;
-        [SerializeField] private Character character;
+        [SerializeField] private PlayableCharacter playableCharacter;
         private void OnTriggerEnter(Collider other)
         {
             if (((1 << other.gameObject.layer) & enemyLayer) != 0)
             {
-                if (character.IsAttacking)
+                if (playableCharacter.IsAttacking)
                 {
-                    CombatManager.CharacterAttack(other.gameObject, character.GetSmallAttackDamage());
+                    CombatManager.CharacterAttack(other.gameObject, playableCharacter.GetSmallAttackDamage());
                     // Debug.Log("Hit enemy: " + other.name);   
                 }
 
-                if (character.IsChargedAttacking)
+                if (playableCharacter.IsChargedAttacking)
                 {
-                    CombatManager.CharacterAttack(other.gameObject, character.ChargedAttackDamage);
+                    CombatManager.CharacterAttack(other.gameObject, playableCharacter.ChargedAttackDamage);
                 }
             }
         }

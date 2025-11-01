@@ -1,10 +1,11 @@
 using System.Collections;
 using Combat;
+using Environment.Interfaces;
 using UnityEngine;
 
 namespace Character
 {
-    public class Character : MonoBehaviour, IDamageable
+    public class PlayableCharacter : MonoBehaviour, IDamageable
     {
         // #pragma warning disable CS0414 // Field is assigned but its value is never used
         public MovementState movementState;
@@ -46,9 +47,11 @@ namespace Character
         public bool IsAttacking { get; set; }
         public bool IsChargedAttacking { get; set; }
         public bool IsDizzy { get; set; }
-        public bool IsDead { get; set; }
+        public bool IsDead { get; private set; }
         
         private RaycastHit _slopeHit;
+
+        public IInteractable interactableObject;
         
         private Rigidbody _rigidbody;
         
@@ -134,6 +137,11 @@ namespace Character
                     CurrentComboStep = 1;
                 }
             }
+        }
+
+        public void RequestInteract()
+        {
+            interactableObject?.Interact();
         }
 
         public float GetSmallAttackDamage()

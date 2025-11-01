@@ -18,7 +18,7 @@ namespace Character
         private static readonly int IsSleeping = Animator.StringToHash("isSleeping");
         
         private PlayerInput _playerInput;
-        private Character _character;
+        private PlayableCharacter _playableCharacter;
         private Animator _animator;
 
         private bool _canAttack;
@@ -28,98 +28,98 @@ namespace Character
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            if (!_character.IsDizzy && !_character.IsDead)
+            if (!_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
                 Vector2 movement = context.ReadValue<Vector2>();
-                _character.SetInputVector(movement);
-                _character.movementState = Character.MovementState.Walk;
+                _playableCharacter.SetInputVector(movement);
+                _playableCharacter.movementState = PlayableCharacter.MovementState.Walk;
                 _animator.SetBool(IsWalking, movement.sqrMagnitude > 0);
                 
-                if (!_animator.GetBool(IsWalking) && _character.SprintRequested)
+                if (!_animator.GetBool(IsWalking) && _playableCharacter.SprintRequested)
                 {
-                    _character.RequestSprint();
-                    _animator.SetBool(IsSprinting, _character.SprintRequested);
+                    _playableCharacter.RequestSprint();
+                    _animator.SetBool(IsSprinting, _playableCharacter.SprintRequested);
                 }
             }
 
-            if (_character.IsDizzy)
+            if (_playableCharacter.IsDizzy)
             {
-                _character.SetInputVector(new Vector2(0,0));
+                _playableCharacter.SetInputVector(new Vector2(0,0));
             }
         }
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy && !_character.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
-                _character.movementState = Character.MovementState.Jump;
-                _character.RequestJump();
+                _playableCharacter.movementState = PlayableCharacter.MovementState.Jump;
+                _playableCharacter.RequestJump();
             }
         }
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy && !_character.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
                 if (_animator.GetBool(IsWalking) && !_animator.GetBool(IsShielding))
                 {
-                    _character.RequestSprint();
-                    _character.movementState = Character.MovementState.Sprint;
-                    _animator.SetBool(IsSprinting, _character.SprintRequested);
+                    _playableCharacter.RequestSprint();
+                    _playableCharacter.movementState = PlayableCharacter.MovementState.Sprint;
+                    _animator.SetBool(IsSprinting, _playableCharacter.SprintRequested);
                 }
             }
         }
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) && !_character.IsDizzy && !_character.IsDead)
+            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
                 if (_animator.GetBool(IsSprinting))
                 {
-                    _character.RequestSprint();
-                    _animator.SetBool(IsSprinting, _character.SprintRequested);
+                    _playableCharacter.RequestSprint();
+                    _animator.SetBool(IsSprinting, _playableCharacter.SprintRequested);
                 }
-                _character.RequestAttack();
-                _character.movementState = Character.MovementState.SmallAttack;
-                _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _playableCharacter.RequestAttack();
+                _playableCharacter.movementState = PlayableCharacter.MovementState.SmallAttack;
+                _animator.SetBool(IsAttacking, _playableCharacter.IsAttacking);
             }
         }
 
         public void OnChargedAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy && !_character.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
-                _character.IsChargedAttacking = true;
-                _character.movementState = Character.MovementState.ChargedAttack;
-                _animator.SetBool(IsChargeAttacking, _character.IsChargedAttacking);
+                _playableCharacter.IsChargedAttacking = true;
+                _playableCharacter.movementState = PlayableCharacter.MovementState.ChargedAttack;
+                _animator.SetBool(IsChargeAttacking, _playableCharacter.IsChargedAttacking);
                 _lastChargedAttackStart = Time.time;
             }
 
             if (context.canceled)
             {
-                _character.IsChargedAttacking = false;
-                _animator.SetBool(IsChargeAttacking, _character.IsChargedAttacking);
+                _playableCharacter.IsChargedAttacking = false;
+                _animator.SetBool(IsChargeAttacking, _playableCharacter.IsChargedAttacking);
             }
         }
 
         public void OnShield(InputAction.CallbackContext context)
         {
-            if (context.performed && !_character.IsDizzy && !_character.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
                 _animator.SetBool(IsShielding, true);
-                _character.movementState = Character.MovementState.Shield;
-                _character.RequestShield(_animator.GetBool(IsShielding));
+                _playableCharacter.movementState = PlayableCharacter.MovementState.Shield;
+                _playableCharacter.RequestShield(_animator.GetBool(IsShielding));
                 if (_animator.GetBool(IsSprinting)) 
                 { 
-                    _character.RequestSprint(); 
-                    _animator.SetBool(IsSprinting, _character.SprintRequested);
+                    _playableCharacter.RequestSprint(); 
+                    _animator.SetBool(IsSprinting, _playableCharacter.SprintRequested);
                 }
             }
 
-            if (context.canceled && !_character.IsDizzy && !_character.IsDead)
+            if (context.canceled && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
                 _animator.SetBool(IsShielding, false);
-                _character.RequestShield(_animator.GetBool(IsShielding));
+                _playableCharacter.RequestShield(_animator.GetBool(IsShielding));
             }
         }
 
@@ -135,7 +135,7 @@ namespace Character
         {
             if (context.performed)
             {
-                
+                _playableCharacter.RequestInteract();
             }
         }
 
@@ -158,8 +158,8 @@ namespace Character
                 Debug.LogError("No player input found");
             }
             
-            _character =  GetComponent<Character>();
-            if (_character == null)
+            _playableCharacter =  GetComponent<PlayableCharacter>();
+            if (_playableCharacter == null)
             {
                 Debug.LogError("No character found");
             }
@@ -191,17 +191,17 @@ namespace Character
 
         private void Update()
         {
-            if (_character.IsChargedAttacking)
+            if (_playableCharacter.IsChargedAttacking)
             {
-                if (Time.time - _lastChargedAttackStart > _character.chargedAttackMaxDuration)
+                if (Time.time - _lastChargedAttackStart > _playableCharacter.chargedAttackMaxDuration)
                 {
                     _lastChargedAttackStart = 0;
-                    _character.IsChargedAttacking = false;
-                    _animator.SetBool(IsChargeAttacking, _character.IsChargedAttacking);
+                    _playableCharacter.IsChargedAttacking = false;
+                    _animator.SetBool(IsChargeAttacking, _playableCharacter.IsChargedAttacking);
                     
-                    _character.IsDizzy = true;
-                    _character.movementState = Character.MovementState.Dizzy;
-                    _animator.SetBool(IsDizzy, _character.IsDizzy);
+                    _playableCharacter.IsDizzy = true;
+                    _playableCharacter.movementState = PlayableCharacter.MovementState.Dizzy;
+                    _animator.SetBool(IsDizzy, _playableCharacter.IsDizzy);
                     _lastChargedAttackTime = Time.time;
                     
                     _animator.SetBool(IsWalking, false);
@@ -211,13 +211,13 @@ namespace Character
                 }
             }
 
-            if (_character.IsDizzy)
+            if (_playableCharacter.IsDizzy)
             {
-                if (Time.time - _lastChargedAttackTime > _character.chargedAttackCooldown)
+                if (Time.time - _lastChargedAttackTime > _playableCharacter.chargedAttackCooldown)
                 {
                     _lastChargedAttackTime = 0;
-                    _character.IsDizzy = false;
-                    _animator.SetBool(IsDizzy, _character.IsDizzy);
+                    _playableCharacter.IsDizzy = false;
+                    _animator.SetBool(IsDizzy, _playableCharacter.IsDizzy);
                 }
             }
             
@@ -225,46 +225,46 @@ namespace Character
             if (stateInfo.IsName("Attack01") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
                 // Debug.LogWarning("Attack01 Completed");
-                _character.IsAttacking = false;
-                _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _playableCharacter.IsAttacking = false;
+                _animator.SetBool(IsAttacking, _playableCharacter.IsAttacking);
                 _lastAttackTime =  Time.time;
                 _canAttack = false;
             }
             else if (stateInfo.IsName("Attack02") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
                 // Debug.LogWarning("Attack02 Completed");
-                _character.IsAttacking = false;
-                _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _playableCharacter.IsAttacking = false;
+                _animator.SetBool(IsAttacking, _playableCharacter.IsAttacking);
                 _lastAttackTime =  Time.time;
                 _canAttack = false;
             }
             else if (stateInfo.IsName("Attack03") && stateInfo.normalizedTime >= 1.0f && _animator.GetBool(IsAttacking))
             {
                 // Debug.LogWarning("Attack03 Completed");
-                _character.IsAttacking = false;
-                _animator.SetBool(IsAttacking, _character.IsAttacking);
+                _playableCharacter.IsAttacking = false;
+                _animator.SetBool(IsAttacking, _playableCharacter.IsAttacking);
                 _lastAttackTime =  Time.time;
                 _canAttack = false;
             }
 
-            if (Time.time - _lastAttackTime > _character.attackCooldown)
+            if (Time.time - _lastAttackTime > _playableCharacter.attackCooldown)
             {
                 _canAttack = true;
             }
             
-            if (!_character.IsGrounded)
+            if (!_playableCharacter.IsGrounded)
             {
-                _character.movementState = Character.MovementState.Airborne;
+                _playableCharacter.movementState = PlayableCharacter.MovementState.Airborne;
                 _animator.SetBool(IsFalling, true);
             }
-            else if (_character.IsGrounded && _animator.GetBool(IsFalling))
+            else if (_playableCharacter.IsGrounded && _animator.GetBool(IsFalling))
             {
                 _animator.SetBool(IsFalling, false);
             }
 
-            if (_character.CurrentComboStep != _animator.GetInteger(AttackValue))
+            if (_playableCharacter.CurrentComboStep != _animator.GetInteger(AttackValue))
             {
-                _animator.SetInteger(AttackValue, _character.CurrentComboStep);
+                _animator.SetInteger(AttackValue, _playableCharacter.CurrentComboStep);
             }
         }
     }
