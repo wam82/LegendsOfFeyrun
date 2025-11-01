@@ -50,6 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f04e5384c90041dabdd1d4a293c5bf2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  movementState: 0
   maxHealth: 100
   walkSpeed: 4
   shieldSpeed: 2
@@ -302,7 +303,7 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.35
+  m_Radius: 0.4
   m_Height: 1.5
   m_Direction: 1
   m_Center: {x: 0, y: 0.7, z: 0}

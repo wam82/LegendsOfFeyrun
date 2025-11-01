@@ -21,6 +21,21 @@ namespace Combat
             }
         }
 
+        public static void SlimeAttack(GameObject target, float damage)
+        {
+            IDamageable damageable = target.GetComponent<IDamageable>();
+
+            if (damageable != null)
+            {
+                damageable.TakeDamage(damage);
+                Debug.Log($"Target {target.name} took {damage} damage.");
+            }
+            else
+            {
+                Debug.LogWarning($"Target {target.name} cannot be damaged (no IDamageable component).");
+            }
+        }
+
         private void Awake()
         {
             if (Instance == null)

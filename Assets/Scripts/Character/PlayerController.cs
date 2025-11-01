@@ -28,6 +28,7 @@ namespace Character
             {
                 Vector2 movement = context.ReadValue<Vector2>();
                 _character.SetInputVector(movement);
+                _character.movementState = Character.MovementState.Walk;
                 _animator.SetBool(IsWalking, movement.sqrMagnitude > 0);
                 
                 if (!_animator.GetBool(IsWalking) && _character.SprintRequested)
@@ -47,6 +48,7 @@ namespace Character
         {
             if (context.performed && !_character.IsDizzy)
             {
+                _character.movementState = Character.MovementState.Jump;
                 _character.RequestJump();
             }
         }
@@ -58,6 +60,7 @@ namespace Character
                 if (_animator.GetBool(IsWalking) && !_animator.GetBool(IsShielding))
                 {
                     _character.RequestSprint();
+                    _character.movementState = Character.MovementState.Sprint;
                     _animator.SetBool(IsSprinting, _character.SprintRequested);
                 }
             }
@@ -73,6 +76,7 @@ namespace Character
                     _animator.SetBool(IsSprinting, _character.SprintRequested);
                 }
                 _character.RequestAttack();
+                _character.movementState = Character.MovementState.SmallAttack;
                 _animator.SetBool(IsAttacking, _character.IsAttacking);
             }
         }
@@ -82,6 +86,7 @@ namespace Character
             if (context.performed && !_character.IsDizzy)
             {
                 _character.ChargedAttackRequested = true;
+                _character.movementState = Character.MovementState.ChargedAttack;
                 _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
                 _lastChargedAttackStart = Time.time;
             }
@@ -97,7 +102,8 @@ namespace Character
         {
             if (context.performed && !_character.IsDizzy)
             {
-                _animator.SetBool(IsShielding, true); 
+                _animator.SetBool(IsShielding, true);
+                _character.movementState = Character.MovementState.Shield;
                 _character.RequestShield(_animator.GetBool(IsShielding));
                 if (_animator.GetBool(IsSprinting)) 
                 { 
@@ -179,6 +185,7 @@ namespace Character
                     _animator.SetBool(IsChargeAttacking, _character.ChargedAttackRequested);
                     
                     _character.IsDizzy = true;
+                    _character.movementState = Character.MovementState.Dizzy;
                     _animator.SetBool(IsDizzy, _character.IsDizzy);
                     _lastChargedAttackTime = Time.time;
                     
@@ -232,6 +239,7 @@ namespace Character
             
             if (!_character.IsGrounded)
             {
+                _character.movementState = Character.MovementState.Airborne;
                 _animator.SetBool(IsFalling, true);
             }
             else if (_character.IsGrounded && _animator.GetBool(IsFalling))

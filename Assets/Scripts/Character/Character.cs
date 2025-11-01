@@ -1,10 +1,15 @@
 using System.Collections;
+using Combat;
 using UnityEngine;
 
 namespace Character
 {
-    public class Character : MonoBehaviour
+    public class Character : MonoBehaviour, IDamageable
     {
+        // #pragma warning disable CS0414 // Field is assigned but its value is never used
+        public MovementState movementState;
+        // #pragma warning restore CS0414 // Field is assigned but its value is never used
+
         [Header("Character Attributes")] 
         [SerializeField] private float maxHealth;
         [SerializeField] private float walkSpeed;
@@ -57,17 +62,17 @@ namespace Character
         private bool _shieldRequested;
         private bool _comboStarted;
 
-        // private enum MovementState
-        // {
-        //     Walk,
-        //     Sprint,
-        //     Shield,
-        //     Airborne
-        // }
-        
-// #pragma warning disable CS0414 // Field is assigned but its value is never used
-        // private MovementState _movementState;
-// #pragma warning restore CS0414 // Field is assigned but its value is never used
+        public enum MovementState
+        {
+            Walk,
+            Sprint,
+            Shield,
+            SmallAttack,
+            ChargedAttack,
+            Jump,
+            Dizzy,
+            Airborne
+        }
 
         public void SetInputVector(Vector2 inputVector)
         {
@@ -300,6 +305,11 @@ namespace Character
             }
             
             MoveCharacter();
+        }
+
+        public void TakeDamage(float amount)
+        {
+            _currentHealth -= amount;
         }
     }
 }

@@ -57,6 +57,8 @@ namespace Enemy.Agents
         private bool _canAttack1 = true;
         private bool _canAttack2 = true;
         private bool _hasTaunted;
+        public bool attack1Requested;
+        public bool attack2Requested;
 
         private float _attack1Time;
         private float _attack2Time;
@@ -286,13 +288,23 @@ namespace Enemy.Agents
         
         public void OnAttack1AnimationConnection()
         {
-            // Debug.Log("Attack1 connected");
+            attack1Requested  = true;
         }
+
+        // public void OnAttack1AnimationCompleted()
+        // {
+        //     attack1Requested = false;
+        // }
 
         public void OnAttack2AnimationConnection()
         {
-            // Debug.Log("Attack2 connected");
+            attack2Requested = true;
         }
+        
+        // public void OnAttack2AnimationCompleted()
+        // {
+        //     attack2Requested = false;
+        // }
 
         public void OnHurtAnimationComplete()
         {

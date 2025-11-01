@@ -26,6 +26,8 @@ namespace Enemy.Entities
         public float Attack1Radius => attack1Radius;
         public float Attack2Radius => attack2Radius;
         public float AttackCooldown => attackCooldown;
+        public float Attack1Damage => attack1Damage;
+        public float Attack2Damage => attack2Damage;
 
 
         private float _currentHealth;

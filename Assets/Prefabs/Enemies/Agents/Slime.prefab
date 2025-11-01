@@ -82,8 +82,8 @@ MonoBehaviour:
   attack1Radius: 2
   attack2Radius: 1.25
   attackCooldown: 2
-  attack1Damage: 0
-  attack2Damage: 0
+  attack1Damage: 10
+  attack2Damage: 15
 --- !u!114 &952329771672064894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -108,6 +108,8 @@ MonoBehaviour:
   tauntDuration: 2
   minimumWanderDuration: 4
   maximumWanderDuration: 7
+  attack1Requested: 0
+  attack2Requested: 0
 --- !u!114 &4151521429686508637
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -259,8 +261,56 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2568921697333015212, guid: b3615740610f98a4fac2bdb176fd9017, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4163266567568872223}
+    - targetCorrespondingSourceObject: {fileID: 2568921697333015212, guid: b3615740610f98a4fac2bdb176fd9017, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 4778428830214380733}
   m_SourcePrefab: {fileID: 100100000, guid: b3615740610f98a4fac2bdb176fd9017, type: 3}
+--- !u!1 &3893800915263735232 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2568921697333015212, guid: b3615740610f98a4fac2bdb176fd9017, type: 3}
+  m_PrefabInstance: {fileID: 1562515841444034412}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &4163266567568872223
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893800915263735232}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: -0.25, y: 0.1, z: 0}
+--- !u!114 &4778428830214380733
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3893800915263735232}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: abf0cd6857344b0cb36c564f04c33942, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  slimeAI: {fileID: 952329771672064894}
+  slimeEntity: {fileID: 7222391969382661272}
 --- !u!4 &3893800915263904236 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 2568921697333046912, guid: b3615740610f98a4fac2bdb176fd9017, type: 3}
