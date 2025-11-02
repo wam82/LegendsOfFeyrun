@@ -12,7 +12,7 @@ namespace Enemy.Colliders
 
         private void OnTriggerEnter(Collider other)
         {
-            if (other.gameObject.CompareTag("Player"))
+            if (other.CompareTag("Player"))
             {
                 if (slimeAI.attack1Requested)
                 {

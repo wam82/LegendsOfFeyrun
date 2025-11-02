@@ -7,6 +7,12 @@ namespace Character
 {
     public class PlayableCharacter : MonoBehaviour, IDamageable
     {
+        [ContextMenu("Take 25 Damage")]
+        private void Take25Damage()
+        {
+            TakeDamage(25f);
+        }
+        
         // #pragma warning disable CS0414 // Field is assigned but its value is never used
         public MovementState movementState;
         // #pragma warning restore CS0414 // Field is assigned but its value is never used
@@ -329,12 +335,19 @@ namespace Character
             }
             
             _currentHealth -= amount;
+            _currentHealth = Mathf.Max(0,  _currentHealth);
 
             if (_currentHealth <= 0)
             {
                 IsDead = true;
                 controller.Die();
             }
+        }
+        
+        public void RestoreHealth(float amount)
+        {
+            _currentHealth += amount;
+            _currentHealth = Mathf.Min(_currentHealth, maxHealth);
         }
     }
 }
