@@ -31,7 +31,7 @@ namespace Character
             if (!_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
             {
                 Vector2 movement = context.ReadValue<Vector2>();
-                _playableCharacter.SetInputVector(movement);
+                _playableCharacter.RequestMove(movement);
                 _playableCharacter.movementState = PlayableCharacter.MovementState.Walk;
                 _animator.SetBool(IsWalking, movement.sqrMagnitude > 0);
                 
@@ -44,7 +44,15 @@ namespace Character
 
             if (_playableCharacter.IsDizzy)
             {
-                _playableCharacter.SetInputVector(new Vector2(0,0));
+                _playableCharacter.RequestMove(new Vector2(0,0));
+            }
+        }
+
+        public void OnLook(InputAction.CallbackContext context)
+        {
+            if (_playableCharacter.IsFPSCameraOn)
+            {
+                _playableCharacter.RequestLook(context.ReadValue<Vector2>());
             }
         }
 

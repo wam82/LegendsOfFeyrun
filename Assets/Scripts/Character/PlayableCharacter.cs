@@ -28,6 +28,10 @@ namespace Character
         [SerializeField] private float airMultiplier;
         [SerializeField] private float groundDrag;
         [SerializeField] private float maxSlopeAngle;
+        
+        [Header("Player Settings")]
+        [SerializeField] private float horizontalSensitivity;
+        [SerializeField] private float verticalSensitivity;
 
         [Header("Combat Attributes")] 
         [SerializeField] private float comboTimer;
@@ -41,13 +45,15 @@ namespace Character
 
         [Header("Character Components")] 
         [SerializeField] private float movementForceFactor = 10f;
-        [SerializeField] private Transform cameraTransform;
+        [SerializeField] private Transform firstPersonCamera;
+        [SerializeField] private Transform thirdPersonCamera;
         [SerializeField] private LayerMask groundLayerMask;
         [SerializeField] private PlayerController controller;
 
         public int CurrentComboStep { get; private set; }
         public float ChargedAttackDamage => chargedAttackDamage;
 
+        public bool IsFPSCameraOn { get; set; }
         public bool SprintRequested { get; private set; }
         public bool IsGrounded { get; private set; }
         public bool IsAttacking { get; set; }
@@ -61,13 +67,15 @@ namespace Character
         
         private Rigidbody _rigidbody;
         
-        private Vector2 _inputVector;
+        private Vector2 _movementInputVector;
+        private Vector2 _lookInputVector;
         private Vector3 _desiredDirection;
         
         private float _lastAttackTime;
         private float _movementSpeed;
         private float _currentHealth;
         private const float CharacterHeight = 1f;
+        private float _xRotation = 0f;
         
         private bool _canJump = true;
         private bool _jumpRequested;
@@ -86,9 +94,14 @@ namespace Character
             Airborne
         }
 
-        public void SetInputVector(Vector2 inputVector)
+        public void RequestMove(Vector2 inputVector)
         {
-            _inputVector = inputVector;
+            _movementInputVector = inputVector;
+        }
+
+        public void RequestLook(Vector2 inputVector)
+        {
+            _lookInputVector = inputVector;
         }
 
         private bool OnSlope()
@@ -118,7 +131,6 @@ namespace Character
         public void RequestSprint()
         {
             SprintRequested = !SprintRequested;
-            
         }
 
         public void RequestShield(bool shieldRequested)
@@ -148,6 +160,22 @@ namespace Character
         public void RequestInteract()
         {
             interactableObject?.Interact();
+        }
+
+        public void ToggleActiveCamera()
+        {
+            if (IsFPSCameraOn)
+            {
+                firstPersonCamera.gameObject.SetActive(false);
+                thirdPersonCamera.gameObject.SetActive(true);
+                IsFPSCameraOn = false;
+            }
+            else
+            {
+                firstPersonCamera.gameObject.SetActive(true);
+                thirdPersonCamera.gameObject.SetActive(false);
+                IsFPSCameraOn = true;
+            }
         }
 
         public float GetSmallAttackDamage()
@@ -216,19 +244,70 @@ namespace Character
                 // _movementState =  MovementState.Airborne;
             }
         }
+
+        private void FirstPersonLookAround()
+        {
+            float mouseX = _lookInputVector.x * horizontalSensitivity * Time.deltaTime;
+            float mouseY = _lookInputVector.y * verticalSensitivity * Time.deltaTime;
+            
+            _xRotation -= mouseY;
+            _xRotation = Mathf.Clamp(_xRotation, -80f, 80f);
+
+            firstPersonCamera.localRotation = Quaternion.Euler(_xRotation, 0f, 0f);
+            transform.Rotate(Vector3.up * mouseX);
+        }
+
+        private void FirstPersonMovement()
+        {
+            // 1. Get camera forward and right, ignoring vertical component (so you only move horizontally)
+            Vector3 camForward = firstPersonCamera.forward;
+            Vector3 camRight = firstPersonCamera.right;
+            camForward.y = 0f;
+            camRight.y = 0f;
+            camForward.Normalize();
+            camRight.Normalize();
+
+            // 2. Compute movement direction from input (relative to camera orientation)
+            _desiredDirection = camForward * _movementInputVector.y + camRight * _movementInputVector.x;
+
+            // 3. Apply movement forces
+            if (_desiredDirection.sqrMagnitude > 0.01f)
+            {
+                if (OnSlope())
+                {
+                    _rigidbody.AddForce(GetSlopeMoveDirection() * (_movementSpeed * 0.5f * movementForceFactor), ForceMode.Force);
+                }
+                else if (IsGrounded)
+                {
+                    _rigidbody.AddForce(_desiredDirection.normalized * (_movementSpeed * movementForceFactor), ForceMode.Force);
+                }
+                else // In air
+                {
+                    _rigidbody.AddForce(_desiredDirection.normalized * (_movementSpeed * movementForceFactor * airMultiplier), ForceMode.Force);
+                }
+            }
+
+            // 4. Clamp horizontal velocity
+            Vector3 flatVelocity = new Vector3(_rigidbody.velocity.x, 0f, _rigidbody.velocity.z);
+            if (flatVelocity.magnitude > _movementSpeed)
+            {
+                Vector3 limitedVelocity = flatVelocity.normalized * _movementSpeed;
+                _rigidbody.velocity = new Vector3(limitedVelocity.x, _rigidbody.velocity.y, limitedVelocity.z);
+            }
+        }
         
-        private void MoveCharacter()
+        private void ThirdPersonMovement()
         {
             // 1. Get camera's forward and right, ignoring vertical component
-            Vector3 camForward = cameraTransform.forward;
-            Vector3 camRight = cameraTransform.right;
+            Vector3 camForward = thirdPersonCamera.forward;
+            Vector3 camRight = thirdPersonCamera.right;
             camForward.y = 0f;
             camRight.y = 0f;
             camForward.Normalize();
             camRight.Normalize();
             
             // 2. Compute movement direction from input
-            _desiredDirection = camForward * _inputVector.y + camRight * _inputVector.x;
+            _desiredDirection = camForward * _movementInputVector.y + camRight * _movementInputVector.x;
             
             // 3. Rotate character to face movement direction 
             if (_desiredDirection.sqrMagnitude > 0.01f)
@@ -320,8 +399,16 @@ namespace Character
             {
                 return;
             }
-            
-            MoveCharacter();
+
+            if (IsFPSCameraOn)
+            {
+                FirstPersonMovement();
+                FirstPersonLookAround();
+            }
+            else
+            {
+                ThirdPersonMovement();
+            }
         }
 
         public void TakeDamage(float amount)

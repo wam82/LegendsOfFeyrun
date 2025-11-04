@@ -8,7 +8,6 @@ namespace Environment.Objects
 {
     public class Door : MonoBehaviour, IInteractable
     {
-        [SerializeField] private PlayableCharacter playableCharacter;
         [SerializeField] private float openingAngle;
         [SerializeField] private float duration;
         
