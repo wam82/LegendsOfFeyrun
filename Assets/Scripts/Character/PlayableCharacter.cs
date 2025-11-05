@@ -52,6 +52,7 @@ namespace Character
 
         public int CurrentComboStep { get; private set; }
         public float ChargedAttackDamage => chargedAttackDamage;
+        public float Speed => _movementSpeed;
 
         public bool IsFPSCameraOn { get; set; }
         public bool SprintRequested { get; private set; }

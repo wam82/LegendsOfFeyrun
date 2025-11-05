@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Combat;
 using NPC.MovementBehaviours;
 using UnityEngine;
 
@@ -41,6 +42,18 @@ namespace NPC
         protected virtual void Start()
         {
             obstacles.AddRange(GameObject.FindGameObjectsWithTag("Obstacle"));
+            
+            if (!trackedTarget)
+            {
+                if (CombatManager.Instance.player != null)
+                {
+                    trackedTarget = CombatManager.Instance.player;
+                }
+                else
+                {
+                    Debug.LogError("No tracked target for " + gameObject.name);
+                }
+            }
         }
 
         protected virtual void Update()

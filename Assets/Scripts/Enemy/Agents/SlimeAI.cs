@@ -365,19 +365,6 @@ namespace Enemy.Agents
         protected override void Start()
         {
             base.Start();
-            
-            if (!trackedTarget)
-            {
-                if (CombatManager.Instance.player != null)
-                {
-                    trackedTarget = CombatManager.Instance.player;
-                }
-                else
-                {
-                    Debug.LogError("No tracked target for " + gameObject.name);
-                }
-            }
-            
             _activeBehaviour = StartCoroutine(BaseBehaviour());
         }
 
