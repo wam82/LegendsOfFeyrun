@@ -2,7 +2,7 @@ namespace Environment.Interfaces
 {
     public interface IInteractable
     {
-        bool CanInteract { get; set; }
+        bool CanInteract();
         void Interact();
     }
 }

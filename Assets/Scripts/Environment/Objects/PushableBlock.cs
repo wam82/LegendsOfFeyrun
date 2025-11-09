@@ -11,17 +11,17 @@ namespace Environment.Objects
         [SerializeField] private float moveDuration;
      
         private bool _isMoving;
-        
-        public bool CanInteract { get; set; }
+        private bool _isPlayerPushing;
+
+        public bool CanInteract()
+        {
+            return !_isMoving && _isPlayerPushing;
+        }
+
         public void Interact()
         {
-            if (CanInteract)
+            if (CanInteract())
             {
-                if (_isMoving)
-                {
-                    return;
-                }
-                
                 float blockSize = transform.localScale.z;
                 Vector3 targetPosition = transform.position + transform.forward * blockSize;
                 StartCoroutine(MoveBlock(targetPosition));
@@ -59,7 +59,7 @@ namespace Environment.Objects
                 {
                     other.gameObject.GetComponent<PlayableCharacter>().interactableObject =
                         gameObject.GetComponent<IInteractable>();
-                    CanInteract = true;
+                    _isPlayerPushing = true;
                 }
             }
         }
@@ -69,7 +69,7 @@ namespace Environment.Objects
             if (other.gameObject.CompareTag("Player"))
             {
                 other.gameObject.GetComponent<PlayableCharacter>().interactableObject = null;
-                CanInteract = false;
+                _isPlayerPushing = false;
             }
         }
     }

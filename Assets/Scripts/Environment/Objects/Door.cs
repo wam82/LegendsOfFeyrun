@@ -13,8 +13,7 @@ namespace Environment.Objects
         
         private bool _opened;
         private bool _isRotating;
-        
-        public bool CanInteract { get; set; }
+        private bool _isPlayerInTrigger;
 
         private IEnumerator Rotate()
         {
@@ -41,15 +40,15 @@ namespace Environment.Objects
             _isRotating = false;
         }
 
+        public bool CanInteract()
+        {
+            return !_isRotating && _isPlayerInTrigger;
+        }
+
         public void Interact()
         {
-            if (CanInteract)
+            if (CanInteract())
             {
-                if (_isRotating)
-                {
-                    return;
-                }
-
                 StartCoroutine(Rotate());
                 _opened = !_opened;
             }
@@ -62,7 +61,7 @@ namespace Environment.Objects
             {
                 other.gameObject.GetComponent<PlayableCharacter>().interactableObject =
                     gameObject.GetComponent<IInteractable>();
-                CanInteract = true;
+                _isPlayerInTrigger = true;
             }
         }
 
@@ -71,7 +70,7 @@ namespace Environment.Objects
             if (other.CompareTag("Player"))
             {
                 other.gameObject.GetComponent<PlayableCharacter>().interactableObject = null;
-                CanInteract = false;
+                _isPlayerInTrigger = false;
             }
         }
     }
