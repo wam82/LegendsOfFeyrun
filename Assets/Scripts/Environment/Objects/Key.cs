@@ -1,17 +1,20 @@
 using System.Linq;
 using Character;
+using Environment.Interfaces;
 using NPC;
 using NPC.MovementBehaviours;
 using UnityEngine;
 
 namespace Environment.Objects
 {
-    public class Key : AIAgent
+    public class Key : AIAgent, ICollectible
     {
         [SerializeField] private float distanceToMaintain;
         [SerializeField] private float bufferDistance;
         
         private float _distance;
+        
+        public bool Collected { get; set; }
         
         private PlayableCharacter _playableCharacter;
 
@@ -46,6 +49,11 @@ namespace Environment.Objects
 
         protected override void Update()
         {
+            if (!Collected)
+            {
+                return;
+            }
+            
             base.Update();
             _distance = Vector3.Distance(transform.position, TargetPosition);
             moveSpeed = _playableCharacter.Speed + _distance/(distanceToMaintain + bufferDistance);
@@ -53,6 +61,22 @@ namespace Environment.Objects
             if (_distance < distanceToMaintain - bufferDistance)
             {
                 moveSpeed = 0;
+            }
+        }
+        
+        public void Collect(GameObject player)
+        {
+            Collected = true;
+        }
+
+        public void OnTriggerEnter(Collider other)
+        {
+            if (other.CompareTag("Player"))
+            {
+                if (!Collected)
+                {
+                    Collect(other.gameObject);
+                }
             }
         }
     }

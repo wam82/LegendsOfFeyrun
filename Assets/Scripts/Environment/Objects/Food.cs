@@ -4,14 +4,15 @@ using UnityEngine;
 
 namespace Environment.Objects
 {
-    public class Food : MonoBehaviour, IConsumable
+    public class Food : MonoBehaviour, ICollectible
     {
         [SerializeField] private float restoreAmount;
 
-        public bool Consumed { get; set; }
+        public bool Collected { get; set; }
 
-        public void Consume(GameObject target)
+        public void Collect(GameObject target)
         {
+            Collected = true;
             target.GetComponent<PlayableCharacter>().RestoreHealth(restoreAmount);
         }
 
@@ -19,10 +20,9 @@ namespace Environment.Objects
         {
             if (other.CompareTag("Player"))
             {
-                if (!Consumed)
+                if (!Collected)
                 {
-                    Consume(other.gameObject);
-                    Consumed = true;
+                    Collect(other.gameObject);
                 }
             }
         }
