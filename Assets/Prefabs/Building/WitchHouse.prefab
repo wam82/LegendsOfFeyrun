@@ -1,0 +1,84 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &2364953874210253474
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 24.820545
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.024191108
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -30.385292
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: -5164921100856074710, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b7bab55e5f5da04428fc05a9271575a9, type: 2}
+    - target: {fileID: -2647538700095549465, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b7bab55e5f5da04428fc05a9271575a9, type: 2}
+    - target: {fileID: -1212983936944529709, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b7bab55e5f5da04428fc05a9271575a9, type: 2}
+    - target: {fileID: 919132149155446097, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Name
+      value: WitchHouse
+      objectReference: {fileID: 0}
+    - target: {fileID: 1267952197485840594, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b7bab55e5f5da04428fc05a9271575a9, type: 2}
+    - target: {fileID: 2643061142009012147, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b7bab55e5f5da04428fc05a9271575a9, type: 2}
+    - target: {fileID: 3919535467276561931, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: b7bab55e5f5da04428fc05a9271575a9, type: 2}
+    m_RemovedComponents: []
+    m_RemovedGameObjects:
+    - {fileID: 3679547209126956787, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 7c077e9cc24a7af46a6cdd1379ccd745, type: 3}
