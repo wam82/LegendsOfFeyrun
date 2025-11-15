@@ -64,7 +64,7 @@ namespace Environment.Objects
             }
         }
         
-        public void Collect(GameObject player)
+        public void Collect()
         {
             Collected = true;
         }
@@ -75,7 +75,7 @@ namespace Environment.Objects
             {
                 if (!Collected)
                 {
-                    Collect(other.gameObject);
+                    Collect();
                 }
             }
         }

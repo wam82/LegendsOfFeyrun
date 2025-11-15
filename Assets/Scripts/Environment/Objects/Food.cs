@@ -1,4 +1,6 @@
+using System;
 using Character;
+using Combat;
 using Environment.Interfaces;
 using UnityEngine;
 
@@ -7,13 +9,24 @@ namespace Environment.Objects
     public class Food : MonoBehaviour, ICollectible
     {
         [SerializeField] private float restoreAmount;
-
+        private PlayableCharacter _playableCharacter;
         public bool Collected { get; set; }
 
-        public void Collect(GameObject target)
+        public void Collect()
         {
             Collected = true;
-            target.GetComponent<PlayableCharacter>().RestoreHealth(restoreAmount);
+            _playableCharacter.RestoreHealth(restoreAmount);
+        }
+
+        private void Start()
+        {
+            if (!_playableCharacter)
+            {
+                if (CombatManager.Instance.player != null)
+                {
+                    _playableCharacter = CombatManager.Instance.player.GetComponent<PlayableCharacter>();
+                }
+            }
         }
 
         public void OnTriggerEnter(Collider other)
@@ -22,7 +35,7 @@ namespace Environment.Objects
             {
                 if (!Collected)
                 {
-                    Collect(other.gameObject);
+                    Collect();
                 }
             }
         }
