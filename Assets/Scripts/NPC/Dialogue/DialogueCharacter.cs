@@ -1,15 +1,19 @@
 using System.Collections;
 using Character;
 using Environment.Interfaces;
+using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 namespace NPC.Dialogue
 {
     public class DialogueCharacter : MonoBehaviour, IInteractable
     {
         [SerializeField] private DialogueData dialogueData;
-        
-        public DialogueData DialogueData => dialogueData;
+        [SerializeField] private GameObject dialoguePanel;
+        [SerializeField] private TMP_Text dialogueText;
+        [SerializeField] private TMP_Text nameText;
+        [SerializeField] private Image dialoguePortrait;
         
         private int _dialogueIndex;
         
@@ -39,18 +43,17 @@ namespace NPC.Dialogue
             }
         }
 
-        private void Speak(string sentence)
-        {
-            Debug.Log(dialogueData.characterName + ": " + sentence);
-        }
-
         private void StartDialogue()
         {
             _isDialogueActive = true;
             _dialogueIndex = 0;
             
-            // StartCoroutine(TypeLine());
-            StartCoroutine(TestSpeak());
+            nameText.SetText(dialogueData.characterName);
+            dialoguePortrait.sprite = dialogueData.portrait;
+            dialoguePanel.SetActive(true);
+            // pause game?
+            
+            StartCoroutine(TypeLine());
         }
 
         private void NextLine()
@@ -58,12 +61,12 @@ namespace NPC.Dialogue
             if (_isTyping)
             {
                 StopAllCoroutines();
-                //ui.setText(dialogueData.dialogueLines[_dialogueIndex]);
+                dialogueText.SetText(dialogueData.dialogueLines[_dialogueIndex]);
                 _isTyping = false;
             }
             else if (++_dialogueIndex < dialogueData.dialogueLines.Length)
             {
-                StartCoroutine(TestSpeak());
+                StartCoroutine(TypeLine());
             }
             else
             {
@@ -71,24 +74,14 @@ namespace NPC.Dialogue
             }
         }
 
-        private IEnumerator TestSpeak()
-        {
-            Speak(dialogueData.dialogueLines[_dialogueIndex]);
-            
-            if (dialogueData.autoProgressLines.Length > _dialogueIndex && dialogueData.autoProgressLines[_dialogueIndex])
-            {
-                yield return new WaitForSeconds(dialogueData.autoProgressDelay);
-                NextLine();
-            }
-        }
-
         private IEnumerator TypeLine()
         {
             _isTyping = true;
+            dialogueText.SetText("");
 
             foreach (char letter in dialogueData.dialogueLines[_dialogueIndex])
             {
-                //ui.text += letter;
+                dialogueText.text += letter;
                 yield return new WaitForSeconds(dialogueData.typingSpeed);
             }
             
@@ -97,14 +90,16 @@ namespace NPC.Dialogue
             if (dialogueData.autoProgressLines.Length > _dialogueIndex && dialogueData.autoProgressLines[_dialogueIndex])
             {
                 yield return new WaitForSeconds(dialogueData.autoProgressDelay);
-                // NextLine();
+                NextLine();
             }
         }
 
-        public void EndDialogue()
+        private void EndDialogue()
         {
             StopAllCoroutines();
             _isDialogueActive = false;
+            dialogueText.SetText("");
+            dialoguePanel.SetActive(false);
         }
         
         private void OnTriggerEnter(Collider other)
