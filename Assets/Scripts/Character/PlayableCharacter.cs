@@ -1,6 +1,8 @@
 using System.Collections;
+using System.Collections.Generic;
 using Combat;
 using Environment.Interfaces;
+using Environment.Objects;
 using UnityEngine;
 
 namespace Character
@@ -83,6 +85,9 @@ namespace Character
         private bool _shieldRequested;
         private bool _comboStarted;
 
+        private readonly Dictionary<KeyType, List<Key>> _collectedKeys = new();
+
+
         public enum MovementState
         {
             Walk,
@@ -93,6 +98,58 @@ namespace Character
             Jump,
             Dizzy,
             Airborne
+        }
+
+        public void AddKey(Key key)
+        {
+            KeyType type = key.type;
+
+            if (!_collectedKeys.TryGetValue(type, out var list))
+            {
+                list = new List<Key>();
+                _collectedKeys[type] = list;
+            }
+
+            list.Add(key);
+        }
+
+        public bool AttemptKeyTransaction(KeyType type)
+        {
+            if (_collectedKeys.ContainsKey(type))
+            {
+                if (_collectedKeys.TryGetValue(type, out var list))
+                {
+                    if (list.Count > 0)
+                    {
+                        // Take the first key
+                        Key firstKey = list[0];
+
+                        // Remove the key
+                        list.Remove(firstKey);
+                        firstKey.gameObject.SetActive(false);
+
+                        // If the list is now empty, remove the entire entry from the dictionary
+                        if (list.Count == 0)
+                        {
+                            _collectedKeys.Remove(type);
+                        }
+                
+                        return true;
+                    }
+
+                    Debug.LogWarning("List is empty");
+                }
+                else
+                {
+                    Debug.LogWarning("Couldn't pull value from dictionary");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No key type found for " + type);
+            }
+            
+            return false;
         }
 
         public void RequestMove(Vector2 inputVector)

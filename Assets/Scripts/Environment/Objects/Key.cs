@@ -7,10 +7,17 @@ using UnityEngine;
 
 namespace Environment.Objects
 {
+    public enum KeyType
+    {
+        Normal,
+    }
+    
     public class Key : AIAgent, ICollectible
     {
         [SerializeField] private float distanceToMaintain;
         [SerializeField] private float bufferDistance;
+
+        public KeyType type = KeyType.Normal;
         
         private float _distance;
         
@@ -66,6 +73,7 @@ namespace Environment.Objects
         
         public void Collect()
         {
+            _playableCharacter.AddKey(this);
             Collected = true;
         }
 
