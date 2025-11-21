@@ -4031,7 +4031,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 5941861842619815900, guid: 0f637b7d01a780c4f8229529fee884d7, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6.7000003
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 5941861842619815900, guid: 0f637b7d01a780c4f8229529fee884d7, type: 3}
       propertyPath: m_LocalPosition.z
@@ -4068,6 +4068,10 @@ PrefabInstance:
     - target: {fileID: 7617179497436023003, guid: 0f637b7d01a780c4f8229529fee884d7, type: 3}
       propertyPath: m_Name
       value: Tavern
+      objectReference: {fileID: 0}
+    - target: {fileID: 7617179497436023003, guid: 0f637b7d01a780c4f8229529fee884d7, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
