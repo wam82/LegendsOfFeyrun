@@ -56,6 +56,18 @@ PrefabInstance:
       propertyPath: m_Name
       value: TGV_Floor_03A
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 9fedfc63736095f4f8b7d311f3b3e47c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3255925604882660192, guid: 9fedfc63736095f4f8b7d311f3b3e47c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4520304041224280096, guid: 9fedfc63736095f4f8b7d311f3b3e47c, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 9fedfc63736095f4f8b7d311f3b3e47c, type: 3}
       propertyPath: m_FadeMode
       value: 1
