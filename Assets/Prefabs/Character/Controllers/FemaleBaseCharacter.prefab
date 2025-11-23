@@ -154,7 +154,9 @@ MonoBehaviour:
   jumpCooldown: 0.25
   airMultiplier: 0.4
   groundDrag: 3
-  maxSlopeAngle: 40
+  maxSlopeAngle: 65
+  horizontalSensitivity: 0
+  verticalSensitivity: 0
   comboTimer: 3
   attackCooldown: 0.1
   comboStep1Damage: 10
@@ -164,7 +166,8 @@ MonoBehaviour:
   chargedAttackCooldown: 3
   chargedAttackDamage: 0
   movementForceFactor: 10
-  cameraTransform: {fileID: 0}
+  firstPersonCamera: {fileID: 0}
+  thirdPersonCamera: {fileID: 0}
   groundLayerMask:
     serializedVersion: 2
     m_Bits: 456
