@@ -1,9 +1,12 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Combat;
 using Environment.Interfaces;
 using Environment.Objects;
 using UnityEngine;
+using UserInterface;
+using Random = UnityEngine.Random;
 
 namespace Character
 {
@@ -413,6 +416,11 @@ namespace Character
             _currentHealth = maxHealth;
         }
 
+        private void Start()
+        {
+            UIManager.Instance.InstantiateHealthBar(maxHealth);
+        }
+
         private void Update()
         {
             if (_comboStarted && (Time.time - _lastAttackTime > comboTimer || CurrentComboStep == 3))
@@ -481,6 +489,7 @@ namespace Character
             
             _currentHealth -= amount;
             _currentHealth = Mathf.Max(0,  _currentHealth);
+            UIManager.Instance.SetHealth(_currentHealth);
 
             if (_currentHealth <= 0)
             {
@@ -493,6 +502,7 @@ namespace Character
         {
             _currentHealth += amount;
             _currentHealth = Mathf.Min(_currentHealth, maxHealth);
+            UIManager.Instance.SetHealth(_currentHealth);
         }
     }
 }

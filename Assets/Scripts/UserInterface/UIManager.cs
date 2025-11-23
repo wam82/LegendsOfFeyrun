@@ -15,6 +15,28 @@ namespace UserInterface
 
         [SerializeField] private GameObject interactPanel;
         [SerializeField] private TMP_Text interactText;
+        [SerializeField] private RectTransform healthBar;
+        [SerializeField] private TMP_Text healthText;
+        [SerializeField] private float healthBarHeight;
+        [SerializeField] private float healthBarWidth;
+        
+        private float _characterMaxHealth;
+        private float _characterCurrentHealth;
+
+        public void InstantiateHealthBar(float maxHealth)
+        {
+            _characterMaxHealth = maxHealth;
+            SetHealth(_characterMaxHealth);
+        }
+
+        public void SetHealth(float health)
+        {
+            _characterCurrentHealth = health;
+            healthText.text = health.ToString("0");
+            float newWidth =  (_characterCurrentHealth / _characterMaxHealth) * healthBarWidth;
+            
+            healthBar.sizeDelta = new Vector2(newWidth, healthBarHeight);
+        }
         
         public void ShowInteractPrompt()
         {
