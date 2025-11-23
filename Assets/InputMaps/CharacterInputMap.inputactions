@@ -311,6 +311,17 @@
                 },
                 {
                     "name": "",
+                    "id": "f49b089e-3c7c-48b4-8293-fc5028c5d318",
+                    "path": "<Keyboard>/e",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";KeyboardMouseScheme",
+                    "action": "Interact",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
                     "id": "b238f581-7485-4230-a5ad-a6a6d6e65da0",
                     "path": "<Gamepad>/buttonEast",
                     "interactions": "",

@@ -1,8 +1,9 @@
-using System;
 using System.Collections;
 using Character;
+using Combat;
 using Environment.Interfaces;
 using UnityEngine;
+using UserInterface;
 
 namespace Environment.Objects
 {
@@ -14,6 +15,8 @@ namespace Environment.Objects
         private bool _opened;
         private bool _isRotating;
         private bool _isPlayerInTrigger;
+        
+        private PlayableCharacter _playableCharacter;
 
         private IEnumerator Rotate()
         {
@@ -54,14 +57,16 @@ namespace Environment.Objects
             }
             Debug.Log("Interacted with " + gameObject.name);
         }
+        
 
         private void OnTriggerEnter(Collider other)
         {
             if (other.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<PlayableCharacter>().interactableObject =
-                    gameObject.GetComponent<IInteractable>();
+                _playableCharacter.interactableObject = this;
                 _isPlayerInTrigger = true;
+                
+                UIManager.Instance.ShowInteractPrompt();
             }
         }
 
@@ -69,8 +74,21 @@ namespace Environment.Objects
         {
             if (other.CompareTag("Player"))
             {
-                other.gameObject.GetComponent<PlayableCharacter>().interactableObject = null;
+                _playableCharacter.interactableObject = null;
                 _isPlayerInTrigger = false;
+                
+                UIManager.Instance.HideInteractPrompt();
+            }
+        }
+        
+        private void Start()
+        {
+            if (!_playableCharacter)
+            {
+                if (CombatManager.Instance.player)
+                {
+                    _playableCharacter = CombatManager.Instance.player.GetComponent<PlayableCharacter>();
+                }
             }
         }
     }

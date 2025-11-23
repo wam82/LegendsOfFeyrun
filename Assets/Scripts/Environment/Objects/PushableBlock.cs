@@ -3,6 +3,7 @@ using System.Collections;
 using Character;
 using Environment.Interfaces;
 using UnityEngine;
+using UserInterface;
 
 namespace Environment.Objects
 {
@@ -60,6 +61,8 @@ namespace Environment.Objects
                     other.gameObject.GetComponent<PlayableCharacter>().interactableObject =
                         gameObject.GetComponent<IInteractable>();
                     _isPlayerPushing = true;
+                    
+                    UIManager.Instance.ShowInteractPrompt();
                 }
             }
         }
@@ -70,6 +73,8 @@ namespace Environment.Objects
             {
                 other.gameObject.GetComponent<PlayableCharacter>().interactableObject = null;
                 _isPlayerPushing = false;
+                
+                UIManager.Instance.HideInteractPrompt();
             }
         }
     }

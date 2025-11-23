@@ -5,6 +5,7 @@ using Character;
 using Combat;
 using Environment.Interfaces;
 using UnityEngine;
+using UserInterface;
 
 namespace Environment.Objects
 {
@@ -90,6 +91,8 @@ namespace Environment.Objects
             {
                 _playableCharacter.interactableObject = GetComponent<IInteractable>();
                 _isPlayerInTrigger = true;
+                
+                UIManager.Instance.ShowInteractPrompt();
             }
         }
 
@@ -99,6 +102,8 @@ namespace Environment.Objects
             {
                 _playableCharacter.interactableObject = null;
                 _isPlayerInTrigger = false;
+                
+                UIManager.Instance.HideInteractPrompt();
             }
         }
 
