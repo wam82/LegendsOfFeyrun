@@ -1918,10 +1918,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Farmhouse
       objectReference: {fileID: 0}
-    - target: {fileID: 4970101161122168962, guid: 967bde6af1d19c349993f4c5bda52375, type: 3}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -4622,10 +4618,6 @@ PrefabInstance:
     - target: {fileID: 7617179497436023003, guid: 0f637b7d01a780c4f8229529fee884d7, type: 3}
       propertyPath: m_Name
       value: Tavern
-      objectReference: {fileID: 0}
-    - target: {fileID: 7617179497436023003, guid: 0f637b7d01a780c4f8229529fee884d7, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8552,10 +8544,6 @@ PrefabInstance:
     - target: {fileID: 7195110899087521368, guid: d2e5293165f994144936bea423c06727, type: 3}
       propertyPath: m_Name
       value: House No.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7195110899087521368, guid: d2e5293165f994144936bea423c06727, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
