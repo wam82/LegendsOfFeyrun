@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.34754658
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,23 +22,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.036643982
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -46,7 +46,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: 180
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 7259b2b0d33395a438797b82431aa386, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -112,7 +112,7 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.02
+  - screenRelativeHeight: 0.040073782
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 2368454154283948839}

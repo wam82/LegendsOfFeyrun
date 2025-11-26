@@ -279,7 +279,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f45e66ba45c54c7d83490fb6d932cb58, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  playableCharacter: {fileID: 0}
   openingAngle: 90
   duration: 1
 --- !u!65 &3319259985789298141
@@ -366,6 +365,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4242560723094647577}
+  - component: {fileID: 5348029233891389243}
   m_Layer: 0
   m_Name: Door Frame - Brick
   m_TagString: Untagged
@@ -390,6 +390,31 @@ Transform:
   - {fileID: 5846986851496940323}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!205 &5348029233891389243
+LODGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4226707613694325110}
+  serializedVersion: 2
+  m_LocalReferencePoint: {x: 0.0000019073486, y: 1.4720587, z: 0.0036621094}
+  m_Size: 3.0558827
+  m_FadeMode: 1
+  m_AnimateCrossFading: 1
+  m_LastLODIsBillboard: 0
+  m_LODs:
+  - screenRelativeHeight: 0.25
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 991800219855990956}
+    - renderer: {fileID: 3864201753521834076}
+  - screenRelativeHeight: 0.01
+    fadeTransitionWidth: 0
+    renderers:
+    - renderer: {fileID: 2906247937937548071}
+    - renderer: {fileID: 5623790354060227252}
+  m_Enabled: 1
 --- !u!1 &5835016983338356194
 GameObject:
   m_ObjectHideFlags: 0
