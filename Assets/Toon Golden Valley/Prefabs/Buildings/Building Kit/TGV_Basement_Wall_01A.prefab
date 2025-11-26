@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6fc3dbe166eab6b42bca0bb4440291b0, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.60000396
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6fc3dbe166eab6b42bca0bb4440291b0, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6fc3dbe166eab6b42bca0bb4440291b0, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -52.703663
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 6fc3dbe166eab6b42bca0bb4440291b0, type: 3}
       propertyPath: m_LocalRotation.w
@@ -112,7 +112,7 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.02
+  - screenRelativeHeight: 0.051593777
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 7736477987765749598}

@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 5079606969851164323}
   - component: {fileID: 6160255063101867544}
   - component: {fileID: 6641415149600938092}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -117,7 +117,7 @@ GameObject:
   - component: {fileID: 7137959726817200011}
   - component: {fileID: 1658298237595268004}
   - component: {fileID: 2095564235728534311}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -262,9 +262,25 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -6345297143810855539, guid: 35178eeba47b56345b6956aacaa6a645, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: -1565784278818779055, guid: 35178eeba47b56345b6956aacaa6a645, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 35178eeba47b56345b6956aacaa6a645, type: 3}
       propertyPath: m_Name
       value: Stairs - Large
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 35178eeba47b56345b6956aacaa6a645, type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 2768732163626540496, guid: 35178eeba47b56345b6956aacaa6a645, type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4742473837712756890, guid: 35178eeba47b56345b6956aacaa6a645, type: 3}
       propertyPath: m_FadeMode
