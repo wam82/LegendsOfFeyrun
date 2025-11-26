@@ -24,7 +24,7 @@ namespace Environment.Objects
             if (CanInteract())
             {
                 float blockSize = transform.localScale.z;
-                Vector3 targetPosition = transform.position + transform.forward * blockSize;
+                Vector3 targetPosition = transform.position + transform.forward * blockSize * 2;
                 StartCoroutine(MoveBlock(targetPosition));
             }   
         }
@@ -34,16 +34,44 @@ namespace Environment.Objects
             _isMoving = true;
             
             Vector3 startPosition = transform.position;
+            
+            bool hasObstacle = Physics.Raycast(
+                startPosition,
+                transform.forward,
+                out RaycastHit hit,
+                1f
+            );
+
+            Vector3 actualTarget = targetPosition;
+            
+            if (hasObstacle)
+            {
+                actualTarget = startPosition + transform.forward * 1f;
+            }
+            
             float elapsedTime = 0f;
 
             while (elapsedTime < moveDuration)
             {
-                transform.position = Vector3.Lerp(startPosition, targetPosition, elapsedTime / moveDuration);
+                transform.position = Vector3.Lerp(startPosition, actualTarget, elapsedTime / moveDuration);
                 elapsedTime += Time.deltaTime;
                 yield return null;
             }
 
-            transform.position = targetPosition;
+            transform.position = actualTarget;
+            
+            if (hasObstacle)
+            {
+                elapsedTime = 0f;
+                while (elapsedTime < moveDuration)
+                {
+                    transform.position = Vector3.Lerp(actualTarget, startPosition, elapsedTime / moveDuration);
+                    elapsedTime += Time.deltaTime;
+                    yield return null;
+                }
+                transform.position = startPosition;
+            }
+            
             _isMoving = false;
         }
 
