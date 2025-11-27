@@ -20626,9 +20626,37 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1518966471015069131, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Intensity
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2298764510884728782, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_LODs.Array.data[0].screenRelativeHeight
+      value: 0.0134
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271423332621739316, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Range
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 3271423332621739316, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Intensity
+      value: 1.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4282893678864011066, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Range
+      value: 1.5
+      objectReference: {fileID: 0}
     - target: {fileID: 5189886528506116550, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
       propertyPath: m_Name
       value: Alchemist
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225585807221412332, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Range
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5225585807221412332, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Intensity
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 5930996169642145877, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
       propertyPath: m_LocalPosition.x
@@ -20670,7 +20698,16 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    - target: {fileID: 7855254812460837545, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Range
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 7855254812460837545, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
+      propertyPath: m_Intensity
+      value: 2
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 2298764510884728782, guid: a6d8ee773df33aa4b9fe6aea2cc17d1f, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
