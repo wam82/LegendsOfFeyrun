@@ -39,6 +39,7 @@ namespace Enemy.Agents
         // 9. Walk towards player
         
         [SerializeField] private SlimeState currentState;
+        [SerializeField] private bool startSleepingUntilActivated = true;
 
         [Header("Slime Behaviour Attributes")] 
         [SerializeField] private float sleepDuration;
@@ -346,6 +347,18 @@ namespace Enemy.Agents
             ResetAllAnimatorParameters();
             _activeBehaviour = StartCoroutine(newBehaviour);
         }
+        
+        public void Activate()
+        {
+            if (_activeBehaviour != null)
+                StopCoroutine(_activeBehaviour);
+
+            currentState = SlimeState.Awakening;
+            ResetAllAnimatorParameters();
+
+            _activeBehaviour = StartCoroutine(WakeUp());
+        }
+
 
         private void Awake()
         {
@@ -365,7 +378,19 @@ namespace Enemy.Agents
         protected override void Start()
         {
             base.Start();
-            _activeBehaviour = StartCoroutine(BaseBehaviour());
+            
+            if (!startSleepingUntilActivated)
+            {
+                // Normal behavior (sleep → wake → search → wander)
+                _activeBehaviour = StartCoroutine(BaseBehaviour());
+            }
+            else
+            {
+                // Stay sleeping forever unless activated
+                currentState = SlimeState.Sleeping;
+                ResetAllAnimatorParameters();
+                _animator.SetBool(IsSleeping, true);
+            }
         }
 
         protected override void GetSteeringSum(out Vector3 steeringForceSum, out Quaternion rotation)
