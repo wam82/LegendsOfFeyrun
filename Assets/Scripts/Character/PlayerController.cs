@@ -1,4 +1,5 @@
 using System.Collections;
+using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -136,6 +137,7 @@ namespace Character
             if (context.performed)
             {
                 Debug.Log("OnPause");
+                PauseManager.SetPause(!PauseManager.IsGamePaused);
             }
         }
 
