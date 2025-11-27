@@ -136,7 +136,6 @@ namespace Character
         {
             if (context.performed)
             {
-                Debug.Log("OnPause");
                 PauseManager.SetPause(!PauseManager.IsGamePaused);
             }
         }

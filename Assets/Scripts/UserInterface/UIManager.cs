@@ -10,11 +10,16 @@ namespace UserInterface
     public class UIManager :  MonoBehaviour
     {
         public static UIManager Instance;
+        
+        // public PlayerInput playerInput;
 
         private PlayableCharacter _player;
 
+        [Header("Interact Tooltip")]
         [SerializeField] private GameObject interactPanel;
         [SerializeField] private TMP_Text interactText;
+        
+        [Header("Health Bar")]
         [SerializeField] private RectTransform healthBar;
         [SerializeField] private TMP_Text healthText;
         [SerializeField] private float healthBarHeight;
