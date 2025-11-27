@@ -14,7 +14,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: -0.24128628
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalPosition.y
@@ -22,7 +22,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: -0.12636185
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalRotation.w
@@ -30,15 +30,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -62,9 +62,6 @@ PrefabInstance:
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
       insertIndex: -1
-      addedObject: {fileID: 8900190370619433845}
-    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
-      insertIndex: -1
       addedObject: {fileID: -2613661320222309996}
   m_SourcePrefab: {fileID: 100100000, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
 --- !u!1 &914231478089427736 stripped
@@ -72,27 +69,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 919132149155446097, guid: 27ad65eabcf6cec498e56733ed7f51f3, type: 3}
   m_PrefabInstance: {fileID: 31922664839648841}
   m_PrefabAsset: {fileID: 0}
---- !u!65 &8900190370619433845
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 914231478089427736}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.165888, y: 0.098629795, z: 0.16588804}
-  m_Center: {x: -0.000052042305, y: 0.049314898, z: -0.000017158687}
 --- !u!205 &-2613661320222309996
 LODGroup:
   m_ObjectHideFlags: 0
@@ -107,7 +83,7 @@ LODGroup:
   m_AnimateCrossFading: 1
   m_LastLODIsBillboard: 0
   m_LODs:
-  - screenRelativeHeight: 0.02
+  - screenRelativeHeight: 0.037940446
     fadeTransitionWidth: 0
     renderers:
     - renderer: {fileID: 1707142294700788429}
