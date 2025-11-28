@@ -29,7 +29,7 @@ namespace Character
         
         public void OnMove(InputAction.CallbackContext context)
         {
-            if (!_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
+            if (!_playableCharacter.IsDizzy && !_playableCharacter.IsDead && !PauseManager.IsGamePaused)
             {
                 Vector2 movement = context.ReadValue<Vector2>();
                 _playableCharacter.RequestMove(movement);
@@ -43,7 +43,7 @@ namespace Character
                 }
             }
 
-            if (_playableCharacter.IsDizzy)
+            if (_playableCharacter.IsDizzy || PauseManager.IsGamePaused)
             {
                 _playableCharacter.RequestMove(new Vector2(0,0));
             }
@@ -51,7 +51,7 @@ namespace Character
 
         public void OnLook(InputAction.CallbackContext context)
         {
-            if (_playableCharacter.IsFPSCameraOn)
+            if (_playableCharacter.IsFPSCameraOn && !PauseManager.IsGamePaused)
             {
                 _playableCharacter.RequestLook(context.ReadValue<Vector2>());
             }
@@ -59,7 +59,7 @@ namespace Character
 
         public void OnJump(InputAction.CallbackContext context)
         {
-            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead && !PauseManager.IsGamePaused)
             {
                 _playableCharacter.movementState = PlayableCharacter.MovementState.Jump;
                 _playableCharacter.RequestJump();
@@ -68,7 +68,7 @@ namespace Character
 
         public void OnSprint(InputAction.CallbackContext context)
         {
-            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead && !PauseManager.IsGamePaused)
             {
                 if (_animator.GetBool(IsWalking) && !_animator.GetBool(IsShielding))
                 {
@@ -81,7 +81,8 @@ namespace Character
 
         public void OnAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
+            if (context.performed && !_animator.GetBool(IsAttacking) && _canAttack && !_animator.GetBool(IsShielding) 
+                && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead && !PauseManager.IsGamePaused)
             {
                 if (_animator.GetBool(IsSprinting))
                 {
@@ -96,7 +97,7 @@ namespace Character
 
         public void OnChargedAttack(InputAction.CallbackContext context)
         {
-            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead && !PauseManager.IsGamePaused)
             {
                 _playableCharacter.IsChargedAttacking = true;
                 _playableCharacter.movementState = PlayableCharacter.MovementState.ChargedAttack;
@@ -113,7 +114,7 @@ namespace Character
 
         public void OnShield(InputAction.CallbackContext context)
         {
-            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead)
+            if (context.performed && !_playableCharacter.IsDizzy && !_playableCharacter.IsDead && !PauseManager.IsGamePaused)
             {
                 _animator.SetBool(IsShielding, true);
                 _playableCharacter.movementState = PlayableCharacter.MovementState.Shield;
@@ -136,7 +137,7 @@ namespace Character
         {
             if (context.performed)
             {
-                PauseManager.SetPause(!PauseManager.IsGamePaused);
+                PauseManager.PauseGame(true);
             }
         }
 
@@ -200,6 +201,17 @@ namespace Character
 
         private void Update()
         {
+            if (PauseManager.IsGamePaused)
+            {
+                _animator.SetBool(IsWalking, false);
+                _animator.SetBool(IsSprinting, false);
+                _animator.SetBool(IsFalling, false);
+                _animator.SetBool(IsShielding, false);
+                _animator.SetBool(IsDizzy, false);
+                _animator.SetBool(IsAttacking, false);
+                _animator.SetBool(IsChargeAttacking, false);
+            }
+            
             if (_playableCharacter.IsChargedAttacking)
             {
                 if (Time.time - _lastChargedAttackStart > _playableCharacter.chargedAttackMaxDuration)

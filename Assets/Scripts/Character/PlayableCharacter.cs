@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using Combat;
 using Environment.Interfaces;
 using Environment.Objects;
+using Managers;
 using UnityEngine;
 using UserInterface;
 using Random = UnityEngine.Random;
@@ -461,7 +462,7 @@ namespace Character
 
         private void FixedUpdate()
         {
-            if (IsDizzy || IsDead)
+            if (IsDizzy || IsDead || PauseManager.IsGamePaused)
             {
                 return;
             }

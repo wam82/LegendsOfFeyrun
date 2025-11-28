@@ -1,9 +1,11 @@
 using System.Collections;
 using Character;
 using Environment.Interfaces;
+using Managers;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using UserInterface;
 
 namespace NPC.Dialogue
 {
@@ -51,7 +53,7 @@ namespace NPC.Dialogue
             nameText.SetText(dialogueData.characterName);
             dialoguePortrait.sprite = dialogueData.portrait;
             dialoguePanel.SetActive(true);
-            // pause game?
+            PauseManager.SetPause(true);
             
             StartCoroutine(TypeLine());
         }
@@ -100,6 +102,7 @@ namespace NPC.Dialogue
             _isDialogueActive = false;
             dialogueText.SetText("");
             dialoguePanel.SetActive(false);
+            PauseManager.SetPause(false);
         }
         
         private void OnTriggerEnter(Collider other)
@@ -109,6 +112,8 @@ namespace NPC.Dialogue
                 other.gameObject.GetComponent<PlayableCharacter>().interactableObject =
                     gameObject.GetComponent<IInteractable>();
                 _isPlayerInTrigger = true;
+                
+                UIManager.Instance.ShowInteractPrompt();
             }
         }
 
@@ -118,6 +123,8 @@ namespace NPC.Dialogue
             {
                 other.gameObject.GetComponent<PlayableCharacter>().interactableObject = null;
                 _isPlayerInTrigger = false;
+                
+                UIManager.Instance.HideInteractPrompt();
             }
         }
     }

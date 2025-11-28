@@ -66,7 +66,7 @@ namespace UserInterface
             inputActions.FindActionMap("Game").Enable();
             ControllerActionsUnsubscribe();
             _actionMap.Disable();
-            PauseManager.SetPause(!PauseManager.IsGamePaused);
+            PauseManager.PauseGame(false);
         }
 
         private void OnReturnButtonPressed()

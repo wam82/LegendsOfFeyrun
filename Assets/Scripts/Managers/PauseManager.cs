@@ -14,6 +14,11 @@ namespace Managers
         public static void SetPause(bool pause)
         {
             IsGamePaused = pause;
+        }
+
+        public static void PauseGame(bool pause)
+        {
+            IsGamePaused = pause;
             Instance?.AdjustTimescale();
             Instance?.TogglePauseMenu();
         }
