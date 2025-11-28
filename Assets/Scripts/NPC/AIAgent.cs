@@ -41,7 +41,10 @@ namespace NPC
 
         protected virtual void Start()
         {
-            obstacles.AddRange(GameObject.FindGameObjectsWithTag("Obstacle"));
+            if (obstacles.Count < 1)
+            {
+                obstacles.AddRange(GameObject.FindGameObjectsWithTag("Obstacle"));
+            }
             
             if (!trackedTarget)
             {
