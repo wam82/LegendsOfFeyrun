@@ -10,6 +10,7 @@ namespace Environment.Objects
     public enum KeyType
     {
         Normal,
+        Warped
     }
     
     public class Key : AIAgent, ICollectible
