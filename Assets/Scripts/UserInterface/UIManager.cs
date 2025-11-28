@@ -4,16 +4,26 @@ using Combat;
 using TMPro;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 namespace UserInterface
 {
     public class UIManager :  MonoBehaviour
     {
         public static UIManager Instance;
-        
-        // public PlayerInput playerInput;
 
         private PlayableCharacter _player;
+
+        [Header("Dialogue Panel")]
+        [SerializeField] private GameObject dialoguePanel;
+        [SerializeField] private TMP_Text dialogueText;
+        [SerializeField] private TMP_Text nameText;
+        [SerializeField] private Image dialoguePortrait;
+
+        public GameObject DialoguePanel => dialoguePanel;
+        public TMP_Text DialogueText => dialogueText;
+        public TMP_Text NameText => nameText;
+        public Image DialoguePortrait => dialoguePortrait;
 
         [Header("Interact Tooltip")]
         [SerializeField] private GameObject interactPanel;

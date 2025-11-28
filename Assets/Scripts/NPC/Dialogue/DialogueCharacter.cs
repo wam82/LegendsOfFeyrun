@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using Character;
 using Environment.Interfaces;
@@ -125,6 +126,32 @@ namespace NPC.Dialogue
                 _isPlayerInTrigger = false;
                 
                 UIManager.Instance.HideInteractPrompt();
+            }
+        }
+
+        private void Start()
+        {
+            if (UIManager.Instance)
+            {
+                if (!dialoguePanel)
+                {
+                    dialoguePanel = UIManager.Instance.DialoguePanel;
+                }
+
+                if (!dialogueText)
+                {
+                    dialogueText = UIManager.Instance.DialogueText;
+                }
+
+                if (!nameText)
+                {
+                    nameText = UIManager.Instance.NameText;
+                }
+
+                if (!dialoguePortrait)
+                {
+                    dialoguePortrait = UIManager.Instance.DialoguePortrait;
+                }
             }
         }
     }

@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
+  m_Name: Jane (Inn Customer)
+  m_EditorClassIdentifier: 
+  characterName: "Jo\xEBl"
+  portrait: {fileID: 0}
+  dialogueLines:
+  - '*as you listen in to the conversation*'
+  - "Jo\xEBl, I'm really worried about this whole shrinking situation going on in
+    the village."
+  - I don't want to loose you..
+  - ...
+  - ...
+  - "I... I LOVE YOU JO\xCBL"
+  autoProgressLines: 0101010101
+  autoProgressDelay: 1.5
+  typingSpeed: 0.05
+  dialogueClips: []
+  voicePitch: 1

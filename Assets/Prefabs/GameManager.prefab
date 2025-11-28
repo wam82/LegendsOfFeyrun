@@ -845,6 +845,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f17df1813e94efab501e4744028f703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dialoguePanel: {fileID: 2532659016191730147}
+  dialogueText: {fileID: 3655821266333681368}
+  nameText: {fileID: 802284164217029040}
+  dialoguePortrait: {fileID: 4413113457539452889}
   interactPanel: {fileID: 1524452124902030107}
   interactText: {fileID: 5924603223351801206}
   healthBar: {fileID: 4307771945483987467}
