@@ -11,8 +11,6 @@ namespace UserInterface
 {
     public class PauseMenuController : MonoBehaviour
     {
-        // private PlayerInput _playerInput;
-
         public InputActionAsset inputActions;
 
         private UIDocument _uiDocument;
@@ -129,8 +127,6 @@ namespace UserInterface
 
         private void OnEnable()
         {
-            Debug.Log("OnEnable");
-            
             VisualElement root = GetComponent<UIDocument>().rootVisualElement;
             
             _resumeButton = root.Q<Button>("ResumeButton");
