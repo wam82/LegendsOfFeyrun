@@ -16,7 +16,9 @@ MonoBehaviour:
   portrait: {fileID: 0}
   dialogueLines:
   - I know something about the shrinking that nobody else knows....
-  autoProgressLines: 
+  - ...
+  - But I won't tell you anything!
+  autoProgressLines: 0101
   autoProgressDelay: 1.5
   typingSpeed: 0.05
   dialogueClips: []

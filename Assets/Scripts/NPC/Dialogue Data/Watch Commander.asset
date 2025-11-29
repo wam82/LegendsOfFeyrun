@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
+  m_Name: Watch Commander
+  m_EditorClassIdentifier: 
+  characterName: Watch Commander
+  portrait: {fileID: 0}
+  dialogueLines:
+  - 'Hello Traveler! '
+  - 'How can I be of assistance? '
+  - 'Hmmm, a gem that used to belong to the Mother on the other side of this wall? '
+  - 'Hmmm, doesn''t ring any bells. '
+  - '... '
+  - 'Ergorn told you to ask for it? '
+  - 'Oh this little scallywag! He''s going to get me in trouble one day! '
+  - 'There is indeed a gem on the other side of this wall that used to belong to
+    the Mother. '
+  - 'However, travel to the other side has been strictly prohibited since the Mother
+    left and never came back. '
+  - 'That being said... '
+  - ...
+  - ...
+  - 'Oh forget about it, I''ll tell you what. '
+  - 'If let''s say in a purely hypothetical world, you were to ask the barkeep at
+    the tavern for the key to this gate. '
+  - 'And let''s say they gave you indications as to where to find it and you were
+    to come back with this key that may no longer exist to open the gate. '
+  - 'I may just so happen to be looking away at that exact moment... '
+  - The tavern is the brick building with the blue roof right next to the entrance
+    this this village from where you came.
+  autoProgressLines: 01010101010101010101010101010101
+  autoProgressDelay: 1
+  typingSpeed: 0.05
+  dialogueClips: []
+  voicePitch: 1

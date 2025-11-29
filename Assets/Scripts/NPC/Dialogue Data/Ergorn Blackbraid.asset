@@ -1,0 +1,34 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
+  m_Name: Ergorn Blackbraid
+  m_EditorClassIdentifier: 
+  characterName: Ergorn Blackbraid
+  portrait: {fileID: 0}
+  dialogueLines:
+  - 'Hi''ya there Adventurer! '
+  - "Welcome to the grand region of Feyr\xFCn! "
+  - 'Up ahead is the small town of Eldhavn. '
+  - 'Legend has it that ever since the Mother disappeared, everyone in this Universe
+    have been shrunken down. '
+  - 'It is also said that the Mother possessed a magical gem that, if assembled with
+    other runes, could solve any problem a worthy hero would ask of it. '
+  - 'Now I was told that it was on the other side of Eldhavn.  '
+  - 'Perhaps you should go check in the town if the rumor is real. '
+  - 'I''d ask one of the guards at the big ol'' gate at the end of the main road. '
+  - 'Maybe they got a bit more information for y''a. '
+  - 'Good luck out their pal''. Careful not to trip on the logs! '
+  autoProgressLines: 010101010101010101
+  autoProgressDelay: 1.5
+  typingSpeed: 0.05
+  dialogueClips: []
+  voicePitch: 1

@@ -1,0 +1,32 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
+  m_Name: Alchemist
+  m_EditorClassIdentifier: 
+  characterName: 
+  portrait: {fileID: 0}
+  dialogueLines:
+  - ...
+  - ...
+  - ...
+  - 'hmmm? '
+  - ...
+  - 'A magic gate blocking access to the old man''s residence? '
+  - ...
+  - 'No, don''t be silly... '
+  - 'It''s just a different key... '
+  - Yeah! Go find it, it's somewhere in my basement.
+  autoProgressLines: 010101010101010101
+  autoProgressDelay: 1.5
+  typingSpeed: 0.05
+  dialogueClips: []
+  voicePitch: 1
