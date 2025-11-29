@@ -5,6 +5,7 @@ using UnityEditor;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
+using UnityEngine.SceneManagement;
 using UnityEngine.UIElements;
 
 namespace UserInterface
@@ -69,7 +70,11 @@ namespace UserInterface
 
         private void OnReturnButtonPressed()
         {
-            Debug.Log("Return to main menu");
+            ButtonActionsUnsubscribe();
+            inputActions.FindActionMap("Game").Enable();
+            ControllerActionsUnsubscribe();
+            _actionMap.Disable();
+            SceneManager.LoadScene("MainMenu");
         }
 
         private void OnQuitButtonPressed()
