@@ -203,17 +203,6 @@ namespace Character
 
         private void Update()
         {
-            if (PauseManager.IsGamePaused)
-            {
-                _animator.SetBool(IsWalking, false);
-                _animator.SetBool(IsSprinting, false);
-                _animator.SetBool(IsFalling, false);
-                _animator.SetBool(IsShielding, false);
-                _animator.SetBool(IsDizzy, false);
-                _animator.SetBool(IsAttacking, false);
-                _animator.SetBool(IsChargeAttacking, false);
-            }
-            
             if (_playableCharacter.IsChargedAttacking)
             {
                 if (Time.time - _lastChargedAttackStart > _playableCharacter.chargedAttackMaxDuration)
