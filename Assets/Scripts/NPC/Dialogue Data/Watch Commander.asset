@@ -36,7 +36,7 @@ MonoBehaviour:
     to come back with this key that may no longer exist to open the gate. '
   - 'I may just so happen to be looking away at that exact moment... '
   - The tavern is the brick building with the blue roof right next to the entrance
-    this this village from where you came.
+    of this village from where you came.
   autoProgressLines: 01010101010101010101010101010101
   autoProgressDelay: 1
   typingSpeed: 0.05
