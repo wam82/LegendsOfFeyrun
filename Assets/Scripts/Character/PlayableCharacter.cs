@@ -424,11 +424,11 @@ namespace Character
 
         private void Update()
         {
-            if (_comboStarted && (Time.time - _lastAttackTime > comboTimer || CurrentComboStep == 3))
+            if (_comboStarted && (Time.time - _lastAttackTime > comboTimer || CurrentComboStep < 3))
             {
+                // Debug.Log(CurrentComboStep);
                 CurrentComboStep = 0;
                 _comboStarted = false;
-                // Debug.LogWarning("Reset combo");
             }
             
             CheckIsGrounded();
