@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6540458557907491002}
   - component: {fileID: 2647889738722203701}
-  - component: {fileID: 5318400505759180831}
+  - component: {fileID: 4534021312807851414}
   m_Layer: 5
   m_Name: PlayerDeathOverlay
   m_TagString: Untagged
@@ -49,7 +49,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 2c73210f19ba6e64a9b6d11f337427a9, type: 3}
   m_SortingOrder: 0
---- !u!114 &5318400505759180831
+--- !u!114 &4534021312807851414
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -58,7 +58,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 251745884258833956}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3438204e66cc4eb4818bb2ef37440597, type: 3}
+  m_Script: {fileID: 11500000, guid: ef39cb6701794eba816e8d96ddda0018, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 99d8da650065a45aaaf370ae7ee3c14a, type: 3}
@@ -615,7 +615,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2818484943765068211}
   - component: {fileID: 485489622209327181}
-  - component: {fileID: 8364450949389978146}
+  - component: {fileID: 4813270817491434436}
   m_Layer: 5
   m_Name: EndScreenOverlay
   m_TagString: Untagged
@@ -654,7 +654,7 @@ MonoBehaviour:
   m_ParentUI: {fileID: 0}
   sourceAsset: {fileID: 9197481963319205126, guid: 1a92049b8ea4a3d4eb6587184cd6b47d, type: 3}
   m_SortingOrder: 0
---- !u!114 &8364450949389978146
+--- !u!114 &4813270817491434436
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -663,7 +663,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 3091499041102819686}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 3438204e66cc4eb4818bb2ef37440597, type: 3}
+  m_Script: {fileID: 11500000, guid: cf720e3d3c3a4f94aca9bc3730370ce9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   inputActions: {fileID: -944628639613478452, guid: 99d8da650065a45aaaf370ae7ee3c14a, type: 3}
@@ -977,10 +977,12 @@ MonoBehaviour:
   dialoguePortrait: {fileID: 4413113457539452889}
   interactPanel: {fileID: 1524452124902030107}
   interactText: {fileID: 5924603223351801206}
-  healthBar: {fileID: 7627272977715734234}
+  healthBarFill: {fileID: 7627272977715734234}
   healthText: {fileID: 1718120760823182618}
   healthBarHeight: 50
   healthBarWidth: 250
+  deathScreen: {fileID: 251745884258833956}
+  endScreen: {fileID: 3091499041102819686}
 --- !u!114 &2956968703523505726
 MonoBehaviour:
   m_ObjectHideFlags: 0
