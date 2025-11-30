@@ -1,6 +1,7 @@
 ﻿using System;
 using Environment.Interfaces;
 using UnityEngine;
+using UserInterface;
 
 namespace Environment.Objects
 {
@@ -19,7 +20,7 @@ namespace Environment.Objects
         public void Collect()
         {
             Collected = true;
-            Debug.Log("Gem Collected");
+            UIManager.Instance.ToggleEndScreen(true);
         }
 
         public void OnTriggerEnter(Collider other)

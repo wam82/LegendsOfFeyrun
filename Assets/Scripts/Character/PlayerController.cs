@@ -2,6 +2,7 @@ using System.Collections;
 using Managers;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UserInterface;
 
 namespace Character
 {
@@ -153,6 +154,7 @@ namespace Character
         {
             yield return new WaitForSeconds(amount);
             _animator.SetBool(IsSleeping,true);
+            UIManager.Instance.ToggleDeathScreen(true);
         }
         public void Die()
         {

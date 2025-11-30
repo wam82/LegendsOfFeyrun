@@ -71,7 +71,6 @@ namespace UserInterface
         private void OnReturnButtonPressed()
         {
             ButtonActionsUnsubscribe();
-            inputActions.FindActionMap("Game").Enable();
             ControllerActionsUnsubscribe();
             _actionMap.Disable();
             SceneManager.LoadScene("MainMenu");

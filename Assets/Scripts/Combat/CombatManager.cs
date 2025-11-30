@@ -28,7 +28,7 @@ namespace Combat
             if (damageable != null)
             {
                 damageable.TakeDamage(damage);
-                Debug.Log($"Target {target.name} took {damage} damage.");
+                // Debug.Log($"Target {target.name} took {damage} damage.");
             }
             else
             {

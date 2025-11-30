@@ -30,10 +30,15 @@ namespace UserInterface
         [SerializeField] private TMP_Text interactText;
         
         [Header("Health Bar")]
-        [SerializeField] private RectTransform healthBar;
+        [SerializeField] private RectTransform healthBarFill;
         [SerializeField] private TMP_Text healthText;
         [SerializeField] private float healthBarHeight;
         [SerializeField] private float healthBarWidth;
+
+        [Header("Other Panels")] 
+        [SerializeField] private GameObject deathScreen;
+        [SerializeField] private GameObject endScreen;
+        
         
         private float _characterMaxHealth;
         private float _characterCurrentHealth;
@@ -50,7 +55,7 @@ namespace UserInterface
             healthText.text = health.ToString("0");
             float newWidth =  (_characterCurrentHealth / _characterMaxHealth) * healthBarWidth;
             
-            healthBar.sizeDelta = new Vector2(newWidth, healthBarHeight);
+            healthBarFill.sizeDelta = new Vector2(newWidth, healthBarHeight);
         }
         
         public void ShowInteractPrompt()
@@ -67,6 +72,22 @@ namespace UserInterface
         public void HideInteractPrompt()
         {
             interactPanel.SetActive(false);
+        }
+
+        public void ToggleDeathScreen(bool toggle)
+        {
+            if (!endScreen.activeInHierarchy)
+            {
+                deathScreen.SetActive(toggle);
+            }
+        }
+
+        public void ToggleEndScreen(bool toggle)
+        {
+            if (!deathScreen.activeInHierarchy)
+            {
+                endScreen.SetActive(toggle);
+            }
         }
 
         private void Awake()
