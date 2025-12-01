@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Concert Viewer 2
   m_EditorClassIdentifier: 
   characterName: Concert Viewer
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 574370aa5dbe71f449665e74c2e7d29c, type: 3}
   dialogueLines:
   - Woah, this music is so good!!
   autoProgressLines: 

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Reurig (inn Customer)
   m_EditorClassIdentifier: 
   characterName: Reurig
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 9c266482d0ae9df4ea33087897537bf4, type: 3}
   dialogueLines:
   - Ah shucks!
   - I remember a time I used to be able to see above this ramp

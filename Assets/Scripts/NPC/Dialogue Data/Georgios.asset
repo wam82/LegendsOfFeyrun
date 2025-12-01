@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Georgios
   m_EditorClassIdentifier: 
   characterName: Georgios
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: fe9ff79e86d3c4546b20a6a23413587e, type: 3}
   dialogueLines:
   - G'day
   autoProgressLines: 

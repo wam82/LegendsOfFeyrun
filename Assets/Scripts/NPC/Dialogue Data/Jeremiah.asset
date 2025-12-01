@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Jeremiah
   m_EditorClassIdentifier: 
   characterName: Jeremiah
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: dc47a30a7390ae747b9d12411a676692, type: 3}
   dialogueLines:
   - I used to be a part of this kingdom's fighting force.
   - But then we all shrunk and we had no need for an army.

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Crimson
   m_EditorClassIdentifier: 
   characterName: Crimson
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 4fcd9675ae91b4f469fb8b77aea2c28b, type: 3}
   dialogueLines:
   - H'ya there!
   - Name's Roslyn Calloway.

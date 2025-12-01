@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Barkeep
   m_EditorClassIdentifier: 
   characterName: Barkeep
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 6307d5fdec175de4aa8b796d81515ba2, type: 3}
   dialogueLines:
   - 'Greetings! What can I get you? '
   - 'Indications as to where you could find the key to the back gate? '

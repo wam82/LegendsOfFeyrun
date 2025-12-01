@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Taul (Butcher)
   m_EditorClassIdentifier: 
   characterName: Taul
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 19c1eafe29135994292a89cb95b2174f, type: 3}
   dialogueLines:
   - '*grunts*'
   autoProgressLines: 

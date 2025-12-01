@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Guard - New
   m_EditorClassIdentifier: 
   characterName: Guard
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: b83eea79b17636f4ebf68d5eea070f73, type: 3}
   dialogueLines:
   - Hello
   - I started yesterday, so I'm still new to this job.

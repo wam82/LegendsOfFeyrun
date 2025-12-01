@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Watch Commander
   m_EditorClassIdentifier: 
   characterName: Watch Commander
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: ce4aaa243c22a37478f917654a4de17d, type: 3}
   dialogueLines:
   - 'Hello Traveler! '
   - 'How can I be of assistance? '

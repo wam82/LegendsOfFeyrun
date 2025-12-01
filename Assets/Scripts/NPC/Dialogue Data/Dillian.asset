@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Dillian
   m_EditorClassIdentifier: 
   characterName: Dillian
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: d17817c4bb5539c4490a00558fe78709, type: 3}
   dialogueLines:
   - G'day
   autoProgressLines: 

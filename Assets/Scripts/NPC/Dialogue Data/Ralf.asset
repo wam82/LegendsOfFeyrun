@@ -13,9 +13,11 @@ MonoBehaviour:
   m_Name: Ralf
   m_EditorClassIdentifier: 
   characterName: Ralf
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 37e2c8b149f235647bfcbd6f4e3ed41a, type: 3}
   dialogueLines:
-  - This village used to be very peaceful
+  - There's be a lot of unease recently do to the shrinking issue that has been going
+    on.
+  - As a guard on my day off, that worries me a little.
   autoProgressLines: 
   autoProgressDelay: 1.5
   typingSpeed: 0.05

@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
   m_Name: Sleeping Beauty 2
   m_EditorClassIdentifier: 
-  characterName: Inn Customer
-  portrait: {fileID: 0}
+  characterName: Myriam
+  portrait: {fileID: 21300000, guid: 507b0583ff8adac469d541e1dee9fc7a, type: 3}
   dialogueLines:
   - '*sleeps peacefully*'
   autoProgressLines: 

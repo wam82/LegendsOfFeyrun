@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Occupied
   m_EditorClassIdentifier: 
   characterName: Me
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: ef93f7846d7554c47934c332aadeb17a, type: 3}
   dialogueLines:
   - They seem pretty occupied.
   - It might be best to not disturb them

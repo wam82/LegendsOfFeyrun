@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Pippa
   m_EditorClassIdentifier: 
   characterName: Pippa
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: 0d02c699316b8c64bbc1ec6c3cc1925f, type: 3}
   dialogueLines:
   - I'm training to become this kingdom's best guard to ever have existed!
   autoProgressLines: 

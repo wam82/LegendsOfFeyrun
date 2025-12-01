@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
   m_Name: Band Singer 2
   m_EditorClassIdentifier: 
-  characterName: Band Member
-  portrait: {fileID: 0}
+  characterName: Band Singer
+  portrait: {fileID: 21300000, guid: 00d665b2599329043a8763125520a3e7, type: 3}
   dialogueLines:
   - '*sings lyrics*'
   autoProgressLines: 

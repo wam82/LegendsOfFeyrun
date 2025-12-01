@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5e71c01dba4a848dc96f0afb1e6dff93, type: 3}
   m_Name: Jane (Inn Customer)
   m_EditorClassIdentifier: 
-  characterName: "Jo\xEBl"
-  portrait: {fileID: 0}
+  characterName: Jane
+  portrait: {fileID: 21300000, guid: 9095b04844bb5c1408a87de00cc38dbf, type: 3}
   dialogueLines:
   - '*as you listen in to the conversation*'
   - "Jo\xEBl, I'm really worried about this whole shrinking situation going on in

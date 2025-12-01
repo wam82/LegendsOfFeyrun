@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Tavern Customer 3
   m_EditorClassIdentifier: 
   characterName: Customer
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: c0ed8ee4f517a5247af01701870c2ef3, type: 3}
   dialogueLines:
   - This damn shrinking issue that's been going on...
   - I swear it's going to drive me crazy *gulps drink*

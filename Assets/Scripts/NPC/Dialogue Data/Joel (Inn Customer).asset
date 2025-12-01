@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Joel (Inn Customer)
   m_EditorClassIdentifier: 
   characterName: "Jo\xEBl"
-  portrait: {fileID: 0}
+  portrait: {fileID: 21300000, guid: fa30a4b071d64ef4c8f127e7b196f5a7, type: 3}
   dialogueLines:
   - '*as you listen in to the conversation*'
   - ... diseases going around, I'll still love you
